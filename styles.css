@@ -726,6 +726,7 @@ input:checked + .toggle-slider-large:before {
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
+    z-index: 1000;
 }
 
 /* Share Options */
@@ -855,21 +856,17 @@ input:checked + .toggle-slider-large:before {
 .how-to-modal {
     max-width: 600px;
     max-height: 80vh;
+    overflow: hidden;
     position: relative;
 }
 
-.how-to-modal .close {
-    position: fixed;
-    top: 20px;
-    right: 25px;
-    z-index: 10;
-}
-
 .howto-guide {
-    max-height: 80vh;
+    height: 100%;
+    max-height: calc(80vh - 50px);
     overflow-y: auto;
     padding-right: 15px;
     padding-top: 10px;
+    padding-bottom: 20px;
 }
 
 .howto-guide h3 {

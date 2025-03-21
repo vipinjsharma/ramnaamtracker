@@ -688,9 +688,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Create how-to guide HTML content
         const howToGuide = `
+            <h3>How to Use Ram Naam Writing App</h3>
             <div class="howto-guide">
-                <h3>How to Use Ram Naam Writing App</h3>
-                
                 <section class="guide-section">
                     <h4>1. Writing Ram Naam</h4>
                     <p>You can write राम in two ways:</p>
