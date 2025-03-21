@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.ramlekhak.ui.home.HomeFragment"
+        android:label="@string/nav_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_writingFragment"
+            app:destination="@id/writingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/writingFragment"
+        android:name="com.ramlekhak.ui.writing.WritingFragment"
+        android:label="@string/nav_writing"
+        tools:layout="@layout/fragment_writing" />
+
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="com.ramlekhak.ui.stats.StatisticsFragment"
+        android:label="@string/nav_statistics"
+        tools:layout="@layout/fragment_statistics" />
+
+    <fragment
+        android:id="@+id/benefitsFragment"
+        android:name="com.ramlekhak.ui.benefits.BenefitsFragment"
+        android:label="@string/nav_benefits"
+        tools:layout="@layout/fragment_benefits" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.ramlekhak.ui.settings.SettingsFragment"
+        android:label="@string/nav_settings"
+        tools:layout="@layout/fragment_settings" />
+</navigation>

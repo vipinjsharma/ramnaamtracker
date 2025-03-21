@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">राम लेखक</string>
+    
+    <!-- Navigation Drawer -->
+    <string name="nav_home">होम</string>
+    <string name="nav_writing">लेखन बोर्ड</string>
+    <string name="nav_statistics">आंकड़े</string>
+    <string name="nav_benefits">लाभ</string>
+    <string name="nav_settings">सेटिंग्स</string>
+    <string name="nav_share">ऐप शेयर करें</string>
+    <string name="nav_feedback">प्रतिक्रिया भेजें</string>
+    
+    <!-- Home Screen -->
+    <string name="welcome_message">राम लेखक में आपका स्वागत है</string>
+    <string name="today_count">आज का काउंट: %1$d</string>
+    <string name="total_count">कुल काउंट: %1$d</string>
+    <string name="mala_count">माला काउंट: %1$d</string>
+    <string name="start_writing">लिखना शुरू करें</string>
+    <string name="benefit_title">राम नाम लिखने के लाभ</string>
+    <string name="view_all_benefits">सभी लाभ देखें</string>
+    
+    <!-- Writing Screen -->
+    <string name="clear_board">साफ करें</string>
+    <string name="submit_writing">जमा करें</string>
+    <string name="auto_draw">स्वतः लिखें</string>
+    <string name="writing_instructions">बोर्ड पर \"राम\" लिखें</string>
+    <string name="count_submitted">काउंट सफलतापूर्वक जमा किया गया!</string>
+    
+    <!-- Statistics Screen -->
+    <string name="daily_progress">दैनिक प्रगति</string>
+    <string name="weekly_progress">साप्ताहिक प्रगति</string>
+    <string name="monthly_progress">मासिक प्रगति</string>
+    <string name="reset_statistics">आंकड़े रीसेट करें</string>
+    <string name="reset_confirmation">क्या आप वाकई अपने आंकड़े रीसेट करना चाहते हैं?</string>
+    <string name="yes">हां</string>
+    <string name="no">नहीं</string>
+    <string name="no_data">कोई डेटा उपलब्ध नहीं है</string>
+    
+    <!-- Benefits Screen -->
+    <string name="benefit_1">मन को शांत करने में मदद करता है</string>
+    <string name="benefit_2">एकाग्रता बढ़ाता है</string>
+    <string name="benefit_3">धैर्य और दृढ़ता विकसित करता है</string>
+    <string name="benefit_4">आध्यात्मिक शांति प्रदान करता है</string>
+    <string name="benefit_5">भक्ति को मजबूत करता है</string>
+    <string name="benefit_6">सकारात्मक ऊर्जा बनाता है</string>
+    <string name="benefit_7">तनाव कम करने में मदद करता है</string>
+    <string name="benefit_8">फोकस और ध्यान में सुधार करता है</string>
+    
+    <!-- Settings Screen -->
+    <string name="language_setting">भाषा</string>
+    <string name="theme_setting">डार्क थीम</string>
+    <string name="notification_setting">दैनिक रिमाइंडर</string>
+    <string name="reset_at_midnight">मध्यरात्रि पर काउंट रीसेट करें</string>
+    
+    <!-- Others -->
+    <string name="share_message">राम नाम लिखने और ट्रैक करने के लिए राम लेखक ऐप देखें: [ऐप लिंक]</string>
+    <string name="feedback_email">feedback@ramlekhak.com</string>
+    <string name="send_feedback">प्रतिक्रिया भेजें</string>
+    <string name="english">अंग्रेज़ी</string>
+    <string name="hindi">हिंदी</string>
+</resources>
