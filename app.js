@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM fully loaded, initializing app...");
     // DOM Elements
     const app = document.getElementById('app');
     const homePage = document.getElementById('homePage');
@@ -15,6 +16,30 @@ document.addEventListener('DOMContentLoaded', function() {
     const submitBtn = document.getElementById('submitBtn');
     const shareBtn = document.getElementById('shareBtn');
     const downloadBtn = document.getElementById('downloadBtn');
+    
+    // Get menu and overlay elements
+    const menuOverlay = document.getElementById('menuOverlay');
+    const profileOverlay = document.getElementById('profileOverlay');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+    const closeProfileBtn = document.getElementById('closeProfileBtn');
+    const quickCurrentStreak = document.getElementById('quickCurrentStreak');
+    
+    // Menu navigation links
+    const menuWriteLink = document.getElementById('menuWriteLink');
+    const menuShareLink = document.getElementById('menuShareLink');
+    const menuRateLink = document.getElementById('menuRateLink');
+    const menuFeedbackLink = document.getElementById('menuFeedbackLink');
+    const menuHowToLink = document.getElementById('menuHowToLink');
+    const menuLanguageLink = document.getElementById('menuLanguageLink');
+    const menuTermsLink = document.getElementById('menuTermsLink');
+    const menuPrivacyLink = document.getElementById('menuPrivacyLink');
+    
+    // Profile navigation links
+    const profileAccountLink = document.getElementById('profileAccountLink');
+    const profileLanguageLink = document.getElementById('profileLanguageLink');
+    const profileThemeLink = document.getElementById('profileThemeLink');
+    const profileReminderLink = document.getElementById('profileReminderLink');
+    const profileLogoutLink = document.getElementById('profileLogoutLink');
     
     // Profile page elements
     const adminButton = document.getElementById('adminButton');
@@ -77,20 +102,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event Listeners
     backButton.addEventListener('click', handleBackNavigation);
     menuButton.addEventListener('click', toggleMenu);
-    profileButton.addEventListener('click', navigateToProfile);
+    profileButton.addEventListener('click', toggleProfile);
     
-    // Secret admin mode (click profile title 5 times)
-    const profileTitle = document.querySelector('.profile-page h1');
-    let titleClickCount = 0;
-    profileTitle.addEventListener('click', () => {
-        titleClickCount++;
-        if (titleClickCount === 5) {
-            isAdminUser = !isAdminUser;
-            updateProfileStats();
-            showToast(isAdminUser ? 'Admin mode activated' : 'Admin mode deactivated');
-            titleClickCount = 0;
-        }
-    });
+    // Navigation listeners
     startWritingBtn.addEventListener('click', navigateToWriting);
     clearBtn.addEventListener('click', clearCanvas);
     drawBtn.addEventListener('click', autoDraw);
@@ -119,6 +133,44 @@ document.addEventListener('DOMContentLoaded', function() {
     canvas.addEventListener('touchstart', startDrawingTouch);
     canvas.addEventListener('touchmove', drawTouch);
     canvas.addEventListener('touchend', stopDrawing);
+    
+    // Menu and overlay event listeners
+    closeMenuBtn.addEventListener('click', closeMenuOverlay);
+    closeProfileBtn.addEventListener('click', closeProfileOverlay);
+    
+    // Menu navigation links event listeners
+    menuWriteLink.addEventListener('click', handleMenuWriteClick);
+    menuShareLink.addEventListener('click', handleMenuShareClick);
+    menuRateLink.addEventListener('click', handleMenuRateClick);
+    menuFeedbackLink.addEventListener('click', handleMenuFeedbackClick);
+    menuHowToLink.addEventListener('click', handleMenuHowToClick);
+    menuLanguageLink.addEventListener('click', handleMenuLanguageClick);
+    menuTermsLink.addEventListener('click', handleMenuTermsClick);
+    menuPrivacyLink.addEventListener('click', handleMenuPrivacyClick);
+    
+    // Profile menu event listeners
+    profileAccountLink.addEventListener('click', handleProfileAccountClick);
+    profileLanguageLink.addEventListener('click', handleProfileLanguageClick);
+    profileThemeLink.addEventListener('click', handleProfileThemeClick);
+    profileReminderLink.addEventListener('click', handleProfileReminderClick);
+    profileLogoutLink.addEventListener('click', handleProfileLogoutClick);
+    
+    // Secret admin mode (click profile title 5 times)
+    const profileTitle = document.querySelector('.profile-page h2') || document.querySelector('.profile-info h2');
+    let titleClickCount = 0;
+    if (profileTitle) {
+        profileTitle.addEventListener('click', () => {
+            titleClickCount++;
+            if (titleClickCount === 5) {
+                isAdminUser = !isAdminUser;
+                updateProfileStats();
+                showToast(isAdminUser ? 'Admin mode activated' : 'Admin mode deactivated');
+                titleClickCount = 0;
+            }
+        });
+    } else {
+        console.warn("Profile title element not found for admin mode activation");
+    }
     
     // Functions
     function initializeApp() {
@@ -337,49 +389,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Get menu elements
-    const menuOverlay = document.getElementById('menuOverlay');
-    const profileOverlay = document.getElementById('profileOverlay');
-    const closeMenuBtn = document.getElementById('closeMenuBtn');
-    const closeProfileBtn = document.getElementById('closeProfileBtn');
-    const quickCurrentStreak = document.getElementById('quickCurrentStreak');
-    
-    // Menu navigation links
-    const menuWriteLink = document.getElementById('menuWriteLink');
-    const menuShareLink = document.getElementById('menuShareLink');
-    const menuRateLink = document.getElementById('menuRateLink');
-    const menuFeedbackLink = document.getElementById('menuFeedbackLink');
-    const menuHowToLink = document.getElementById('menuHowToLink');
-    const menuLanguageLink = document.getElementById('menuLanguageLink');
-    const menuTermsLink = document.getElementById('menuTermsLink');
-    const menuPrivacyLink = document.getElementById('menuPrivacyLink');
-    
-    // Profile navigation links
-    const profileAccountLink = document.getElementById('profileAccountLink');
-    const profileLanguageLink = document.getElementById('profileLanguageLink');
-    const profileThemeLink = document.getElementById('profileThemeLink');
-    const profileReminderLink = document.getElementById('profileReminderLink');
-    const profileLogoutLink = document.getElementById('profileLogoutLink');
-    
-    // Add event listeners for menu items
-    closeMenuBtn.addEventListener('click', closeMenuOverlay);
-    closeProfileBtn.addEventListener('click', closeProfileOverlay);
-    menuWriteLink.addEventListener('click', handleMenuWriteClick);
-    menuShareLink.addEventListener('click', handleMenuShareClick);
-    menuRateLink.addEventListener('click', handleMenuRateClick);
-    menuFeedbackLink.addEventListener('click', handleMenuFeedbackClick);
-    menuHowToLink.addEventListener('click', handleMenuHowToClick);
-    menuLanguageLink.addEventListener('click', handleMenuLanguageClick);
-    menuTermsLink.addEventListener('click', handleMenuTermsClick);
-    menuPrivacyLink.addEventListener('click', handleMenuPrivacyClick);
-    
-    // Add event listeners for profile items
-    profileAccountLink.addEventListener('click', handleProfileAccountClick);
-    profileLanguageLink.addEventListener('click', handleProfileLanguageClick);
-    profileThemeLink.addEventListener('click', handleProfileThemeClick);
-    profileReminderLink.addEventListener('click', handleProfileReminderClick);
-    profileLogoutLink.addEventListener('click', handleProfileLogoutClick);
-    
     function toggleMenu() {
         menuOverlay.classList.add('active');
         menuOverlay.style.width = '100%';
@@ -525,16 +534,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 <p>We value your feedback! Please rate your experience:</p>
                 
                 <div class="star-rating">
-                    <input type="radio" id="star5" name="rating" value="5">
-                    <label for="star5">★</label>
-                    <input type="radio" id="star4" name="rating" value="4">
-                    <label for="star4">★</label>
-                    <input type="radio" id="star3" name="rating" value="3">
-                    <label for="star3">★</label>
-                    <input type="radio" id="star2" name="rating" value="2">
-                    <label for="star2">★</label>
                     <input type="radio" id="star1" name="rating" value="1">
                     <label for="star1">★</label>
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2">★</label>
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3">★</label>
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4">★</label>
+                    <input type="radio" id="star5" name="rating" value="5">
+                    <label for="star5">★</label>
                 </div>
                 
                 <textarea placeholder="Tell us what you like about the app or how we can improve it..."></textarea>

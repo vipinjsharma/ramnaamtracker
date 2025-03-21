@@ -728,6 +728,7 @@ input:checked + .toggle-slider:before {
 
 .star-rating {
     display: flex;
+    flex-direction: row-reverse;
     justify-content: center;
     gap: 10px;
     margin: 20px 0;
