@@ -965,3 +965,151 @@ input:checked + .toggle-slider:before {
     font-size: 12px;
     color: var(--text-light-color);
 }
+
+/* Reminder Options Styles */
+.reminder-options h3 {
+    margin-top: 0;
+    color: var(--accent-color);
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.reminder-toggle-section {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: var(--card-bg-color);
+}
+
+.reminder-time-section {
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.reminder-time-section.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.time-selection {
+    margin-bottom: 20px;
+}
+
+.time-selection label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.time-selection input[type="time"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    margin-bottom: 12px;
+    background-color: var(--input-bg-color);
+    color: var(--text-color);
+}
+
+.time-presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.time-preset-btn {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    min-width: 80px;
+}
+
+.time-preset-btn:hover {
+    background-color: rgba(var(--accent-color-rgb), 0.1);
+}
+
+.time-preset-btn.active {
+    background-color: rgba(var(--accent-color-rgb), 0.2);
+    border-color: var(--accent-color);
+    font-weight: bold;
+}
+
+.reminder-days {
+    margin-top: 20px;
+}
+
+.reminder-days p {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.day-presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.day-preset-btn {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    min-width: 80px;
+}
+
+.day-preset-btn:hover {
+    background-color: rgba(var(--accent-color-rgb), 0.1);
+}
+
+.day-preset-btn.active {
+    background-color: rgba(var(--accent-color-rgb), 0.2);
+    border-color: var(--accent-color);
+    font-weight: bold;
+}
+
+.day-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.day-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.day-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.day-button.active {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: white;
+}

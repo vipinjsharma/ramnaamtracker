@@ -195,6 +195,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 reminderToggle.checked = savedData.settings.reminder;
             }
         }
+        
+        // Load reminder settings
+        const savedReminders = JSON.parse(localStorage.getItem('ramNaamReminders')) || {};
+        if (savedReminders) {
+            reminderEnabled = savedReminders.enabled !== undefined ? savedReminders.enabled : reminderEnabled;
+            reminderTime = savedReminders.time || reminderTime;
+            reminderDays = savedReminders.days || reminderDays;
+        }
     }
     
     function saveData() {
@@ -1194,11 +1202,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 
                 <div class="reminder-time-section ${!reminderEnabled ? 'disabled' : ''}">
-                    <label for="reminderTime">Reminder Time:</label>
-                    <input type="time" id="reminderTime" value="${reminderTime || '07:00'}" ${!reminderEnabled ? 'disabled' : ''}>
+                    <div class="time-selection">
+                        <label for="reminderTime">Reminder Time:</label>
+                        <input type="time" id="reminderTime" value="${reminderTime || '07:00'}" ${!reminderEnabled ? 'disabled' : ''}>
+                        
+                        <div class="time-presets">
+                            <button class="time-preset-btn" data-time="07:00" ${!reminderEnabled ? 'disabled' : ''}>Morning (7 AM)</button>
+                            <button class="time-preset-btn" data-time="12:00" ${!reminderEnabled ? 'disabled' : ''}>Noon (12 PM)</button>
+                            <button class="time-preset-btn" data-time="18:00" ${!reminderEnabled ? 'disabled' : ''}>Evening (6 PM)</button>
+                        </div>
+                    </div>
                     
                     <div class="reminder-days">
                         <p>Reminder Days:</p>
+                        <div class="day-presets">
+                            <button class="day-preset-btn" data-preset="weekdays" ${!reminderEnabled ? 'disabled' : ''}>Weekdays</button>
+                            <button class="day-preset-btn" data-preset="weekends" ${!reminderEnabled ? 'disabled' : ''}>Weekends</button>
+                            <button class="day-preset-btn" data-preset="everyday" ${!reminderEnabled ? 'disabled' : ''}>Every Day</button>
+                        </div>
                         <div class="day-buttons">
                             <button class="day-button ${reminderDays.includes('sun') ? 'active' : ''}" data-day="sun" ${!reminderEnabled ? 'disabled' : ''}>S</button>
                             <button class="day-button ${reminderDays.includes('mon') ? 'active' : ''}" data-day="mon" ${!reminderEnabled ? 'disabled' : ''}>M</button>
@@ -1246,6 +1267,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const reminderTimeSection = modal.querySelector('.reminder-time-section');
         const reminderTimeInput = modal.querySelector('#reminderTime');
         const dayButtons = modal.querySelectorAll('.day-button');
+        const timePresetButtons = modal.querySelectorAll('.time-preset-btn');
+        const dayPresetButtons = modal.querySelectorAll('.day-preset-btn');
         
         reminderEnableToggle.addEventListener('change', () => {
             const isEnabled = reminderEnableToggle.checked;
@@ -1254,10 +1277,81 @@ document.addEventListener('DOMContentLoaded', function() {
                 reminderTimeSection.classList.remove('disabled');
                 reminderTimeInput.disabled = false;
                 dayButtons.forEach(btn => btn.disabled = false);
+                timePresetButtons.forEach(btn => btn.disabled = false);
+                dayPresetButtons.forEach(btn => btn.disabled = false);
             } else {
                 reminderTimeSection.classList.add('disabled');
                 reminderTimeInput.disabled = true;
                 dayButtons.forEach(btn => btn.disabled = true);
+                timePresetButtons.forEach(btn => btn.disabled = true);
+                dayPresetButtons.forEach(btn => btn.disabled = true);
+            }
+        });
+        
+        // Time preset buttons functionality
+        timePresetButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update time input with preset value
+                reminderTimeInput.value = btn.dataset.time;
+                
+                // Highlight active preset
+                timePresetButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+            
+            // Set initial active state based on current time
+            if (reminderTime === btn.dataset.time) {
+                btn.classList.add('active');
+            }
+        });
+        
+        // Day preset buttons functionality
+        dayPresetButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const preset = btn.dataset.preset;
+                
+                // Clear current selections
+                dayButtons.forEach(b => b.classList.remove('active'));
+                
+                // Select days based on preset
+                if (preset === 'weekdays') {
+                    dayButtons.forEach(b => {
+                        if (['mon', 'tue', 'wed', 'thu', 'fri'].includes(b.dataset.day)) {
+                            b.classList.add('active');
+                        }
+                    });
+                } else if (preset === 'weekends') {
+                    dayButtons.forEach(b => {
+                        if (['sat', 'sun'].includes(b.dataset.day)) {
+                            b.classList.add('active');
+                        }
+                    });
+                } else if (preset === 'everyday') {
+                    dayButtons.forEach(b => b.classList.add('active'));
+                }
+                
+                // Highlight active preset
+                dayPresetButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+            
+            // Set initial active state based on current days
+            const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri'];
+            const weekends = ['sat', 'sun'];
+            const everyday = [...weekdays, ...weekends];
+            
+            if (btn.dataset.preset === 'weekdays' && 
+                weekdays.every(day => reminderDays.includes(day)) && 
+                reminderDays.length === weekdays.length) {
+                btn.classList.add('active');
+            } else if (btn.dataset.preset === 'weekends' && 
+                       weekends.every(day => reminderDays.includes(day)) && 
+                       reminderDays.length === weekends.length) {
+                btn.classList.add('active');
+            } else if (btn.dataset.preset === 'everyday' && 
+                       everyday.every(day => reminderDays.includes(day)) && 
+                       reminderDays.length === everyday.length) {
+                btn.classList.add('active');
             }
         });
         
@@ -1265,6 +1359,33 @@ document.addEventListener('DOMContentLoaded', function() {
         dayButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 btn.classList.toggle('active');
+                
+                // Remove highlight from presets when individual days are selected
+                dayPresetButtons.forEach(b => b.classList.remove('active'));
+                
+                // Check if current selection matches any preset
+                const activeDays = Array.from(modal.querySelectorAll('.day-button.active'))
+                    .map(b => b.dataset.day);
+                    
+                const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri'];
+                const weekends = ['sat', 'sun'];
+                const everyday = [...weekdays, ...weekends];
+                
+                dayPresetButtons.forEach(b => {
+                    if (b.dataset.preset === 'weekdays' && 
+                        weekdays.every(day => activeDays.includes(day)) && 
+                        activeDays.length === weekdays.length) {
+                        b.classList.add('active');
+                    } else if (b.dataset.preset === 'weekends' && 
+                              weekends.every(day => activeDays.includes(day)) && 
+                              activeDays.length === weekends.length) {
+                        b.classList.add('active');
+                    } else if (b.dataset.preset === 'everyday' && 
+                              everyday.every(day => activeDays.includes(day)) && 
+                              activeDays.length === everyday.length) {
+                        b.classList.add('active');
+                    }
+                });
             });
         });
         
