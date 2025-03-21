@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event Listeners
     backButton.addEventListener('click', handleBackNavigation);
     menuButton.addEventListener('click', toggleMenu);
-    profileButton.addEventListener('click', toggleProfile);
+    profileButton.addEventListener('click', navigateToProfile);
     
     // Navigation listeners
     startWritingBtn.addEventListener('click', navigateToWriting);
@@ -872,15 +872,34 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get current language translations
         const lang = translations[appLanguage] || translations.en;
         
-        // Apply translations to UI elements
-        document.querySelector('.home-title').textContent = lang.homeTitle;
-        document.querySelectorAll('.stat-card')[0].querySelector('.stat-label').textContent = lang.todayCount;
-        document.querySelectorAll('.stat-card')[1].querySelector('.stat-label').textContent = lang.totalCount;
-        document.querySelectorAll('.stat-card')[2].querySelector('.stat-label').textContent = lang.malaCount;
-        document.querySelectorAll('.stat-card')[3].querySelector('.stat-label').textContent = lang.streak;
-        document.querySelector('#draw-button').textContent = lang.drawBtn;
-        document.querySelector('#submit-button').textContent = lang.submitBtn;
-        document.querySelector('#clear-button').textContent = lang.clearBtn;
+        try {
+            // Apply translations to UI elements - check for elements first
+            const homeTitle = document.querySelector('.home-title');
+            if (homeTitle) homeTitle.textContent = lang.homeTitle;
+            
+            const statCards = document.querySelectorAll('.stat-card');
+            if (statCards && statCards.length >= 4) {
+                const todayCountLabel = statCards[0].querySelector('.stat-label');
+                const totalCountLabel = statCards[1].querySelector('.stat-label');
+                const malaCountLabel = statCards[2].querySelector('.stat-label');
+                const streakLabel = statCards[3].querySelector('.stat-label');
+                
+                if (todayCountLabel) todayCountLabel.textContent = lang.todayCount;
+                if (totalCountLabel) totalCountLabel.textContent = lang.totalCount;
+                if (malaCountLabel) malaCountLabel.textContent = lang.malaCount;
+                if (streakLabel) streakLabel.textContent = lang.streak;
+            }
+            
+            const drawButton = document.querySelector('#draw-button');
+            const submitButton = document.querySelector('#submit-button');
+            const clearButton = document.querySelector('#clear-button');
+            
+            if (drawButton) drawButton.textContent = lang.drawBtn;
+            if (submitButton) submitButton.textContent = lang.submitBtn;
+            if (clearButton) clearButton.textContent = lang.clearBtn;
+        } catch (e) {
+            console.warn('Error applying language changes:', e);
+        }
         
         // Alert user about the language change
         const message = appLanguage === 'en' ? 
