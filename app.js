@@ -95,7 +95,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Initialize counts
         if (savedData.lastDate === today) {
             todayCount = savedData.todayCount || 0;
-            todayMalaCount = savedData.todayMalaCount || 0;
+            // Calculate mala count based on today's count
+            todayMalaCount = Math.floor(todayCount / MALA_COUNT);
         } else {
             // Reset daily counts if it's a new day
             todayCount = 0;
