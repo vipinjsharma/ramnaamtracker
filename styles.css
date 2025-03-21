@@ -855,7 +855,21 @@ input:checked + .toggle-slider-large:before {
 .how-to-modal {
     max-width: 600px;
     max-height: 80vh;
+    position: relative;
+}
+
+.how-to-modal .close {
+    position: fixed;
+    top: 20px;
+    right: 25px;
+    z-index: 10;
+}
+
+.howto-guide {
+    max-height: 80vh;
     overflow-y: auto;
+    padding-right: 15px;
+    padding-top: 10px;
 }
 
 .howto-guide h3 {
