@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event Listeners
     backButton.addEventListener('click', handleBackNavigation);
     menuButton.addEventListener('click', toggleMenu);
-    profileButton.addEventListener('click', navigateToProfile);
+    profileButton.addEventListener('click', toggleProfile);
     startWritingBtn.addEventListener('click', navigateToWriting);
     clearBtn.addEventListener('click', clearCanvas);
     drawBtn.addEventListener('click', autoDraw);
@@ -283,6 +283,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function navigateToProfile() {
+        closeAllOverlays();
         navigateToPage(profilePage);
     }
     
@@ -298,9 +299,155 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    // Get menu elements
+    const menuOverlay = document.getElementById('menuOverlay');
+    const profileOverlay = document.getElementById('profileOverlay');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+    const closeProfileBtn = document.getElementById('closeProfileBtn');
+    const quickCurrentStreak = document.getElementById('quickCurrentStreak');
+    
+    // Menu navigation links
+    const menuWriteLink = document.getElementById('menuWriteLink');
+    const menuShareLink = document.getElementById('menuShareLink');
+    const menuRateLink = document.getElementById('menuRateLink');
+    const menuFeedbackLink = document.getElementById('menuFeedbackLink');
+    const menuHowToLink = document.getElementById('menuHowToLink');
+    const menuLanguageLink = document.getElementById('menuLanguageLink');
+    const menuTermsLink = document.getElementById('menuTermsLink');
+    const menuPrivacyLink = document.getElementById('menuPrivacyLink');
+    
+    // Profile navigation links
+    const profileViewLink = document.getElementById('profileViewLink');
+    const profileAccountLink = document.getElementById('profileAccountLink');
+    const profileLanguageLink = document.getElementById('profileLanguageLink');
+    const profileThemeLink = document.getElementById('profileThemeLink');
+    const profileReminderLink = document.getElementById('profileReminderLink');
+    const profileAdminLink = document.getElementById('profileAdminLink');
+    const profileLogoutLink = document.getElementById('profileLogoutLink');
+    
+    // Add event listeners for menu items
+    closeMenuBtn.addEventListener('click', closeMenuOverlay);
+    closeProfileBtn.addEventListener('click', closeProfileOverlay);
+    menuWriteLink.addEventListener('click', handleMenuWriteClick);
+    menuShareLink.addEventListener('click', handleMenuShareClick);
+    menuRateLink.addEventListener('click', handleMenuRateClick);
+    menuFeedbackLink.addEventListener('click', handleMenuFeedbackClick);
+    menuHowToLink.addEventListener('click', handleMenuHowToClick);
+    menuLanguageLink.addEventListener('click', handleMenuLanguageClick);
+    menuTermsLink.addEventListener('click', handleMenuTermsClick);
+    menuPrivacyLink.addEventListener('click', handleMenuPrivacyClick);
+    
+    // Add event listeners for profile items
+    profileViewLink.addEventListener('click', handleProfileViewClick);
+    profileAccountLink.addEventListener('click', handleProfileAccountClick);
+    profileLanguageLink.addEventListener('click', handleProfileLanguageClick);
+    profileThemeLink.addEventListener('click', handleProfileThemeClick);
+    profileReminderLink.addEventListener('click', handleProfileReminderClick);
+    profileAdminLink.addEventListener('click', handleProfileAdminClick);
+    profileLogoutLink.addEventListener('click', handleProfileLogoutClick);
+    
     function toggleMenu() {
-        // Implement menu functionality (e.g., dropdown menu)
-        alert('Menu functionality would be implemented here');
+        menuOverlay.classList.add('active');
+        menuOverlay.style.width = '100%';
+    }
+    
+    function toggleProfile() {
+        profileOverlay.classList.add('active');
+        profileOverlay.style.width = '100%';
+        // Update quick streak display
+        quickCurrentStreak.textContent = currentStreak;
+    }
+    
+    function closeMenuOverlay() {
+        menuOverlay.classList.remove('active');
+        menuOverlay.style.width = '0';
+    }
+    
+    function closeProfileOverlay() {
+        profileOverlay.classList.remove('active');
+        profileOverlay.style.width = '0';
+    }
+    
+    function closeAllOverlays() {
+        closeMenuOverlay();
+        closeProfileOverlay();
+    }
+    
+    // Menu link handlers
+    function handleMenuWriteClick() {
+        closeMenuOverlay();
+        navigateToWriting();
+    }
+    
+    function handleMenuShareClick() {
+        closeMenuOverlay();
+        shareStats();
+    }
+    
+    function handleMenuRateClick() {
+        closeMenuOverlay();
+        alert('Rate app functionality would be implemented here');
+    }
+    
+    function handleMenuFeedbackClick() {
+        closeMenuOverlay();
+        alert('Feedback submission functionality would be implemented here');
+    }
+    
+    function handleMenuHowToClick() {
+        closeMenuOverlay();
+        alert('How to use guide would be displayed here');
+    }
+    
+    function handleMenuLanguageClick() {
+        closeMenuOverlay();
+        alert('Language would be changed to Hindi');
+    }
+    
+    function handleMenuTermsClick() {
+        closeMenuOverlay();
+        alert('Terms and conditions would be displayed here');
+    }
+    
+    function handleMenuPrivacyClick() {
+        closeMenuOverlay();
+        alert('Privacy policy would be displayed here');
+    }
+    
+    // Profile link handlers
+    function handleProfileViewClick() {
+        closeProfileOverlay();
+        navigateToProfile();
+    }
+    
+    function handleProfileAccountClick() {
+        closeProfileOverlay();
+        alert('Account settings would be displayed here');
+    }
+    
+    function handleProfileLanguageClick() {
+        closeProfileOverlay();
+        alert('Language preferences would be displayed here');
+    }
+    
+    function handleProfileThemeClick() {
+        closeProfileOverlay();
+        alert('Theme preferences would be displayed here');
+    }
+    
+    function handleProfileReminderClick() {
+        closeProfileOverlay();
+        alert('Reminder settings would be displayed here');
+    }
+    
+    function handleProfileAdminClick() {
+        closeProfileOverlay();
+        navigateToAdmin();
+    }
+    
+    function handleProfileLogoutClick() {
+        closeProfileOverlay();
+        handleLogout();
     }
     
     function handleLogout() {
