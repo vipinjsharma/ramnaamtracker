@@ -150,7 +150,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Profile menu event listeners
     profileAccountLink.addEventListener('click', handleProfileAccountClick);
-    profileLanguageLink.addEventListener('click', handleProfileLanguageClick);
     profileThemeLink.addEventListener('click', handleProfileThemeClick);
     profileReminderLink.addEventListener('click', handleProfileReminderClick);
     profileLogoutLink.addEventListener('click', handleProfileLogoutClick);
@@ -1140,11 +1139,7 @@ document.addEventListener('DOMContentLoaded', function() {
         navigateToProfile();
     }
     
-    function handleProfileLanguageClick() {
-        closeProfileOverlay();
-        // Use the same language selection modal as the menu
-        handleMenuLanguageClick();
-    }
+    // Removed handleProfileLanguageClick since we now only have language in the main menu
     
     function handleProfileThemeClick() {
         closeProfileOverlay();
