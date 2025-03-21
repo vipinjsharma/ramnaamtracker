@@ -48,6 +48,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Constants
     const MALA_COUNT = 108; // Number of rams in one mala
+    
+    // App settings
+    let appLanguage = 'en'; // Default language (en = English, hi = Hindi)
+    let currentTheme = 'light'; // Default theme (light, dark, system)
+    let reminderEnabled = false; // Default reminder state
+    let reminderTime = '07:00'; // Default reminder time (7:00 AM)
+    let reminderDays = ['mon', 'tue', 'wed', 'thu', 'fri']; // Default reminder days (weekdays)
     const DAILY_GOAL = 108; // Default daily goal (1 mala)
     const MONTHLY_GOAL = 21; // Default monthly goal (21 malas)
     
@@ -69,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event Listeners
     backButton.addEventListener('click', handleBackNavigation);
     menuButton.addEventListener('click', toggleMenu);
-    profileButton.addEventListener('click', toggleProfile);
+    profileButton.addEventListener('click', navigateToProfile);
     startWritingBtn.addEventListener('click', navigateToWriting);
     clearBtn.addEventListener('click', clearCanvas);
     drawBtn.addEventListener('click', autoDraw);
@@ -177,9 +184,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (savedData.settings) {
             if (savedData.settings.language) {
                 languageSelect.value = savedData.settings.language;
+                appLanguage = savedData.settings.language;
             }
             if (savedData.settings.theme) {
                 themeSelect.value = savedData.settings.theme;
+                currentTheme = savedData.settings.theme;
                 applyTheme(savedData.settings.theme);
             }
             if (savedData.settings.reminder !== undefined) {
@@ -200,8 +209,8 @@ document.addEventListener('DOMContentLoaded', function() {
             currentStreak: currentStreak,
             longestStreak: longestStreak,
             settings: {
-                language: languageSelect.value,
-                theme: themeSelect.value,
+                language: appLanguage || languageSelect.value,
+                theme: currentTheme || themeSelect.value,
                 reminder: reminderToggle.checked
             }
         };
@@ -317,12 +326,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const menuPrivacyLink = document.getElementById('menuPrivacyLink');
     
     // Profile navigation links
-    const profileViewLink = document.getElementById('profileViewLink');
     const profileAccountLink = document.getElementById('profileAccountLink');
     const profileLanguageLink = document.getElementById('profileLanguageLink');
     const profileThemeLink = document.getElementById('profileThemeLink');
     const profileReminderLink = document.getElementById('profileReminderLink');
-    const profileAdminLink = document.getElementById('profileAdminLink');
     const profileLogoutLink = document.getElementById('profileLogoutLink');
     
     // Add event listeners for menu items
@@ -338,12 +345,10 @@ document.addEventListener('DOMContentLoaded', function() {
     menuPrivacyLink.addEventListener('click', handleMenuPrivacyClick);
     
     // Add event listeners for profile items
-    profileViewLink.addEventListener('click', handleProfileViewClick);
     profileAccountLink.addEventListener('click', handleProfileAccountClick);
     profileLanguageLink.addEventListener('click', handleProfileLanguageClick);
     profileThemeLink.addEventListener('click', handleProfileThemeClick);
     profileReminderLink.addEventListener('click', handleProfileReminderClick);
-    profileAdminLink.addEventListener('click', handleProfileAdminClick);
     profileLogoutLink.addEventListener('click', handleProfileLogoutClick);
     
     function toggleMenu() {
@@ -381,37 +386,666 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function handleMenuShareClick() {
         closeMenuOverlay();
-        shareStats();
+        
+        // Options for sharing
+        const shareOptions = `
+            <div class="share-options">
+                <h3>Share Your Progress</h3>
+                <p>Share your Ram Naam writing journey with others:</p>
+                <div class="share-buttons">
+                    <button id="shareWhatsapp" class="share-button whatsapp">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                        </svg>
+                        WhatsApp
+                    </button>
+                    <button id="shareSMS" class="share-button sms">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        SMS
+                    </button>
+                    <button id="shareEmail" class="share-button email">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        Email
+                    </button>
+                    <button id="shareCopy" class="share-button copy">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                        </svg>
+                        Copy Text
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        // Create a modal for share options
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                ${shareOptions}
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Show the modal
+        setTimeout(() => {
+            modal.style.display = 'flex';
+        }, 10);
+        
+        // Close button functionality
+        const closeBtn = modal.querySelector('.close');
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
+        
+        // Share text
+        const shareText = `I've written RAM naam ${totalCount} times (${Math.floor(totalCount / MALA_COUNT)} malas) with my current streak of ${currentStreak} days!`;
+        
+        // WhatsApp sharing
+        const whatsappBtn = modal.querySelector('#shareWhatsapp');
+        whatsappBtn.addEventListener('click', () => {
+            window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, '_blank');
+        });
+        
+        // SMS sharing
+        const smsBtn = modal.querySelector('#shareSMS');
+        smsBtn.addEventListener('click', () => {
+            window.open(`sms:?body=${encodeURIComponent(shareText)}`, '_blank');
+        });
+        
+        // Email sharing
+        const emailBtn = modal.querySelector('#shareEmail');
+        emailBtn.addEventListener('click', () => {
+            window.open(`mailto:?subject=My Ram Naam Writing Progress&body=${encodeURIComponent(shareText)}`, '_blank');
+        });
+        
+        // Copy text
+        const copyBtn = modal.querySelector('#shareCopy');
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(shareText).then(() => {
+                alert('Text copied to clipboard!');
+                modal.style.display = 'none';
+                setTimeout(() => {
+                    document.body.removeChild(modal);
+                }, 300);
+            }).catch(err => {
+                console.error('Could not copy text: ', err);
+                alert('Failed to copy text. Please try again.');
+            });
+        });
     }
     
     function handleMenuRateClick() {
         closeMenuOverlay();
-        alert('Rate app functionality would be implemented here');
+        
+        // Create rating form HTML
+        const ratingForm = `
+            <div class="rating-form">
+                <h3>Rate Ram Naam Writing App</h3>
+                <p>We value your feedback! Please rate your experience:</p>
+                
+                <div class="star-rating">
+                    <input type="radio" id="star5" name="rating" value="5">
+                    <label for="star5">★</label>
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4">★</label>
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3">★</label>
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2">★</label>
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label for="star1">★</label>
+                </div>
+                
+                <textarea placeholder="Tell us what you like about the app or how we can improve it..."></textarea>
+                
+                <button id="submitRating" class="primary-button">Submit Rating</button>
+            </div>
+        `;
+        
+        // Create a modal for the rating form
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                ${ratingForm}
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Show the modal
+        setTimeout(() => {
+            modal.style.display = 'flex';
+        }, 10);
+        
+        // Close button functionality
+        const closeBtn = modal.querySelector('.close');
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
+        
+        // Submit button functionality
+        const submitBtn = modal.querySelector('#submitRating');
+        submitBtn.addEventListener('click', () => {
+            const selectedRating = modal.querySelector('input[name="rating"]:checked');
+            const feedbackText = modal.querySelector('textarea').value;
+            
+            if (selectedRating) {
+                // In a real app, this would send the rating to a server
+                const rating = selectedRating.value;
+                alert(`Thank you for your ${rating}-star rating!`);
+                modal.style.display = 'none';
+                setTimeout(() => {
+                    document.body.removeChild(modal);
+                }, 300);
+            } else {
+                alert('Please select a rating before submitting.');
+            }
+        });
     }
     
     function handleMenuFeedbackClick() {
         closeMenuOverlay();
-        alert('Feedback submission functionality would be implemented here');
+        
+        // Create feedback form HTML
+        const feedbackForm = `
+            <div class="feedback-form">
+                <h3>Leave Feedback</h3>
+                <p>We'd love to hear your thoughts on how to improve the Ram Naam Writing app!</p>
+                
+                <textarea placeholder="Please share your feedback, suggestions, or report any issues you've encountered..."></textarea>
+                <input type="email" placeholder="Your email (optional)">
+                
+                <button id="submitFeedback" class="primary-button">Submit Feedback</button>
+            </div>
+        `;
+        
+        // Create a modal for the feedback form
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                ${feedbackForm}
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Show the modal
+        setTimeout(() => {
+            modal.style.display = 'flex';
+        }, 10);
+        
+        // Close button functionality
+        const closeBtn = modal.querySelector('.close');
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
+        
+        // Submit button functionality
+        const submitBtn = modal.querySelector('#submitFeedback');
+        submitBtn.addEventListener('click', () => {
+            const feedbackText = modal.querySelector('textarea').value;
+            const email = modal.querySelector('input[type="email"]').value;
+            
+            if (feedbackText.trim() === '') {
+                alert('Please enter your feedback before submitting.');
+                return;
+            }
+            
+            // In a real app, this would send the feedback to a server
+            alert('Thank you for your feedback! We appreciate your input.');
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
     }
     
     function handleMenuHowToClick() {
         closeMenuOverlay();
-        alert('How to use guide would be displayed here');
+        
+        // Create how-to guide HTML content
+        const howToGuide = `
+            <div class="howto-guide">
+                <h3>How to Use Ram Naam Writing App</h3>
+                
+                <section class="guide-section">
+                    <h4>1. Writing Ram Naam</h4>
+                    <p>You can write राम in two ways:</p>
+                    <ul>
+                        <li><strong>Manual Writing:</strong> Use your finger or stylus to write राम on the canvas.</li>
+                        <li><strong>Auto-Draw:</strong> Tap the "DRAW" button to automatically write राम.</li>
+                    </ul>
+                    <p>After writing, tap "Submit" to add to your count. The "Auto-Draw" option automatically submits after drawing.</p>
+                </section>
+                
+                <section class="guide-section">
+                    <h4>2. Tracking Progress</h4>
+                    <p>The app tracks:</p>
+                    <ul>
+                        <li><strong>Today's Count:</strong> Number of राम written today</li>
+                        <li><strong>Total Count:</strong> Total राम written since you started</li>
+                        <li><strong>Mala Count:</strong> 1 mala = 108 राम, showing your spiritual progress</li>
+                        <li><strong>Streak:</strong> Number of consecutive days you've written राम</li>
+                    </ul>
+                </section>
+                
+                <section class="guide-section">
+                    <h4>3. Profile and Settings</h4>
+                    <p>The profile button (top left) provides access to:</p>
+                    <ul>
+                        <li>Detailed statistics and streaks</li>
+                        <li>App preferences like theme and language</li>
+                        <li>Daily reminder settings</li>
+                    </ul>
+                </section>
+                
+                <section class="guide-section">
+                    <h4>4. Menu Features</h4>
+                    <p>The menu button (☰) provides access to:</p>
+                    <ul>
+                        <li>Ram Naam Writing page</li>
+                        <li>Share your progress with friends</li>
+                        <li>Rate the app</li>
+                        <li>Leave feedback</li>
+                        <li>Language options</li>
+                        <li>Terms and Privacy Policy</li>
+                    </ul>
+                </section>
+                
+                <section class="guide-section">
+                    <h4>5. Benefits of Ram Naam Writing</h4>
+                    <p>Regular writing of राम helps with:</p>
+                    <ul>
+                        <li>Clearing karmas</li>
+                        <li>Releasing suppressed emotions</li>
+                        <li>Controlling bad habits</li>
+                        <li>Providing spiritual connection and peace</li>
+                    </ul>
+                </section>
+                
+                <button id="closeHowTo" class="primary-button">Got It!</button>
+            </div>
+        `;
+        
+        // Create a modal for the how-to guide
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content how-to-modal">
+                <span class="close">&times;</span>
+                ${howToGuide}
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Show the modal
+        setTimeout(() => {
+            modal.style.display = 'flex';
+        }, 10);
+        
+        // Close button functionality
+        const closeBtn = modal.querySelector('.close');
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
+        
+        // "Got It" button functionality
+        const gotItBtn = modal.querySelector('#closeHowTo');
+        gotItBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
     }
     
     function handleMenuLanguageClick() {
         closeMenuOverlay();
-        alert('Language would be changed to Hindi');
+        
+        // Create language selection modal
+        const languageOptions = `
+            <div class="language-options">
+                <h3>Select Language / भाषा चुनें</h3>
+                <p>Choose your preferred language for the app interface:</p>
+                
+                <div class="language-buttons">
+                    <button id="langEnglish" class="language-button ${appLanguage === 'en' ? 'active' : ''}">
+                        <span class="lang-icon">🇬🇧</span>
+                        English
+                    </button>
+                    <button id="langHindi" class="language-button ${appLanguage === 'hi' ? 'active' : ''}">
+                        <span class="lang-icon">🇮🇳</span>
+                        हिंदी (Hindi)
+                    </button>
+                </div>
+                
+                <p class="language-note">Note: Changing language will refresh the app interface.</p>
+            </div>
+        `;
+        
+        // Create a modal for language selection
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                ${languageOptions}
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Show the modal
+        setTimeout(() => {
+            modal.style.display = 'flex';
+        }, 10);
+        
+        // Close button functionality
+        const closeBtn = modal.querySelector('.close');
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
+        
+        // Language selection functionality
+        const englishBtn = modal.querySelector('#langEnglish');
+        const hindiBtn = modal.querySelector('#langHindi');
+        
+        englishBtn.addEventListener('click', () => {
+            if (appLanguage !== 'en') {
+                appLanguage = 'en';
+                saveData();
+                applyLanguage();
+                modal.style.display = 'none';
+                setTimeout(() => {
+                    document.body.removeChild(modal);
+                }, 300);
+            }
+        });
+        
+        hindiBtn.addEventListener('click', () => {
+            if (appLanguage !== 'hi') {
+                appLanguage = 'hi';
+                saveData();
+                applyLanguage();
+                modal.style.display = 'none';
+                setTimeout(() => {
+                    document.body.removeChild(modal);
+                }, 300);
+            }
+        });
+    }
+    
+    function applyLanguage() {
+        // Update UI text based on selected language
+        const translations = {
+            en: {
+                homeTitle: 'RAM Naam Writing',
+                todayCount: 'Today\'s Count',
+                totalCount: 'Total Count',
+                malaCount: 'Mala Count',
+                streak: 'Current Streak',
+                drawBtn: 'DRAW',
+                submitBtn: 'SUBMIT',
+                clearBtn: 'CLEAR',
+                // Add more translations as needed
+            },
+            hi: {
+                homeTitle: 'राम नाम लेखन',
+                todayCount: 'आज की संख्या',
+                totalCount: 'कुल संख्या',
+                malaCount: 'माला संख्या',
+                streak: 'वर्तमान स्ट्रीक',
+                drawBtn: 'स्वतः लिखें',
+                submitBtn: 'जमा करें',
+                clearBtn: 'साफ़ करें',
+                // Add more translations as needed
+            }
+        };
+        
+        // Get current language translations
+        const lang = translations[appLanguage] || translations.en;
+        
+        // Apply translations to UI elements
+        document.querySelector('.home-title').textContent = lang.homeTitle;
+        document.querySelectorAll('.stat-card')[0].querySelector('.stat-label').textContent = lang.todayCount;
+        document.querySelectorAll('.stat-card')[1].querySelector('.stat-label').textContent = lang.totalCount;
+        document.querySelectorAll('.stat-card')[2].querySelector('.stat-label').textContent = lang.malaCount;
+        document.querySelectorAll('.stat-card')[3].querySelector('.stat-label').textContent = lang.streak;
+        document.querySelector('#draw-button').textContent = lang.drawBtn;
+        document.querySelector('#submit-button').textContent = lang.submitBtn;
+        document.querySelector('#clear-button').textContent = lang.clearBtn;
+        
+        // Alert user about the language change
+        const message = appLanguage === 'en' ? 
+            'Language changed to English!' : 
+            'भाषा हिंदी में बदल दी गई है!';
+        
+        // Show toast notification instead of alert
+        showToast(message);
+    }
+    
+    function showToast(message, duration = 3000) {
+        // Create toast element
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = message;
+        
+        // Add toast to the document
+        document.body.appendChild(toast);
+        
+        // Show the toast
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 10);
+        
+        // Hide and remove the toast after the specified duration
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 300);
+        }, duration);
     }
     
     function handleMenuTermsClick() {
         closeMenuOverlay();
-        alert('Terms and conditions would be displayed here');
+        
+        // Terms and Conditions content
+        const termsContent = `
+            <div class="terms-content">
+                <h3>Terms and Conditions</h3>
+                
+                <section>
+                    <h4>1. Acceptance of Terms</h4>
+                    <p>By accessing or using the Ram Naam Writing app, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, please do not use the application.</p>
+                </section>
+                
+                <section>
+                    <h4>2. Use of the Application</h4>
+                    <p>The Ram Naam Writing app is designed for spiritual and personal use. You may use this application for personal, non-commercial purposes only. Any use of the app or its content for commercial purposes is strictly prohibited without prior written consent.</p>
+                </section>
+                
+                <section>
+                    <h4>3. User Accounts</h4>
+                    <p>When you create an account with us, you guarantee that the information you provide is accurate, complete, and current at all times. You are responsible for maintaining the confidentiality of your account and password.</p>
+                </section>
+                
+                <section>
+                    <h4>4. Intellectual Property</h4>
+                    <p>The app and its original content, features, and functionality are owned by Ram Naam Writing and are protected by international copyright, trademark, and other intellectual property laws.</p>
+                </section>
+                
+                <section>
+                    <h4>5. Limitations</h4>
+                    <p>In no event shall Ram Naam Writing be liable for any damages arising out of the use or inability to use the application. The app is provided on an "as is" basis without warranties of any kind.</p>
+                </section>
+                
+                <section>
+                    <h4>6. Governing Law</h4>
+                    <p>These Terms shall be governed by and construed in accordance with the laws of India, without regard to its conflict of law provisions.</p>
+                </section>
+                
+                <section>
+                    <h4>7. Changes to Terms</h4>
+                    <p>We reserve the right to modify these terms at any time. We will notify users of any changes by updating the date at the top of this page.</p>
+                </section>
+                
+                <button id="acceptTerms" class="primary-button">I Accept</button>
+            </div>
+        `;
+        
+        // Create a modal for the terms
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                ${termsContent}
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Show the modal
+        setTimeout(() => {
+            modal.style.display = 'flex';
+        }, 10);
+        
+        // Close button functionality
+        const closeBtn = modal.querySelector('.close');
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
+        
+        // Accept button functionality
+        const acceptBtn = modal.querySelector('#acceptTerms');
+        acceptBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
     }
     
     function handleMenuPrivacyClick() {
         closeMenuOverlay();
-        alert('Privacy policy would be displayed here');
+        
+        // Privacy Policy content
+        const privacyContent = `
+            <div class="privacy-content">
+                <h3>Privacy Policy</h3>
+                
+                <section>
+                    <h4>1. Information We Collect</h4>
+                    <p>The Ram Naam Writing app collects minimal personal information. We only store the information necessary for the functionality of the app, such as your writing statistics and app preferences. All data is stored locally on your device unless you choose to sync it with our servers.</p>
+                </section>
+                
+                <section>
+                    <h4>2. Use of Information</h4>
+                    <p>The information we collect is used to provide and improve the service. We use your data to:</p>
+                    <ul>
+                        <li>Keep track of your writing progress</li>
+                        <li>Maintain your user preferences</li>
+                        <li>Generate statistics about your usage</li>
+                        <li>Improve the app based on anonymous usage data</li>
+                    </ul>
+                </section>
+                
+                <section>
+                    <h4>3. Data Storage</h4>
+                    <p>By default, all data is stored locally on your device. If you opt to create an account, your data will be securely backed up to our servers to enable cross-device synchronization. We employ industry-standard encryption to protect your data during transmission and storage.</p>
+                </section>
+                
+                <section>
+                    <h4>4. Data Sharing</h4>
+                    <p>We do not sell, trade, or otherwise transfer your personally identifiable information to outside parties. This does not include trusted third parties who assist us in operating our service, so long as those parties agree to keep this information confidential.</p>
+                </section>
+                
+                <section>
+                    <h4>5. Analytics</h4>
+                    <p>We may use anonymous usage data for analytical purposes to improve the application. This data does not contain personally identifiable information.</p>
+                </section>
+                
+                <section>
+                    <h4>6. Your Rights</h4>
+                    <p>You have the right to access, update, or delete your personal information. You can do this directly through the app in your account settings, or by contacting us.</p>
+                </section>
+                
+                <section>
+                    <h4>7. Policy Changes</h4>
+                    <p>We may update this privacy policy from time to time. We will notify you of any changes by posting the new privacy policy on this page and updating the effective date.</p>
+                </section>
+                
+                <button id="acceptPrivacy" class="primary-button">I Understand</button>
+            </div>
+        `;
+        
+        // Create a modal for the privacy policy
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                ${privacyContent}
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Show the modal
+        setTimeout(() => {
+            modal.style.display = 'flex';
+        }, 10);
+        
+        // Close button functionality
+        const closeBtn = modal.querySelector('.close');
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
+        
+        // Accept button functionality
+        const acceptBtn = modal.querySelector('#acceptPrivacy');
+        acceptBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
     }
     
     // Profile link handlers
@@ -427,17 +1061,248 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function handleProfileLanguageClick() {
         closeProfileOverlay();
-        alert('Language preferences would be displayed here');
+        // Use the same language selection modal as the menu
+        handleMenuLanguageClick();
     }
     
     function handleProfileThemeClick() {
         closeProfileOverlay();
-        alert('Theme preferences would be displayed here');
+        
+        // Create theme selection modal
+        const themeOptions = `
+            <div class="theme-options">
+                <h3>Select Theme</h3>
+                <p>Choose your preferred theme for the app:</p>
+                
+                <div class="theme-buttons">
+                    <button id="themeLight" class="theme-button ${currentTheme === 'light' ? 'active' : ''}">
+                        <span class="theme-icon">☀️</span>
+                        <div class="theme-details">
+                            <span class="theme-name">Light Theme</span>
+                            <span class="theme-desc">Default light appearance</span>
+                        </div>
+                    </button>
+                    <button id="themeDark" class="theme-button ${currentTheme === 'dark' ? 'active' : ''}">
+                        <span class="theme-icon">🌙</span>
+                        <div class="theme-details">
+                            <span class="theme-name">Dark Theme</span>
+                            <span class="theme-desc">Easier on eyes in low light</span>
+                        </div>
+                    </button>
+                    <button id="themeSystem" class="theme-button ${currentTheme === 'system' ? 'active' : ''}">
+                        <span class="theme-icon">⚙️</span>
+                        <div class="theme-details">
+                            <span class="theme-name">System Theme</span>
+                            <span class="theme-desc">Follows your device settings</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        // Create a modal for theme selection
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                ${themeOptions}
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Show the modal
+        setTimeout(() => {
+            modal.style.display = 'flex';
+        }, 10);
+        
+        // Close button functionality
+        const closeBtn = modal.querySelector('.close');
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
+        
+        // Theme selection functionality
+        const lightBtn = modal.querySelector('#themeLight');
+        const darkBtn = modal.querySelector('#themeDark');
+        const systemBtn = modal.querySelector('#themeSystem');
+        
+        lightBtn.addEventListener('click', () => {
+            setTheme('light');
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
+        
+        darkBtn.addEventListener('click', () => {
+            setTheme('dark');
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
+        
+        systemBtn.addEventListener('click', () => {
+            setTheme('system');
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
+    }
+    
+    function setTheme(theme) {
+        currentTheme = theme;
+        
+        if (theme === 'system') {
+            // Check system preference
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            applyTheme(prefersDark ? 'dark' : 'light');
+        } else {
+            applyTheme(theme);
+        }
+        
+        // Save the preference
+        saveData();
+        
+        // Show feedback
+        showToast(`Theme changed to ${theme.charAt(0).toUpperCase() + theme.slice(1)}`);
     }
     
     function handleProfileReminderClick() {
         closeProfileOverlay();
-        alert('Reminder settings would be displayed here');
+        
+        // Create reminder settings modal
+        const reminderOptions = `
+            <div class="reminder-options">
+                <h3>Daily Reminder Settings</h3>
+                <p>Get notified daily to write Ram Naam and keep your streak going!</p>
+                
+                <div class="reminder-toggle-section">
+                    <label class="toggle-container">
+                        <span class="toggle-label">Enable Daily Reminder</span>
+                        <div class="toggle-switch-large">
+                            <input type="checkbox" id="reminderEnable" ${reminderEnabled ? 'checked' : ''}>
+                            <span class="toggle-slider-large"></span>
+                        </div>
+                    </label>
+                </div>
+                
+                <div class="reminder-time-section ${!reminderEnabled ? 'disabled' : ''}">
+                    <label for="reminderTime">Reminder Time:</label>
+                    <input type="time" id="reminderTime" value="${reminderTime || '07:00'}" ${!reminderEnabled ? 'disabled' : ''}>
+                    
+                    <div class="reminder-days">
+                        <p>Reminder Days:</p>
+                        <div class="day-buttons">
+                            <button class="day-button ${reminderDays.includes('sun') ? 'active' : ''}" data-day="sun" ${!reminderEnabled ? 'disabled' : ''}>S</button>
+                            <button class="day-button ${reminderDays.includes('mon') ? 'active' : ''}" data-day="mon" ${!reminderEnabled ? 'disabled' : ''}>M</button>
+                            <button class="day-button ${reminderDays.includes('tue') ? 'active' : ''}" data-day="tue" ${!reminderEnabled ? 'disabled' : ''}>T</button>
+                            <button class="day-button ${reminderDays.includes('wed') ? 'active' : ''}" data-day="wed" ${!reminderEnabled ? 'disabled' : ''}>W</button>
+                            <button class="day-button ${reminderDays.includes('thu') ? 'active' : ''}" data-day="thu" ${!reminderEnabled ? 'disabled' : ''}>T</button>
+                            <button class="day-button ${reminderDays.includes('fri') ? 'active' : ''}" data-day="fri" ${!reminderEnabled ? 'disabled' : ''}>F</button>
+                            <button class="day-button ${reminderDays.includes('sat') ? 'active' : ''}" data-day="sat" ${!reminderEnabled ? 'disabled' : ''}>S</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="saveReminder" class="primary-button">Save Settings</button>
+            </div>
+        `;
+        
+        // Create a modal for the reminder settings
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                ${reminderOptions}
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Show the modal
+        setTimeout(() => {
+            modal.style.display = 'flex';
+        }, 10);
+        
+        // Close button functionality
+        const closeBtn = modal.querySelector('.close');
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
+        
+        // Toggle reminder enable/disable
+        const reminderEnableToggle = modal.querySelector('#reminderEnable');
+        const reminderTimeSection = modal.querySelector('.reminder-time-section');
+        const reminderTimeInput = modal.querySelector('#reminderTime');
+        const dayButtons = modal.querySelectorAll('.day-button');
+        
+        reminderEnableToggle.addEventListener('change', () => {
+            const isEnabled = reminderEnableToggle.checked;
+            
+            if (isEnabled) {
+                reminderTimeSection.classList.remove('disabled');
+                reminderTimeInput.disabled = false;
+                dayButtons.forEach(btn => btn.disabled = false);
+            } else {
+                reminderTimeSection.classList.add('disabled');
+                reminderTimeInput.disabled = true;
+                dayButtons.forEach(btn => btn.disabled = true);
+            }
+        });
+        
+        // Day button functionality
+        dayButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+            });
+        });
+        
+        // Save button functionality
+        const saveBtn = modal.querySelector('#saveReminder');
+        saveBtn.addEventListener('click', () => {
+            // Get settings values
+            reminderEnabled = reminderEnableToggle.checked;
+            reminderTime = reminderTimeInput.value;
+            
+            // Get selected days
+            reminderDays = [];
+            modal.querySelectorAll('.day-button.active').forEach(btn => {
+                reminderDays.push(btn.dataset.day);
+            });
+            
+            // Save settings
+            saveReminderSettings();
+            
+            // Provide feedback and close modal
+            showToast('Reminder settings saved');
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
+    }
+    
+    function saveReminderSettings() {
+        // In a real app, this would request notification permission if needed
+        // and schedule the notifications based on the settings
+        const settings = {
+            enabled: reminderEnabled,
+            time: reminderTime,
+            days: reminderDays
+        };
+        
+        localStorage.setItem('ramNaamReminders', JSON.stringify(settings));
     }
     
     function handleProfileAdminClick() {
