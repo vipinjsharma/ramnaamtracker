@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ram Naam Writing</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <button id="backButton" class="back-button">&larr;</button>
+            <h1>Ram Naam Writing</h1>
+            <button id="menuButton" class="menu-button">☰</button>
+        </header>
+
+        <div id="homePage" class="page active">
+            <div class="content">
+                <h2>Hi, Ram Bhakt</h2>
+                <h3>Benefits of writing Ram naam:</h3>
+                <ul class="benefits-list">
+                    <li>
+                        <h4>Clearing karmas</h4>
+                        <p>Ram is the beej mantra of the Manipur chakra, which is the psychic center of the human body where karmas are stored. Writing Ram's name can help clear these karmas.</p>
+                    </li>
+                    <li>
+                        <h4>Releasing emotions</h4>
+                        <p>Writing Ram's name can help release suppressed emotions, negative samskaras, and unresolved issues from the past.</p>
+                    </li>
+                    <li>
+                        <h4>Controlling bad habits</h4>
+                        <p>Writing Ram's name can help control bad habits through sense withdrawal.</p>
+                    </li>
+                    <li>
+                        <h4>Providing salvation</h4>
+                        <p>Ram's name is said to provide salvation from materialistic attachments and detach humans from the senses that attract lust and hate. It can also give peace to the soul and cut karmic bonds before moving on to the next body or place.</p>
+                    </li>
+                </ul>
+
+                <button id="startWritingBtn" class="primary-button">Start RAM naam writing..</button>
+
+                <div class="stats-section">
+                    <h3>Statistics of your writing Ram naam:</h3>
+                    <div class="stats-actions">
+                        <button id="shareBtn" class="icon-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="18" cy="5" r="3"></circle>
+                                <circle cx="6" cy="12" r="3"></circle>
+                                <circle cx="18" cy="19" r="3"></circle>
+                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                            </svg>
+                        </button>
+                        <button id="downloadBtn" class="icon-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    <p>Today's count: <span id="homeTodayCount">0</span></p>
+                    <p>Today's mala count: <span id="homeTodayMalaCount">0</span></p>
+                    <p>Total count: <span id="homeTotalCount">0</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="writingPage" class="page">
+            <div class="canvas-container">
+                <canvas id="drawingCanvas"></canvas>
+                <button id="clearBtn" class="clear-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                    Clear
+                </button>
+            </div>
+            
+            <div class="writing-instructions">
+                <p>Write <span class="hindi-text">राम</span> in above space or tap below draw button to automatically draw on board and submit to increase count.</p>
+            </div>
+
+            <div class="writing-stats">
+                <p>Today's count: <span id="writingTodayCount">0</span></p>
+                <p>Today's mala count: <span id="writingTodayMalaCount">0</span></p>
+            </div>
+
+            <div class="action-buttons">
+                <button id="drawBtn" class="primary-button">DRAW</button>
+                <button id="submitBtn" class="primary-button">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
