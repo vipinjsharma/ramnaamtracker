@@ -11,7 +11,15 @@
         <header>
             <button id="backButton" class="back-button">&larr;</button>
             <h1>Ram Naam Writing</h1>
-            <button id="menuButton" class="menu-button">☰</button>
+            <div class="header-buttons">
+                <button id="profileButton" class="profile-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </button>
+                <button id="menuButton" class="menu-button">☰</button>
+            </div>
         </header>
 
         <div id="homePage" class="page active">
@@ -90,6 +98,180 @@
             <div class="action-buttons">
                 <button id="drawBtn" class="primary-button">DRAW</button>
                 <button id="submitBtn" class="primary-button">Submit</button>
+            </div>
+        </div>
+
+        <!-- Profile Page -->
+        <div id="profilePage" class="page">
+            <div class="content">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <img src="https://ui-avatars.com/api/?name=Ram+Bhakt&background=FF7817&color=fff" alt="User Avatar">
+                    </div>
+                    <div class="profile-info">
+                        <h2>Ram Bhakt</h2>
+                        <p>Member since: March 2025</p>
+                    </div>
+                </div>
+                
+                <div class="profile-stats">
+                    <div class="stat-card">
+                        <h3>Total Count</h3>
+                        <p id="profileTotalCount">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Malas</h3>
+                        <p id="profileTotalMalas">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Current Streak</h3>
+                        <p id="profileCurrentStreak">0 days</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Longest Streak</h3>
+                        <p id="profileLongestStreak">0 days</p>
+                    </div>
+                </div>
+                
+                <div class="profile-section">
+                    <h3>Personal Goals</h3>
+                    <div class="goal-progress">
+                        <p>Daily Goal: 108 Rams</p>
+                        <div class="progress-bar">
+                            <div id="dailyGoalProgress" class="progress-fill" style="width: 0%"></div>
+                        </div>
+                        <p>Monthly Goal: 21 Malas</p>
+                        <div class="progress-bar">
+                            <div id="monthlyGoalProgress" class="progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-section">
+                    <h3>Settings</h3>
+                    <div class="settings-option">
+                        <label for="languageSelect">Language:</label>
+                        <select id="languageSelect" class="settings-select">
+                            <option value="en">English</option>
+                            <option value="hi">Hindi</option>
+                        </select>
+                    </div>
+                    <div class="settings-option">
+                        <label for="reminderToggle">Daily Reminder:</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="reminderToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-option">
+                        <label for="themeSelect">Theme:</label>
+                        <select id="themeSelect" class="settings-select">
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="profile-actions">
+                    <button id="adminButton" class="secondary-button">Admin Panel</button>
+                    <button id="logoutButton" class="secondary-button">Logout</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Admin Page -->
+        <div id="adminPage" class="page">
+            <div class="content">
+                <h2>Admin Panel</h2>
+                
+                <div class="admin-section">
+                    <h3>User Management</h3>
+                    <div class="user-list">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Total Count</th>
+                                    <th>Last Active</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Ram Bhakt</td>
+                                    <td>1,256</td>
+                                    <td>Today</td>
+                                    <td>
+                                        <button class="table-action-btn">Edit</button>
+                                        <button class="table-action-btn">View</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Krishna Das</td>
+                                    <td>24,108</td>
+                                    <td>Yesterday</td>
+                                    <td>
+                                        <button class="table-action-btn">Edit</button>
+                                        <button class="table-action-btn">View</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Radha Devi</td>
+                                    <td>5,832</td>
+                                    <td>3 days ago</td>
+                                    <td>
+                                        <button class="table-action-btn">Edit</button>
+                                        <button class="table-action-btn">View</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="admin-section">
+                    <h3>App Settings</h3>
+                    <div class="settings-option">
+                        <label for="appTitleInput">App Title:</label>
+                        <input type="text" id="appTitleInput" value="Ram Naam Writing" class="admin-input">
+                    </div>
+                    <div class="settings-option">
+                        <label for="malaCountInput">RAM count per mala:</label>
+                        <input type="number" id="malaCountInput" value="108" class="admin-input">
+                    </div>
+                    <div class="settings-option">
+                        <label for="goalSettingsInput">Default Daily Goal:</label>
+                        <input type="number" id="goalSettingsInput" value="108" class="admin-input">
+                    </div>
+                    <button id="saveSettingsBtn" class="primary-button">Save Settings</button>
+                </div>
+                
+                <div class="admin-section">
+                    <h3>Analytics Overview</h3>
+                    <div class="analytics-cards">
+                        <div class="stat-card">
+                            <h4>Total Users</h4>
+                            <p>24</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Active Today</h4>
+                            <p>12</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Total RAM Written</h4>
+                            <p>108,432</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Total Malas</h4>
+                            <p>1,004</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="admin-actions">
+                    <button id="exportDataBtn" class="primary-button">Export All Data</button>
+                    <button id="backupDataBtn" class="primary-button">Backup Database</button>
+                </div>
             </div>
         </div>
     </div>

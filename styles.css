@@ -8,6 +8,10 @@
     --button-color: #f5b642;
     --button-hover: #e67e22;
     --clear-button-color: #e74c3c;
+    --card-bg-color: #ffffff;
+    --border-color: #ddd;
+    --table-header-bg: #f5b642;
+    --table-stripe-bg: #f9f1dc;
 }
 
 * {
@@ -46,6 +50,20 @@ header {
 header h1 {
     font-size: 24px;
     margin: 0;
+}
+
+.header-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-button, .menu-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
 }
 
 .page {
@@ -147,6 +165,221 @@ header h1 {
     gap: 15px;
 }
 
+/* Profile Page */
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 15px;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-info h2 {
+    margin-bottom: 5px;
+}
+
+.profile-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background-color: var(--card-bg-color);
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card h3, .stat-card h4 {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: var(--accent-color);
+}
+
+.stat-card p {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.profile-section {
+    margin-bottom: 25px;
+}
+
+.profile-section h3 {
+    margin-bottom: 15px;
+    color: var(--accent-color);
+}
+
+.goal-progress {
+    margin-bottom: 20px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 12px;
+    background-color: var(--border-color);
+    border-radius: 6px;
+    margin: 8px 0 15px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: var(--accent-color);
+}
+
+.settings-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.settings-select {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg-color);
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+    background-color: var(--accent-color);
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(26px);
+}
+
+.profile-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* Admin Page */
+.admin-section {
+    background-color: var(--card-bg-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.admin-section h3 {
+    margin-bottom: 15px;
+    color: var(--accent-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.admin-table th, .admin-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.admin-table th {
+    background-color: var(--table-header-bg);
+    color: white;
+}
+
+.admin-table tr:nth-child(even) {
+    background-color: var(--table-stripe-bg);
+}
+
+.table-action-btn {
+    padding: 5px 10px;
+    margin-right: 5px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.admin-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+.analytics-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
 /* Buttons */
 .primary-button {
     background-color: var(--button-color);
@@ -166,7 +399,25 @@ header h1 {
     background-color: var(--button-hover);
 }
 
-.back-button, .menu-button {
+.secondary-button {
+    background-color: transparent;
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s;
+    flex: 1;
+}
+
+.secondary-button:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.back-button {
     background: none;
     border: none;
     font-size: 24px;
@@ -186,6 +437,29 @@ header h1 {
     .action-buttons {
         flex-direction: column;
     }
+    
+    .profile-stats, .analytics-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .profile-avatar {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    .admin-table {
+        font-size: 14px;
+    }
+    
+    .table-action-btn {
+        padding: 4px 8px;
+        font-size: 10px;
+    }
 }
 
 /* Dark mode */
@@ -195,6 +469,10 @@ header h1 {
         --text-color: #f0f0f0;
         --button-color: #e67e22;
         --button-hover: #d35400;
+        --card-bg-color: #3c3c3c;
+        --border-color: #555;
+        --table-header-bg: #e67e22;
+        --table-stripe-bg: #3c3c3c;
     }
     
     .canvas-container {

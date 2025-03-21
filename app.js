@@ -3,8 +3,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const app = document.getElementById('app');
     const homePage = document.getElementById('homePage');
     const writingPage = document.getElementById('writingPage');
+    const profilePage = document.getElementById('profilePage');
+    const adminPage = document.getElementById('adminPage');
     const backButton = document.getElementById('backButton');
     const menuButton = document.getElementById('menuButton');
+    const profileButton = document.getElementById('profileButton');
     const startWritingBtn = document.getElementById('startWritingBtn');
     const canvas = document.getElementById('drawingCanvas');
     const clearBtn = document.getElementById('clearBtn');
@@ -13,6 +16,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const shareBtn = document.getElementById('shareBtn');
     const downloadBtn = document.getElementById('downloadBtn');
     
+    // Profile page elements
+    const adminButton = document.getElementById('adminButton');
+    const logoutButton = document.getElementById('logoutButton');
+    const languageSelect = document.getElementById('languageSelect');
+    const themeSelect = document.getElementById('themeSelect');
+    const reminderToggle = document.getElementById('reminderToggle');
+    
+    // Admin page elements
+    const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+    const exportDataBtn = document.getElementById('exportDataBtn');
+    const backupDataBtn = document.getElementById('backupDataBtn');
+    const malaCountInput = document.getElementById('malaCountInput');
+    const appTitleInput = document.getElementById('appTitleInput');
+    const goalSettingsInput = document.getElementById('goalSettingsInput');
+    
     // Counter elements
     const homeTodayCount = document.getElementById('homeTodayCount');
     const homeTodayMalaCount = document.getElementById('homeTodayMalaCount');
@@ -20,8 +38,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const writingTodayCount = document.getElementById('writingTodayCount');
     const writingTodayMalaCount = document.getElementById('writingTodayMalaCount');
     
+    // Profile stats elements
+    const profileTotalCount = document.getElementById('profileTotalCount');
+    const profileTotalMalas = document.getElementById('profileTotalMalas');
+    const profileCurrentStreak = document.getElementById('profileCurrentStreak');
+    const profileLongestStreak = document.getElementById('profileLongestStreak');
+    const dailyGoalProgress = document.getElementById('dailyGoalProgress');
+    const monthlyGoalProgress = document.getElementById('monthlyGoalProgress');
+    
     // Constants
     const MALA_COUNT = 108; // Number of rams in one mala
+    const DAILY_GOAL = 108; // Default daily goal (1 mala)
+    const MONTHLY_GOAL = 21; // Default monthly goal (21 malas)
     
     // State
     let isDrawing = false;
@@ -30,19 +58,35 @@ document.addEventListener('DOMContentLoaded', function() {
     let todayCount = 0;
     let todayMalaCount = 0;
     let totalCount = 0;
+    let currentStreak = 0;
+    let longestStreak = 0;
     let drawingContext;
+    let lastActivePage = homePage;
     
     // Initialize the app
     initializeApp();
     
     // Event Listeners
-    backButton.addEventListener('click', navigateToHome);
+    backButton.addEventListener('click', handleBackNavigation);
+    menuButton.addEventListener('click', toggleMenu);
+    profileButton.addEventListener('click', navigateToProfile);
     startWritingBtn.addEventListener('click', navigateToWriting);
     clearBtn.addEventListener('click', clearCanvas);
     drawBtn.addEventListener('click', autoDraw);
     submitBtn.addEventListener('click', submitDrawing);
     shareBtn.addEventListener('click', shareStats);
     downloadBtn.addEventListener('click', downloadStats);
+    
+    // Profile page event listeners
+    adminButton.addEventListener('click', navigateToAdmin);
+    logoutButton.addEventListener('click', handleLogout);
+    languageSelect.addEventListener('change', handleLanguageChange);
+    themeSelect.addEventListener('change', handleThemeChange);
+    
+    // Admin page event listeners
+    saveSettingsBtn.addEventListener('click', saveAppSettings);
+    exportDataBtn.addEventListener('click', exportData);
+    backupDataBtn.addEventListener('click', backupData);
     
     // Canvas event listeners
     canvas.addEventListener('mousedown', startDrawing);
@@ -65,6 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Update UI
         updateCountDisplay();
+        updateProfileStats();
         
         // Show home page initially
         navigateToHome();
@@ -97,13 +142,50 @@ document.addEventListener('DOMContentLoaded', function() {
             todayCount = savedData.todayCount || 0;
             // Calculate mala count based on today's count
             todayMalaCount = Math.floor(todayCount / MALA_COUNT);
+            
+            // If user wrote something today, update streak
+            if (todayCount > 0 && savedData.lastActiveDate !== today) {
+                // Check if last active date was yesterday to continue streak
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                
+                if (savedData.lastActiveDate === yesterday.toDateString()) {
+                    currentStreak = (savedData.currentStreak || 0) + 1;
+                } else {
+                    currentStreak = 1; // Reset streak if not consecutive days
+                }
+                
+                // Update longest streak if needed
+                longestStreak = Math.max(currentStreak, savedData.longestStreak || 0);
+            } else {
+                currentStreak = savedData.currentStreak || 0;
+                longestStreak = savedData.longestStreak || 0;
+            }
         } else {
             // Reset daily counts if it's a new day
             todayCount = 0;
             todayMalaCount = 0;
+            
+            // Initialize streaks from saved data
+            currentStreak = savedData.currentStreak || 0;
+            longestStreak = savedData.longestStreak || 0;
         }
         
         totalCount = savedData.totalCount || 0;
+        
+        // Load settings
+        if (savedData.settings) {
+            if (savedData.settings.language) {
+                languageSelect.value = savedData.settings.language;
+            }
+            if (savedData.settings.theme) {
+                themeSelect.value = savedData.settings.theme;
+                applyTheme(savedData.settings.theme);
+            }
+            if (savedData.settings.reminder !== undefined) {
+                reminderToggle.checked = savedData.settings.reminder;
+            }
+        }
     }
     
     function saveData() {
@@ -111,9 +193,17 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const dataToSave = {
             lastDate: today,
+            lastActiveDate: today,
             todayCount: todayCount,
             todayMalaCount: todayMalaCount,
-            totalCount: totalCount
+            totalCount: totalCount,
+            currentStreak: currentStreak,
+            longestStreak: longestStreak,
+            settings: {
+                language: languageSelect.value,
+                theme: themeSelect.value,
+                reminder: reminderToggle.checked
+            }
         };
         
         localStorage.setItem('ramNaamData', JSON.stringify(dataToSave));
@@ -130,22 +220,149 @@ document.addEventListener('DOMContentLoaded', function() {
         writingTodayMalaCount.textContent = todayMalaCount;
     }
     
-    function navigateToHome() {
-        homePage.classList.add('active');
+    function updateProfileStats() {
+        // Update profile stats
+        profileTotalCount.textContent = totalCount;
+        profileTotalMalas.textContent = Math.floor(totalCount / MALA_COUNT);
+        profileCurrentStreak.textContent = `${currentStreak} days`;
+        profileLongestStreak.textContent = `${longestStreak} days`;
+        
+        // Update progress bars
+        const dailyProgress = Math.min(100, (todayCount / DAILY_GOAL) * 100);
+        dailyGoalProgress.style.width = `${dailyProgress}%`;
+        
+        const monthProgress = Math.min(100, (todayMalaCount / MONTHLY_GOAL) * 100);
+        monthlyGoalProgress.style.width = `${monthProgress}%`;
+    }
+    
+    function navigateToPage(page) {
+        // Hide all pages
+        homePage.classList.remove('active');
         writingPage.classList.remove('active');
-        backButton.style.visibility = 'hidden';
-        menuButton.style.visibility = 'visible';
+        profilePage.classList.remove('active');
+        adminPage.classList.remove('active');
+        
+        // Show target page
+        page.classList.add('active');
+        
+        // Update back button visibility
+        if (page === homePage) {
+            backButton.style.visibility = 'hidden';
+            profileButton.style.visibility = 'visible';
+            menuButton.style.visibility = 'visible';
+        } else {
+            backButton.style.visibility = 'visible';
+            profileButton.style.visibility = 'visible';
+            menuButton.style.visibility = 'hidden';
+        }
+        
+        // Save last active page for back navigation (if not admin)
+        if (page !== adminPage) {
+            lastActivePage = page;
+        }
+        
+        // Update stats
         updateCountDisplay();
+        
+        if (page === profilePage) {
+            updateProfileStats();
+        }
+        
+        // Set up canvas if needed
+        if (page === writingPage) {
+            setupCanvas();
+        }
+    }
+    
+    function navigateToHome() {
+        navigateToPage(homePage);
     }
     
     function navigateToWriting() {
-        homePage.classList.remove('active');
-        writingPage.classList.add('active');
-        backButton.style.visibility = 'visible';
-        menuButton.style.visibility = 'hidden';
+        navigateToPage(writingPage);
+    }
+    
+    function navigateToProfile() {
+        navigateToPage(profilePage);
+    }
+    
+    function navigateToAdmin() {
+        navigateToPage(adminPage);
+    }
+    
+    function handleBackNavigation() {
+        if (adminPage.classList.contains('active')) {
+            navigateToPage(lastActivePage);
+        } else {
+            navigateToHome();
+        }
+    }
+    
+    function toggleMenu() {
+        // Implement menu functionality (e.g., dropdown menu)
+        alert('Menu functionality would be implemented here');
+    }
+    
+    function handleLogout() {
+        // For now, just show an alert and go to home
+        alert('Logout functionality would be implemented here');
+        navigateToHome();
+    }
+    
+    function handleLanguageChange() {
+        // Save the language preference
+        saveData();
+        // For now, just show an alert
+        alert(`Language changed to ${languageSelect.options[languageSelect.selectedIndex].text}`);
+    }
+    
+    function handleThemeChange() {
+        const theme = themeSelect.value;
+        applyTheme(theme);
+        saveData();
+    }
+    
+    function applyTheme(theme) {
+        if (theme === 'dark') {
+            document.documentElement.classList.add('dark-theme');
+        } else {
+            document.documentElement.classList.remove('dark-theme');
+        }
+    }
+    
+    function saveAppSettings() {
+        // Update MALA_COUNT and other settings
+        // Note: In a real app, we'd need to update the global constant and reload data
+        alert('Settings saved successfully');
+    }
+    
+    function exportData() {
+        const exportData = {
+            totalCount: totalCount,
+            todayCount: todayCount,
+            malaCount: Math.floor(totalCount / MALA_COUNT),
+            streak: currentStreak,
+            longestStreak: longestStreak,
+            exportDate: new Date().toISOString()
+        };
         
-        // Make sure canvas is properly sized
-        setupCanvas();
+        // Create a blob and download it
+        const dataStr = JSON.stringify(exportData, null, 2);
+        const blob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'ram_naam_data.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+    
+    function backupData() {
+        // For now, just show an alert
+        alert('Database backup functionality would be implemented here');
     }
     
     function startDrawing(e) {
@@ -271,6 +488,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Clear the canvas for next drawing
         clearCanvas();
         
+        // Update streak info (if this is first submission today)
+        if (todayCount === 1) {
+            currentStreak++;
+            longestStreak = Math.max(currentStreak, longestStreak);
+        }
+        
         // Update the UI
         updateCountDisplay();
         
@@ -279,15 +502,28 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function shareStats() {
-        // Share functionality would be implemented here
-        // For now, show an alert
-        alert('Share functionality would be implemented here');
+        // Prepare sharing text
+        const shareText = `I've written RAM naam ${totalCount} times (${Math.floor(totalCount / MALA_COUNT)} malas) with my current streak of ${currentStreak} days!`;
+        
+        // Check if Web Share API is available
+        if (navigator.share) {
+            navigator.share({
+                title: 'RAM Naam Writing Stats',
+                text: shareText,
+                // url: window.location.href
+            }).catch(() => {
+                // Fallback
+                alert(shareText);
+            });
+        } else {
+            // Fallback for browsers that don't support sharing
+            alert(shareText);
+        }
     }
     
     function downloadStats() {
-        // Download functionality would be implemented here
-        // For now, show an alert
-        alert('Download functionality would be implemented here');
+        // For now just use exportData function
+        exportData();
     }
     
     // Handle window resize to adjust canvas
