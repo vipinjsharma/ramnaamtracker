@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event Listeners
     backButton.addEventListener('click', handleBackNavigation);
     menuButton.addEventListener('click', toggleMenu);
-    profileButton.addEventListener('click', navigateToProfile);
+    profileButton.addEventListener('click', toggleProfile);
     
     // Navigation listeners
     startWritingBtn.addEventListener('click', navigateToWriting);
@@ -1113,7 +1113,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function handleProfileAccountClick() {
         closeProfileOverlay();
-        alert('Account settings would be displayed here');
+        navigateToProfile();
     }
     
     function handleProfileLanguageClick() {
