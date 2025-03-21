@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let reminderEnabled = false; // Default reminder state
     let reminderTime = '07:00'; // Default reminder time (7:00 AM)
     let reminderDays = ['mon', 'tue', 'wed', 'thu', 'fri']; // Default reminder days (weekdays)
+    let isAdminUser = false; // Default user role (non-admin)
     const DAILY_GOAL = 108; // Default daily goal (1 mala)
     const MONTHLY_GOAL = 21; // Default monthly goal (21 malas)
     
@@ -77,6 +78,19 @@ document.addEventListener('DOMContentLoaded', function() {
     backButton.addEventListener('click', handleBackNavigation);
     menuButton.addEventListener('click', toggleMenu);
     profileButton.addEventListener('click', navigateToProfile);
+    
+    // Secret admin mode (click profile title 5 times)
+    const profileTitle = document.querySelector('.profile-page h1');
+    let titleClickCount = 0;
+    profileTitle.addEventListener('click', () => {
+        titleClickCount++;
+        if (titleClickCount === 5) {
+            isAdminUser = !isAdminUser;
+            updateProfileStats();
+            showToast(isAdminUser ? 'Admin mode activated' : 'Admin mode deactivated');
+            titleClickCount = 0;
+        }
+    });
     startWritingBtn.addEventListener('click', navigateToWriting);
     clearBtn.addEventListener('click', clearCanvas);
     drawBtn.addEventListener('click', autoDraw);
@@ -250,6 +264,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const monthProgress = Math.min(100, (todayMalaCount / MONTHLY_GOAL) * 100);
         monthlyGoalProgress.style.width = `${monthProgress}%`;
+        
+        // Show/hide admin button based on user role
+        if (isAdminUser) {
+            adminButton.style.display = 'block';
+        } else {
+            adminButton.style.display = 'none';
+        }
     }
     
     function navigateToPage(page) {
@@ -1184,6 +1205,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function handleProfileReminderClick() {
         closeProfileOverlay();
+        navigateToHome(); // Go to home before showing modal
         
         // Create reminder settings modal
         const reminderOptions = `
