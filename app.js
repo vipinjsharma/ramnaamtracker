@@ -113,15 +113,15 @@ document.addEventListener('DOMContentLoaded', function() {
     downloadBtn.addEventListener('click', downloadStats);
     
     // Profile page event listeners
-    adminButton.addEventListener('click', navigateToAdmin);
-    logoutButton.addEventListener('click', handleLogout);
-    languageSelect.addEventListener('change', handleLanguageChange);
-    themeSelect.addEventListener('change', handleThemeChange);
+    if (adminButton) adminButton.addEventListener('click', navigateToAdmin);
+    if (logoutButton) logoutButton.addEventListener('click', handleLogout);
+    if (languageSelect) languageSelect.addEventListener('change', handleLanguageChange);
+    if (themeSelect) themeSelect.addEventListener('change', handleThemeChange);
     
     // Admin page event listeners
-    saveSettingsBtn.addEventListener('click', saveAppSettings);
-    exportDataBtn.addEventListener('click', exportData);
-    backupDataBtn.addEventListener('click', backupData);
+    if (saveSettingsBtn) saveSettingsBtn.addEventListener('click', saveAppSettings);
+    if (exportDataBtn) exportDataBtn.addEventListener('click', exportData);
+    if (backupDataBtn) backupDataBtn.addEventListener('click', backupData);
     
     // Canvas event listeners
     canvas.addEventListener('mousedown', startDrawing);
@@ -249,15 +249,23 @@ document.addEventListener('DOMContentLoaded', function() {
         // Load settings
         if (savedData.settings) {
             if (savedData.settings.language) {
-                languageSelect.value = savedData.settings.language;
                 appLanguage = savedData.settings.language;
+                
+                // Only set select value if element exists
+                if (languageSelect) {
+                    languageSelect.value = savedData.settings.language;
+                }
             }
             if (savedData.settings.theme) {
-                themeSelect.value = savedData.settings.theme;
                 currentTheme = savedData.settings.theme;
+                
+                // Only set select value if element exists
+                if (themeSelect) {
+                    themeSelect.value = savedData.settings.theme;
+                }
                 applyTheme(savedData.settings.theme);
             }
-            if (savedData.settings.reminder !== undefined) {
+            if (savedData.settings.reminder !== undefined && reminderToggle) {
                 reminderToggle.checked = savedData.settings.reminder;
             }
         }
@@ -274,6 +282,26 @@ document.addEventListener('DOMContentLoaded', function() {
     function saveData() {
         const today = new Date().toDateString();
         
+        // Create settings object with null checks
+        const settings = {
+            language: appLanguage,
+            theme: currentTheme,
+            reminder: false
+        };
+        
+        // Add values from form elements if they exist
+        if (languageSelect) {
+            settings.language = appLanguage || languageSelect.value;
+        }
+        
+        if (themeSelect) {
+            settings.theme = currentTheme || themeSelect.value;
+        }
+        
+        if (reminderToggle) {
+            settings.reminder = reminderToggle.checked;
+        }
+        
         const dataToSave = {
             lastDate: today,
             lastActiveDate: today,
@@ -282,11 +310,7 @@ document.addEventListener('DOMContentLoaded', function() {
             totalCount: totalCount,
             currentStreak: currentStreak,
             longestStreak: longestStreak,
-            settings: {
-                language: appLanguage || languageSelect.value,
-                theme: currentTheme || themeSelect.value,
-                reminder: reminderToggle.checked
-            }
+            settings: settings
         };
         
         localStorage.setItem('ramNaamData', JSON.stringify(dataToSave));
