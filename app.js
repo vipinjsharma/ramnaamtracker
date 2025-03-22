@@ -26,7 +26,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Menu navigation links
     const menuWriteLink = document.getElementById('menuWriteLink');
+    const menuProfileLink = document.getElementById('menuProfileLink');
     const menuShareLink = document.getElementById('menuShareLink');
+    const menuDownloadLink = document.getElementById('menuDownloadLink');
     const menuRateLink = document.getElementById('menuRateLink');
     const menuFeedbackLink = document.getElementById('menuFeedbackLink');
     const menuHowToLink = document.getElementById('menuHowToLink');
@@ -34,6 +36,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const menuThemeLink = document.getElementById('menuThemeLink');
     const menuTermsLink = document.getElementById('menuTermsLink');
     const menuPrivacyLink = document.getElementById('menuPrivacyLink');
+    
+    // Sidebar profile elements
+    const sidebarUsername = document.getElementById('sidebarUsername');
+    const sidebarStats = document.getElementById('sidebarStats');
+    const sidebarAvatar = document.getElementById('sidebarAvatar');
     
     // Profile navigation links
     const profileGoalsLink = document.getElementById('profileGoalsLink');
@@ -78,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // App settings
     let appLanguage = 'en'; // Default language (en = English, hi = Hindi)
     let currentTheme = 'light'; // Default theme (light, dark, system)
+    let userName = 'Ram Bhakt'; // Default user name
     
     // Translations
     const translations = {
@@ -128,7 +136,12 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Other
             'cancel': 'Cancel',
-            'confirm': 'Confirm'
+            'confirm': 'Confirm',
+            
+            // Name Editing
+            'name_updated': 'Name updated!',
+            'name_length_error': 'Name must be between 2 and 30 characters',
+            'edit_name': 'Edit Name'
         },
         'hi': {
             // Home Page
@@ -177,7 +190,12 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Other
             'cancel': 'रद्द करें',
-            'confirm': 'पुष्टि करें'
+            'confirm': 'पुष्टि करें',
+            
+            // Name Editing
+            'name_updated': 'नाम अपडेट हो गया!',
+            'name_length_error': 'नाम 2 से 30 अक्षरों के बीच होना चाहिए',
+            'edit_name': 'नाम संपादित करें'
         }
     };
     let reminderEnabled = false; // Default reminder state
@@ -211,6 +229,26 @@ document.addEventListener('DOMContentLoaded', function() {
     menuButton.addEventListener('click', toggleMenu);
     homeButton.addEventListener('click', navigateToHome);
     profileButton.addEventListener('click', navigateToProfile);
+    
+    // Name editing event listeners
+    const editNameBtn = document.getElementById('edit-name-btn');
+    const saveNameBtn = document.getElementById('save-name-btn');
+    const cancelNameBtn = document.getElementById('cancel-name-btn');
+    const profileName = document.getElementById('profile-name');
+    const nameInput = document.getElementById('name-input');
+    const editNameControls = document.getElementById('edit-name-controls');
+    
+    if (editNameBtn) {
+        editNameBtn.addEventListener('click', handleEditNameClick);
+    }
+    
+    if (saveNameBtn) {
+        saveNameBtn.addEventListener('click', handleSaveNameClick);
+    }
+    
+    if (cancelNameBtn) {
+        cancelNameBtn.addEventListener('click', handleCancelNameClick);
+    }
     
     // Navigation listeners
     startWritingBtn.addEventListener('click', navigateToWriting);
@@ -252,19 +290,19 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Menu navigation links event listeners
     menuWriteLink.addEventListener('click', handleMenuWriteClick);
+    if (menuProfileLink) menuProfileLink.addEventListener('click', navigateToProfile);
     menuShareLink.addEventListener('click', handleMenuShareClick);
+    if (menuDownloadLink) menuDownloadLink.addEventListener('click', downloadStats);
     menuRateLink.addEventListener('click', handleMenuRateClick);
     menuFeedbackLink.addEventListener('click', handleMenuFeedbackClick);
     menuHowToLink.addEventListener('click', handleMenuHowToClick);
     menuLanguageLink.addEventListener('click', handleMenuLanguageClick);
-    menuThemeLink.addEventListener('click', handleProfileThemeClick); // Using the same handler as the profile theme
+    menuThemeLink.addEventListener('click', handleProfileThemeClick);
     menuTermsLink.addEventListener('click', handleMenuTermsClick);
     menuPrivacyLink.addEventListener('click', handleMenuPrivacyClick);
     
     // Profile menu event listeners
     if (profileGoalsLink) profileGoalsLink.addEventListener('click', handleEditGoalsClick);
-    // Theme link is now in the main menu
-    if (menuThemeLink) menuThemeLink.addEventListener('click', handleProfileThemeClick);
     if (profileReminderLink) profileReminderLink.addEventListener('click', handleProfileReminderClick);
     if (profileLogoutLink) profileLogoutLink.addEventListener('click', handleProfileLogoutClick);
     
@@ -481,6 +519,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     languageSelect.value = savedData.settings.language;
                 }
             }
+            
+            // Load saved username if available
+            if (savedData.settings.userName) {
+                userName = savedData.settings.userName;
+            }
             if (savedData.settings.theme) {
                 currentTheme = savedData.settings.theme;
                 
@@ -512,7 +555,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const settings = {
             language: appLanguage,
             theme: currentTheme,
-            reminder: false
+            reminder: false,
+            userName: userName
         };
         
         // Add values from form elements if they exist
@@ -578,15 +622,46 @@ document.addEventListener('DOMContentLoaded', function() {
         profileCurrentStreak.textContent = `${currentStreak} days`;
         profileLongestStreak.textContent = `${longestStreak} days`;
         
+        // Update user name display
+        const profileNameElement = document.getElementById('profile-name');
+        if (profileNameElement) {
+            profileNameElement.textContent = userName;
+            
+            // Update avatar with new name
+            const avatarImg = document.querySelector('.profile-avatar img');
+            if (avatarImg) {
+                const nameParts = userName.split(' ');
+                const initials = nameParts.map(part => part.charAt(0)).join('+');
+                avatarImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=FF7817&color=fff`;
+            }
+        }
+        
+        // Update sidebar stats
+        if (sidebarUsername) {
+            sidebarUsername.textContent = userName;
+        }
+        
+        if (sidebarStats) {
+            const totalMalas = Math.floor(totalCount / MALA_COUNT);
+            sidebarStats.textContent = `${totalMalas} ${totalMalas === 1 ? 'mala' : 'malas'} completed`;
+        }
+        
+        if (sidebarAvatar) {
+            sidebarAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=FF7817&color=fff`;
+        }
+        
         // Update progress bars using custom goals
         const dailyProgress = Math.min(100, (todayCount / dailyGoal) * 100);
         dailyGoalProgress.style.width = `${dailyProgress}%`;
         
-        // Calculate monthly progress based on malas
-        const monthlyMalaGoal = Math.floor(monthlyGoal / MALA_COUNT);
-        const currentMonthMalas = Math.floor(currentMonthCount / MALA_COUNT);
-        const monthProgress = Math.min(100, (currentMonthMalas / monthlyMalaGoal) * 100);
+        // Calculate monthly progress based on total counts instead of just full malas
+        // This allows for partial mala progress to show in the UI
+        const monthProgress = Math.min(100, (currentMonthCount / monthlyGoal) * 100);
         monthlyGoalProgress.style.width = `${monthProgress}%`;
+        
+        // Calculate mala values for accurate display
+        const monthlyMalaGoal = Math.ceil(monthlyGoal / MALA_COUNT);
+        const currentMonthMalas = Math.floor(currentMonthCount / MALA_COUNT);
         
         // Update goal text displays if they exist
         if (document.getElementById('daily-goal-display')) {
@@ -669,6 +744,82 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             navigateToHome();
         }
+    }
+    
+    // Name editing functions
+    function handleEditNameClick() {
+        // Get references to elements
+        const profileName = document.getElementById('profile-name');
+        const nameInput = document.getElementById('name-input');
+        const editNameControls = document.getElementById('edit-name-controls');
+        
+        // Hide name element and show edit controls
+        profileName.style.display = 'none';
+        editNameControls.style.display = 'flex';
+        
+        // Set input value to current name
+        nameInput.value = userName;
+        
+        // Focus the input field
+        nameInput.focus();
+    }
+    
+    function handleSaveNameClick() {
+        // Get references to elements
+        const profileName = document.getElementById('profile-name');
+        const nameInput = document.getElementById('name-input');
+        const editNameControls = document.getElementById('edit-name-controls');
+        
+        // Validate the name (2-30 characters)
+        const newName = nameInput.value.trim();
+        
+        if (newName.length < 2 || newName.length > 30) {
+            showToast(getTranslation('name_length_error') || 'Name must be between 2 and 30 characters', 3000, 'error');
+            return;
+        }
+        
+        // Update the name variable
+        userName = newName;
+        
+        // Update the display
+        profileName.textContent = userName;
+        
+        // Show name element and hide edit controls
+        profileName.style.display = 'block';
+        editNameControls.style.display = 'none';
+        
+        // Save to local storage
+        saveData();
+        
+        // Update the avatar
+        const avatarImg = document.querySelector('.profile-avatar img');
+        if (avatarImg) {
+            avatarImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=FF7817&color=fff`;
+        }
+        
+        // Show success message
+        showToast(getTranslation('name_updated') || 'Name updated!', 2000);
+        
+        // Add haptic feedback if available (mobile device)
+        try {
+            if (window.navigator && window.navigator.vibrate) {
+                window.navigator.vibrate(50);
+            } else if (window.AndroidInterface && typeof window.AndroidInterface.vibrate === 'function') {
+                window.AndroidInterface.vibrate(50);
+            }
+        } catch (e) {
+            console.warn("Could not vibrate device:", e);
+        }
+    }
+    
+    function handleCancelNameClick() {
+        // Get references to elements
+        const profileName = document.getElementById('profile-name');
+        const editNameControls = document.getElementById('edit-name-controls');
+        
+        // Show name element and hide edit controls
+        profileName.style.display = 'block';
+        editNameControls.style.display = 'none';
     }
     
     function toggleMenu() {
@@ -1186,6 +1337,15 @@ document.addEventListener('DOMContentLoaded', function() {
             if (profileReminderLink) profileReminderLink.textContent = getTranslation('daily_reminders');
             if (profileLogoutLink) profileLogoutLink.textContent = getTranslation('logout');
             if (adminButton) adminButton.textContent = getTranslation('admin');
+            
+            // Update name editing elements
+            const editNameBtn = document.getElementById('edit-name-btn');
+            const saveNameBtn = document.getElementById('save-name-btn');
+            const cancelNameBtn = document.getElementById('cancel-name-btn');
+            
+            if (editNameBtn) editNameBtn.title = getTranslation('edit_name');
+            if (saveNameBtn) saveNameBtn.title = getTranslation('save');
+            if (cancelNameBtn) cancelNameBtn.title = getTranslation('cancel');
             
             // Writing button
             if (startWritingBtn) startWritingBtn.textContent = getTranslation('write_ram');

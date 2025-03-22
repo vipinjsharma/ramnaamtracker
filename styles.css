@@ -484,7 +484,6 @@ header h1 {
 }
 
 .stat-card .icon {
-    font-size: 28px;
     margin-right: 12px;
     border-radius: 8px;
     width: 48px;
@@ -492,6 +491,12 @@ header h1 {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
+}
+
+.stat-card .icon svg {
+    width: 30px;
+    height: 30px;
 }
 
 .streak-card .icon {
@@ -515,12 +520,16 @@ header h1 {
     font-weight: var(--md-label-large-weight);
     color: var(--md-on-surface-variant);
     margin-bottom: 4px;
+    white-space: nowrap;
 }
 
 .stat-card .value {
-    font-size: 20px;
+    font-size: 28px;
     font-weight: 700;
     color: var(--md-primary);
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
 }
 
 /* Progress Bar */
@@ -649,6 +658,99 @@ header h1 {
     color: var(--md-on-primary-container);
     opacity: 0.8;
     font-size: var(--md-body-medium-size);
+}
+
+/* Editable Name Feature */
+.profile-name-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.editable-name {
+    cursor: pointer;
+    padding-right: 34px;
+    transition: all 0.3s ease;
+}
+
+.edit-name-btn {
+    background: none;
+    border: none;
+    color: var(--md-on-primary-container);
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 4px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    border-radius: 50%;
+}
+
+.edit-name-btn:hover {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.edit-controls {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+    width: 100%;
+}
+
+.name-input {
+    padding: 12px;
+    border: 2px solid var(--md-primary);
+    border-radius: var(--md-shape-small);
+    background-color: var(--md-surface);
+    font-size: var(--md-title-medium-size);
+    color: var(--md-on-surface);
+    margin-bottom: 8px;
+    transition: all 0.3s ease;
+}
+
+.name-input:focus {
+    border-color: var(--md-primary);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 120, 23, 0.2);
+}
+
+.edit-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.edit-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.2s ease;
+}
+
+.save-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.save-btn:hover {
+    background-color: #45a049;
+}
+
+.cancel-btn {
+    background-color: #F44336;
+    color: white;
+}
+
+.cancel-btn:hover {
+    background-color: #e53935;
 }
 
 .profile-stats {
