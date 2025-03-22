@@ -1,0 +1,38 @@
+[
+    {
+        "merged": "com.ramlekhak.app-mergeDebugResources-54:/layout/nav_header.xml",
+        "source": "com.ramlekhak.app-main-57:/layout/nav_header.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-mergeDebugResources-54:/layout/activity_main.xml",
+        "source": "com.ramlekhak.app-main-57:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-mergeDebugResources-54:/layout/fragment_settings.xml",
+        "source": "com.ramlekhak.app-main-57:/layout/fragment_settings.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-mergeDebugResources-54:/layout/fragment_statistics.xml",
+        "source": "com.ramlekhak.app-main-57:/layout/fragment_statistics.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-mergeDebugResources-54:/layout/fragment_home.xml",
+        "source": "com.ramlekhak.app-main-57:/layout/fragment_home.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-mergeDebugResources-54:/layout/fragment_benefits.xml",
+        "source": "com.ramlekhak.app-main-57:/layout/fragment_benefits.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-mergeDebugResources-54:/layout/fragment_writing.xml",
+        "source": "com.ramlekhak.app-main-57:/layout/fragment_writing.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-mergeDebugResources-54:/layout/activity_webview.xml",
+        "source": "com.ramlekhak.app-main-57:/layout/activity_webview.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-mergeDebugResources-54:/layout/splash_screen.xml",
+        "source": "com.ramlekhak.app-main-57:/layout/splash_screen.xml"
+    }
+]

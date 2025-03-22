@@ -1,0 +1,50 @@
+[
+    {
+        "merged": "com.ramlekhak.app-merged_res-55:/menu_drawer_menu.xml.flat",
+        "source": "com.ramlekhak.app-main-57:/menu/drawer_menu.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-merged_res-55:/layout_nav_header.xml.flat",
+        "source": "com.ramlekhak.app-main-57:/layout/nav_header.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-merged_res-55:/layout_splash_screen.xml.flat",
+        "source": "com.ramlekhak.app-main-57:/layout/splash_screen.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-merged_res-55:/layout_fragment_benefits.xml.flat",
+        "source": "com.ramlekhak.app-main-57:/layout/fragment_benefits.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-merged_res-55:/layout_fragment_statistics.xml.flat",
+        "source": "com.ramlekhak.app-main-57:/layout/fragment_statistics.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-merged_res-55:/layout_activity_main.xml.flat",
+        "source": "com.ramlekhak.app-main-57:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-merged_res-55:/layout_fragment_settings.xml.flat",
+        "source": "com.ramlekhak.app-main-57:/layout/fragment_settings.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-merged_res-55:/layout_fragment_writing.xml.flat",
+        "source": "com.ramlekhak.app-main-57:/layout/fragment_writing.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-merged_res-55:/drawable_app_icon.xml.flat",
+        "source": "com.ramlekhak.app-main-57:/drawable/app_icon.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-merged_res-55:/navigation_nav_graph.xml.flat",
+        "source": "com.ramlekhak.app-main-57:/navigation/nav_graph.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-merged_res-55:/layout_activity_webview.xml.flat",
+        "source": "com.ramlekhak.app-main-57:/layout/activity_webview.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-merged_res-55:/layout_fragment_home.xml.flat",
+        "source": "com.ramlekhak.app-main-57:/layout/fragment_home.xml"
+    }
+]
