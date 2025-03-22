@@ -508,6 +508,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (savedData.currentMonth === thisMonth) {
             // If same month, load saved monthly count
             currentMonthCount = savedData.currentMonthCount || 0;
+            
+            // Make sure currentMonthCount is at least as much as todayCount
+            // This fixes issues where the two counts might get out of sync
+            if (currentMonthCount < todayCount) {
+                currentMonthCount = todayCount;
+            }
         } else {
             // Reset monthly count for new month
             currentMonthCount = todayCount; // Start with today's count

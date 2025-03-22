@@ -2797,3 +2797,12 @@ body.theme-dark .theme-selector-dialog .theme-label {
     border-color: var(--accent-color);
     color: white;
 }
+
+/* Fix for monthly goal text overflow */
+#monthly-goal-display {
+    font-size: 0.9em;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    display: inline-block;
+}
