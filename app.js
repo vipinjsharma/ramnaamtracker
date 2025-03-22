@@ -1116,7 +1116,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Apply translations to elements using our getTranslation helper
             
             // Update header and main page elements
-            document.querySelector('.header-center h1').textContent = getTranslation('app_title');
+            const appTitleElement = document.querySelector('.header-center h1');
+            if (appTitleElement) {
+                appTitleElement.textContent = getTranslation('app_title');
+            }
             
             // Update stats labels
             const todayCountLabel = document.querySelector('.today-count h3');
@@ -2229,6 +2232,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Increment counts
         todayCount++;
         totalCount++;
+        currentMonthCount++; // Also increment the current month count
         
         // Calculate mala count (1 mala = 108 rams)
         todayMalaCount = Math.floor(todayCount / MALA_COUNT);
@@ -2244,6 +2248,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Update the UI
         updateCountDisplay();
+        updateProfileStats(); // Also update the profile stats to reflect latest count
         
         // Save data
         saveData();
