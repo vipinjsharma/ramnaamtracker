@@ -1733,6 +1733,9 @@ input:checked + .toggle-slider-large:before {
     --text-color: #f0f0f0;
     --card-bg-color: #3c3c3c;
     --border-color: #555;
+    --md-on-surface: #f0f0f0; /* Override surface text color in dark mode */
+    --md-on-surface-variant: #d0d0d0; /* Lighter variant for better readability */
+    --md-on-background: #f0f0f0; /* Text color on background */
     
     /* Add direct header styles to ensure theme applies immediately */
     & header {
@@ -1769,7 +1772,8 @@ input:checked + .toggle-slider-large:before {
 
 .dark-theme .theme-description,
 .dark-theme .theme-option-text,
-.dark-theme .selected-theme-name {
+.dark-theme .selected-theme-name,
+.dark-theme .theme-name {
     color: #f0f0f0;
 }
 
@@ -1815,6 +1819,20 @@ input:checked + .toggle-slider-large:before {
 
 .dark-theme #homePage p {
     color: #f0f0f0; /* Light gray for text labels */
+}
+
+/* Fix benefits list text in dark mode */
+.dark-theme .benefits-list li {
+    background-color: #3c3c3c; /* Darker cards in dark mode */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.dark-theme .benefits-list li p {
+    color: #f0f0f0 !important; /* Ensure all benefit text is visible on dark theme */
+}
+
+.dark-theme .benefits-list h4 {
+    color: #FF9800 !important; /* Make benefit headlines stand out with primary color */
 }
 
 /* Ensure all orange/saffron buttons have white text */
@@ -2654,8 +2672,12 @@ body.theme-dark .theme-selector-dialog .theme-label {
 }
 
 .theme-name {
-    font-weight: bold;
+    font-weight: 700;
     margin-bottom: 5px;
+    color: #333333; /* Darker text color for better visibility */
+    text-shadow: none; /* Remove any text shadow that might blur the text */
+    font-size: 14px; /* Slightly larger font size */
+    text-align: center; /* Center the text */
 }
 
 .theme-desc {
