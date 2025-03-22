@@ -150,14 +150,7 @@
                             </svg>
                             Share App
                         </a>
-                        <a href="#" id="menuDownloadLink" class="menu-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                <polyline points="7 10 12 15 17 10"></polyline>
-                                <line x1="12" y1="15" x2="12" y2="3"></line>
-                            </svg>
-                            Download Records
-                        </a>
+
                         <a href="#" id="menuTermsLink" class="menu-item">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -424,11 +417,11 @@
                     </div>
                     <div class="stat-card">
                         <h3>Current Streak</h3>
-                        <p id="profileCurrentStreak">0 days</p>
+                        <p id="profileCurrentStreak"><span class="count-value">0</span> <span class="count-unit">days</span></p>
                     </div>
                     <div class="stat-card">
                         <h3>Longest Streak</h3>
-                        <p id="profileLongestStreak">0 days</p>
+                        <p id="profileLongestStreak"><span class="count-value">0</span> <span class="count-unit">days</span></p>
                     </div>
                 </div>
                 
@@ -445,6 +438,9 @@
                         <div class="goal-header">
                             <p>Monthly Goal:</p>
                             <span id="monthly-goal-display">0/30 malas (0%)</span>
+                        </div>
+                        <div class="goal-subtext">
+                            <span id="monthly-goal-detail">0 malas of 1 completed</span>
                         </div>
                         <div class="progress-bar">
                             <div id="monthlyGoalProgress" class="progress-fill" style="width: 0%"></div>

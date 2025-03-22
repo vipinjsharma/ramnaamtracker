@@ -805,11 +805,16 @@ header h1 {
 .stat-card {
     background-color: var(--md-surface);
     border-radius: var(--md-shape-medium);
-    padding: 20px;
+    padding: 20px 16px;
     text-align: center;
     box-shadow: var(--md-shadow-1);
     transition: all var(--md-transition-medium);
     border: 1px solid rgba(var(--accent-color-rgb), 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
 }
 
 .stat-card:hover {
@@ -821,13 +826,26 @@ header h1 {
     font-size: var(--md-title-medium-size);
     margin-bottom: 12px;
     color: var(--md-primary);
-    font-weight: 600;
+    font-weight: 500;
+    white-space: nowrap;
 }
 
 .stat-card p {
     font-size: var(--md-headline-small-size);
     font-weight: 700;
     color: var(--md-secondary);
+    white-space: nowrap;
+}
+
+.count-value {
+    font-size: var(--md-headline-small-size);
+    font-weight: 700;
+}
+
+.count-unit {
+    font-size: var(--md-body-large-size);
+    font-weight: 500;
+    color: var(--md-on-surface-variant);
 }
 
 .profile-section {
@@ -851,17 +869,35 @@ header h1 {
     margin-bottom: 24px;
 }
 
-.goal-progress h4 {
-    font-size: var(--md-title-small-size);
-    color: var(--md-on-surface);
-    margin-bottom: 8px;
+.goal-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
 }
 
-.goal-progress h4 span {
+.goal-header p {
+    font-size: var(--md-body-large-size);
+    color: var(--md-on-surface);
+    font-weight: 500;
+    margin: 0;
+}
+
+.goal-header span {
     color: var(--md-primary);
     font-weight: 600;
+    white-space: nowrap;
+}
+
+.goal-subtext {
+    font-size: var(--md-body-medium-size);
+    color: var(--md-on-surface-variant);
+    margin: -4px 0 8px 0;
+    padding-left: 2px;
+}
+
+.goal-subtext span {
+    font-weight: 500;
 }
 
 .progress-bar {
