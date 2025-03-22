@@ -429,6 +429,16 @@ input:checked + .toggle-slider:before {
     color: white;
 }
 
+.profile-action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.profile-action-buttons .secondary-button {
+    flex: 1;
+}
+
 .back-button {
     background: none;
     border: none;

@@ -31,15 +31,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const menuFeedbackLink = document.getElementById('menuFeedbackLink');
     const menuHowToLink = document.getElementById('menuHowToLink');
     const menuLanguageLink = document.getElementById('menuLanguageLink');
+    const menuThemeLink = document.getElementById('menuThemeLink');
     const menuTermsLink = document.getElementById('menuTermsLink');
     const menuPrivacyLink = document.getElementById('menuPrivacyLink');
     
     // Profile navigation links
     const profileGoalsLink = document.getElementById('profileGoalsLink');
-    const profileThemeLink = document.getElementById('profileThemeLink');
     const profileReminderLink = document.getElementById('profileReminderLink');
     const profileLogoutLink = document.getElementById('profileLogoutLink');
     const editGoalsBtn = document.getElementById('editGoalsBtn');
+    const reminderSettingsBtn = document.getElementById('reminderSettingsBtn');
     
     // Profile page elements
     const adminButton = document.getElementById('adminButton');
@@ -227,6 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Goal settings listeners
     if (editGoalsBtn) editGoalsBtn.addEventListener('click', handleEditGoalsClick);
+    if (reminderSettingsBtn) reminderSettingsBtn.addEventListener('click', handleProfileReminderClick);
     
     // Admin page event listeners
     if (saveSettingsBtn) saveSettingsBtn.addEventListener('click', saveAppSettings);
@@ -255,12 +257,14 @@ document.addEventListener('DOMContentLoaded', function() {
     menuFeedbackLink.addEventListener('click', handleMenuFeedbackClick);
     menuHowToLink.addEventListener('click', handleMenuHowToClick);
     menuLanguageLink.addEventListener('click', handleMenuLanguageClick);
+    menuThemeLink.addEventListener('click', handleProfileThemeClick); // Using the same handler as the profile theme
     menuTermsLink.addEventListener('click', handleMenuTermsClick);
     menuPrivacyLink.addEventListener('click', handleMenuPrivacyClick);
     
     // Profile menu event listeners
     if (profileGoalsLink) profileGoalsLink.addEventListener('click', handleEditGoalsClick);
-    if (profileThemeLink) profileThemeLink.addEventListener('click', handleProfileThemeClick);
+    // Theme link is now in the main menu
+    if (menuThemeLink) menuThemeLink.addEventListener('click', handleProfileThemeClick);
     if (profileReminderLink) profileReminderLink.addEventListener('click', handleProfileReminderClick);
     if (profileLogoutLink) profileLogoutLink.addEventListener('click', handleProfileLogoutClick);
     
@@ -1135,12 +1139,12 @@ document.addEventListener('DOMContentLoaded', function() {
             if (menuFeedbackLink) menuFeedbackLink.textContent = getTranslation('feedback');
             if (menuHowToLink) menuHowToLink.textContent = getTranslation('how_to_use');
             if (menuLanguageLink) menuLanguageLink.textContent = getTranslation('language');
+            if (menuThemeLink) menuThemeLink.textContent = getTranslation('theme');
             if (menuTermsLink) menuTermsLink.textContent = getTranslation('terms');
             if (menuPrivacyLink) menuPrivacyLink.textContent = getTranslation('privacy');
             
             // Update profile elements
             if (profileAccountLink) profileAccountLink.textContent = getTranslation('account');
-            if (profileThemeLink) profileThemeLink.textContent = getTranslation('theme');
             if (profileReminderLink) profileReminderLink.textContent = getTranslation('daily_reminders');
             if (profileLogoutLink) profileLogoutLink.textContent = getTranslation('logout');
             if (adminButton) adminButton.textContent = getTranslation('admin');
