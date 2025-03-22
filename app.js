@@ -1825,17 +1825,22 @@ document.addEventListener('DOMContentLoaded', function() {
         if (theme === 'system') {
             // Check system preference
             const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            applyTheme(prefersDark ? 'dark' : 'light');
+            const effectiveTheme = prefersDark ? 'dark-theme' : 'theme-ram'; // Use dark theme or Ram theme as default light
+            applyTheme(effectiveTheme);
             
             // Setup media query listener for system theme changes
             const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
             darkModeMediaQuery.addEventListener('change', (e) => {
                 if (currentTheme === 'system') {
-                    applyTheme(e.matches ? 'dark' : 'light');
+                    const newTheme = e.matches ? 'dark-theme' : 'theme-ram';
+                    applyTheme(newTheme);
                 }
             });
         } else {
-            applyTheme(theme);
+            // Make sure theme name is properly formatted
+            const effectiveTheme = theme.startsWith('theme-') ? theme : 
+                                   (theme === 'dark' ? 'dark-theme' : `theme-${theme}`);
+            applyTheme(effectiveTheme);
         }
         
         // Save the preference
@@ -1846,22 +1851,22 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (theme === 'light') {
             themeName = 'Light';
-        } else if (theme === 'dark') {
+        } else if (theme === 'dark' || theme === 'dark-theme') {
             themeName = 'Dark';
         } else if (theme === 'system') {
             themeName = 'System';
-        } else if (theme === 'theme-ram') {
+        } else if (theme === 'theme-ram' || theme === 'ram') {
             themeName = 'Ram (Saffron)';
-        } else if (theme === 'theme-krishna') {
+        } else if (theme === 'theme-krishna' || theme === 'krishna') {
             themeName = 'Krishna (Blue)';
-        } else if (theme === 'theme-lakshmi') {
+        } else if (theme === 'theme-lakshmi' || theme === 'lakshmi') {
             themeName = 'Lakshmi (Gold)';
-        } else if (theme === 'theme-ganesh') {
+        } else if (theme === 'theme-ganesh' || theme === 'ganesh') {
             themeName = 'Ganesh (Red)';
-        } else if (theme === 'theme-shiva') {
+        } else if (theme === 'theme-shiva' || theme === 'shiva') {
             themeName = 'Shiva (Purple)';
         } else {
-            themeName = theme.charAt(0).toUpperCase() + theme.slice(1);
+            themeName = theme.charAt(0).toUpperCase() + theme.slice(1).replace('-theme', '').replace('theme-', '');
         }
         
         // Update all UI elements that depend on theme
@@ -1875,13 +1880,79 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Helper function to update all UI elements that depend on theme
     function updateThemeUI(theme) {
+        // Normalize theme name format
+        const normalizedTheme = theme.startsWith('theme-') ? theme : 
+                              (theme === 'dark' || theme === 'dark-theme') ? 'dark-theme' : 
+                              `theme-${theme}`;
+                              
+        // Update document and body classes directly
+        document.documentElement.className = normalizedTheme;
+        document.body.className = normalizedTheme;
+        
+        // Make sure Android app class is preserved if this is running in WebView
+        if (window.isRunningInWebView) {
+            document.body.classList.add('android-app');
+        }
+        
+        // Set primary colors explicitly
+        let primaryColor, backgroundColor, textColor;
+        
+        switch(normalizedTheme) {
+            case 'theme-ram':
+                primaryColor = '#ff7817';
+                backgroundColor = '#fff7e6';
+                textColor = '#333333';
+                break;
+            case 'theme-krishna':
+                primaryColor = '#2874A6';
+                backgroundColor = '#EBF5FB';
+                textColor = '#1A5276';
+                break;
+            case 'theme-lakshmi':
+                primaryColor = '#D4AC0D';
+                backgroundColor = '#FEF9E7';
+                textColor = '#7D6608';
+                break;
+            case 'theme-ganesh':
+                primaryColor = '#C0392B';
+                backgroundColor = '#FDEDEC';
+                textColor = '#641E16';
+                break;
+            case 'theme-shiva':
+                primaryColor = '#7D3C98';
+                backgroundColor = '#F4ECF7';
+                textColor = '#4A235A';
+                break;
+            case 'dark-theme':
+                primaryColor = '#FF6F00';
+                backgroundColor = '#2c2c2c';
+                textColor = '#f0f0f0';
+                break;
+            default:
+                // Default to Ram theme if none matches
+                primaryColor = '#ff7817';
+                backgroundColor = '#fff7e6';
+                textColor = '#333333';
+        }
+        
+        // Apply direct styling to important elements
+        document.body.style.backgroundColor = backgroundColor;
+        document.body.style.color = textColor;
+        
+        const header = document.querySelector('header');
+        if (header) {
+            header.style.backgroundColor = primaryColor;
+            header.style.color = 'white';
+        }
+        
         // Update theme display if open
         const themeDisplay = document.getElementById('selectedThemeDisplay');
         const themeNameElement = document.getElementById('currentThemeName');
         
         if (themeDisplay && themeNameElement) {
-            if (theme.startsWith('theme-')) {
-                const displayName = theme.replace('theme-', '').charAt(0).toUpperCase() + theme.replace('theme-', '').slice(1);
+            if (normalizedTheme.startsWith('theme-')) {
+                const displayName = normalizedTheme.replace('theme-', '').charAt(0).toUpperCase() + 
+                                  normalizedTheme.replace('theme-', '').slice(1);
                 themeNameElement.textContent = displayName;
                 themeDisplay.classList.remove('hidden');
             } else {
@@ -1895,21 +1966,20 @@ document.addEventListener('DOMContentLoaded', function() {
             btn.classList.remove('active');
             
             // Handle different button ID formats
-            if (btn.id === `theme${theme.replace('theme-', '').charAt(0).toUpperCase() + theme.replace('theme-', '').slice(1)}` || 
-                btn.id === `theme${theme.charAt(0).toUpperCase() + theme.slice(1)}`) {
-                btn.classList.add('active');
-            }
-            
-            // Also check data-theme attribute
-            if (btn.dataset && btn.dataset.theme === theme) {
+            const btnTheme = btn.dataset?.theme || btn.id.toLowerCase().replace('theme', '');
+            const normalizedBtnTheme = btnTheme.startsWith('theme-') ? btnTheme : 
+                                     (btnTheme === 'dark') ? 'dark-theme' : 
+                                     `theme-${btnTheme}`;
+                                     
+            if (normalizedBtnTheme === normalizedTheme) {
                 btn.classList.add('active');
             }
         });
         
-        // Force repaint of theme-related elements
-        document.body.style.display = 'none';
-        document.body.offsetHeight; // This triggers a reflow
-        document.body.style.display = '';
+        // Force a refresh on the UI
+        document.documentElement.style.display = 'none';
+        document.documentElement.offsetHeight; // Trigger reflow
+        document.documentElement.style.display = '';
     }
     
     function handleProfileReminderClick() {
@@ -2340,102 +2410,134 @@ document.addEventListener('DOMContentLoaded', function() {
     function applyTheme(theme) {
         console.log('Applying theme:', theme);
         
-        // Remove all theme classes first from both documentElement and body
-        document.documentElement.classList.remove(
-            'dark-theme',
-            'theme-ram',
-            'theme-krishna',
-            'theme-lakshmi', 
-            'theme-ganesh',
-            'theme-shiva'
-        );
+        // Normalize theme name for consistency
+        const normalizedTheme = theme.startsWith('theme-') ? theme : 
+                              (theme === 'dark' || theme === 'dark-theme') ? 'dark-theme' : 
+                              `theme-${theme}`;
         
-        document.body.classList.remove(
-            'dark-theme',
-            'theme-ram',
-            'theme-krishna',
-            'theme-lakshmi', 
-            'theme-ganesh',
-            'theme-shiva'
-        );
-        
-        // Apply the selected theme
-        if (theme === 'dark') {
-            document.documentElement.classList.add('dark-theme');
-            document.body.classList.add('dark-theme');
-        } else if (theme.startsWith('theme-')) {
-            // For cultural themes like 'theme-ram', 'theme-krishna', etc.
-            document.documentElement.classList.add(theme);
-            document.body.classList.add(theme);
-            
-            // Also remove dark mode if it was applied
-            document.documentElement.classList.remove('dark-theme');
-            document.body.classList.remove('dark-theme');
-            
-            // Apply CSS variables from the theme
-            const themeColors = getComputedStyle(document.documentElement);
-            document.documentElement.style.setProperty('--primary-color', themeColors.getPropertyValue(`--primary-color`));
-            document.documentElement.style.setProperty('--secondary-color', themeColors.getPropertyValue(`--secondary-color`));
-            document.documentElement.style.setProperty('--accent-color', themeColors.getPropertyValue(`--accent-color`));
-            document.documentElement.style.setProperty('--accent-color-rgb', themeColors.getPropertyValue(`--accent-color-rgb`));
-            document.documentElement.style.setProperty('--background-color', themeColors.getPropertyValue(`--background-color`));
-            document.documentElement.style.setProperty('--text-color', themeColors.getPropertyValue(`--text-color`));
-            
-            // Update body background
-            document.body.style.backgroundColor = themeColors.getPropertyValue('--background-color');
-            document.body.style.color = themeColors.getPropertyValue('--text-color');
-            
-            // Update header background
-            const header = document.querySelector('header');
-            if (header) {
-                header.style.backgroundColor = themeColors.getPropertyValue('--primary-color');
-                header.style.color = 'white'; // Ensure header text is always white for better contrast
+        // Theme color mapping
+        const themeColors = {
+            'theme-ram': {
+                primary: '#ff7817',
+                background: '#fff7e6',
+                text: '#333333'
+            },
+            'theme-krishna': {
+                primary: '#2874A6',
+                background: '#EBF5FB',
+                text: '#1A5276'
+            },
+            'theme-lakshmi': {
+                primary: '#D4AC0D',
+                background: '#FEF9E7',
+                text: '#7D6608'
+            },
+            'theme-ganesh': {
+                primary: '#C0392B',
+                background: '#FDEDEC',
+                text: '#641E16'
+            },
+            'theme-shiva': {
+                primary: '#7D3C98',
+                background: '#F4ECF7',
+                text: '#4A235A'
+            },
+            'dark-theme': {
+                primary: '#FF6F00',
+                background: '#2c2c2c',
+                text: '#f0f0f0'
             }
+        };
+        
+        // Make sure we have colors for this theme
+        const colors = themeColors[normalizedTheme] || themeColors['theme-ram'];
+        
+        // 1. Clean up all theme classes first
+        const allThemeClasses = [
+            'dark-theme',
+            'theme-ram',
+            'theme-krishna',
+            'theme-lakshmi', 
+            'theme-ganesh',
+            'theme-shiva'
+        ];
+        
+        // Remove all theme classes from both documentElement and body
+        document.documentElement.classList.remove(...allThemeClasses);
+        document.body.classList.remove(...allThemeClasses);
+        
+        // 2. Set the new theme class
+        document.documentElement.className = normalizedTheme;
+        document.body.className = normalizedTheme;
+        
+        // 3. Apply direct styling for immediate visual feedback
+        document.documentElement.style.setProperty('--primary-color', colors.primary);
+        document.documentElement.style.setProperty('--background-color', colors.background);
+        document.documentElement.style.setProperty('--text-color', colors.text);
+        
+        // Apply to body directly as well
+        document.body.style.backgroundColor = colors.background;
+        document.body.style.color = colors.text;
+        
+        // Apply to header for immediate visibility
+        const header = document.querySelector('header');
+        if (header) {
+            header.style.backgroundColor = colors.primary;
+            header.style.color = 'white'; // Consistent header text color
+        }
+        
+        // Make sure Android app class is preserved if running in WebView
+        if (window.isRunningInWebView || window.AndroidInterface) {
+            document.body.classList.add('android-app');
         }
         
         // Update theme selection indicators
-        const themeButtons = document.querySelectorAll('.theme-palette-btn');
-        themeButtons.forEach(btn => {
+        const allButtons = document.querySelectorAll('.theme-palette-btn, .theme-button');
+        allButtons.forEach(btn => {
             btn.classList.remove('active');
-            if (btn.dataset.theme === theme) {
+            
+            // Get theme value from either dataset or ID
+            const btnTheme = btn.dataset?.theme || btn.id.toLowerCase().replace('theme', '');
+            
+            // Normalize button theme same as we did for selected theme
+            const normalizedBtnTheme = btnTheme.startsWith('theme-') ? btnTheme : 
+                                     (btnTheme === 'dark') ? 'dark-theme' : 
+                                     `theme-${btnTheme}`;
+            
+            if (normalizedBtnTheme === normalizedTheme) {
                 btn.classList.add('active');
             }
         });
         
-        // Update standard theme buttons
-        const standardThemeButtons = document.querySelectorAll('.theme-button');
-        standardThemeButtons.forEach(btn => {
-            btn.classList.remove('active');
-            const btnId = btn.id.replace('theme', '').toLowerCase();
-            if (btnId === theme) {
-                btn.classList.add('active');
-            }
-        });
-        
-        // Update theme display if available
+        // Update theme display name
         const themeDisplay = document.getElementById('selectedThemeDisplay');
         const themeNameElement = document.getElementById('currentThemeName');
         
-        if (themeDisplay && themeNameElement && theme.startsWith('theme-')) {
-            const displayName = theme.replace('theme-', '').charAt(0).toUpperCase() + theme.replace('theme-', '').slice(1);
-            themeNameElement.textContent = displayName;
-            themeDisplay.classList.remove('hidden');
-        } else if (themeDisplay) {
-            themeDisplay.classList.add('hidden');
+        if (themeDisplay && themeNameElement) {
+            if (normalizedTheme.startsWith('theme-')) {
+                // Format display name: theme-krishna -> Krishna
+                const displayName = normalizedTheme.replace('theme-', '').charAt(0).toUpperCase() + 
+                                 normalizedTheme.replace('theme-', '').slice(1);
+                themeNameElement.textContent = displayName;
+                themeDisplay.classList.remove('hidden');
+            } else if (normalizedTheme === 'dark-theme') {
+                themeNameElement.textContent = 'Dark';
+                themeDisplay.classList.remove('hidden');
+            } else {
+                themeDisplay.classList.add('hidden');
+            }
         }
         
-        // Update app header color for Android status bar if using WebView
+        // Update Android status bar color if available
         if (window.AndroidInterface) {
             try {
-                // Get the computed primary color from CSS
-                const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim();
-                window.AndroidInterface.updateStatusBarColor(primaryColor);
+                window.AndroidInterface.updateStatusBarColor(colors.primary);
             } catch (e) {
                 console.error('Error updating Android status bar color:', e);
             }
         }
         
-        console.log('Theme application complete:', theme);
+        console.log('Theme application complete:', normalizedTheme);
     }
     
     function saveAppSettings() {
