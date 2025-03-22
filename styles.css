@@ -274,6 +274,10 @@ header h1 {
 }
 
 /* Home Page */
+.greeting-message, .benefits-title {
+    color: white !important; /* Ensure these elements are always white */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Add subtle shadow for better readability */
+}
 .page {
     padding-top: 24px;
 }
