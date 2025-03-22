@@ -381,6 +381,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Update UI
         updateCountDisplay();
+        updateGreetingMessage(); // Update greeting with user name
         updateProfileStats();
         
         // Apply language settings
@@ -629,6 +630,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    // Function to update the greeting message with the current user name
+    function updateGreetingMessage() {
+        const greetingMessage = document.querySelector('.greeting-message');
+        if (greetingMessage) {
+            greetingMessage.textContent = `Hi, ${userName}`;
+        }
+    }
+    
     function updateProfileStats() {
         // Update profile stats
         profileTotalCount.textContent = totalCount;
@@ -649,6 +658,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 avatarImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=FF7817&color=fff`;
             }
         }
+        
+        // Update the greeting message whenever profile stats are updated
+        updateGreetingMessage();
         
         // Update sidebar stats
         if (sidebarUsername) {
@@ -746,6 +758,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function navigateToHome() {
         navigateToPage(homePage);
+        // Ensure greeting message is updated when navigating to home
+        updateGreetingMessage();
     }
     
     function navigateToWriting() {
@@ -810,6 +824,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show name element and hide edit controls
         profileName.style.display = 'block';
         editNameControls.style.display = 'none';
+        
+        // Update greeting message with new name
+        updateGreetingMessage();
         
         // Save to local storage
         saveData();
