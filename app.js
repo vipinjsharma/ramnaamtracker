@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event Listeners
     backButton.addEventListener('click', handleBackNavigation);
     menuButton.addEventListener('click', toggleMenu);
-    profileButton.addEventListener('click', toggleProfile);
+    profileButton.addEventListener('click', navigateToProfile);
     
     // Navigation listeners
     startWritingBtn.addEventListener('click', navigateToWriting);
