@@ -373,7 +373,7 @@ header h1 {
 .canvas-container {
     position: relative;
     width: 100%;
-    height: 50vh;
+    height: 45vh; /* Slightly reduced height to fit better with new layout */
     border-radius: var(--md-shape-medium);
     margin-bottom: 20px;
     background-color: var(--md-surface);
@@ -381,6 +381,43 @@ header h1 {
     box-shadow: var(--md-shadow-2);
     border: 2px solid rgba(var(--accent-color-rgb), 0.1);
     transition: all var(--md-transition-medium);
+}
+
+/* Progress section layout */
+.progress-section {
+    width: 100%;
+    margin-bottom: 16px;
+    background-color: var(--md-surface);
+    border-radius: var(--md-shape-medium);
+    padding: 16px;
+    box-shadow: var(--md-shadow-1);
+}
+
+/* WhatsApp share button */
+.whatsapp-share-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #25D366;
+    color: white;
+    border: none;
+    border-radius: var(--md-shape-small);
+    padding: 8px 16px;
+    margin-top: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    width: 100%;
+}
+
+.whatsapp-share-button:hover {
+    background-color: #128C7E;
+}
+
+.whatsapp-share-button svg {
+    margin-right: 4px;
 }
 
 .canvas-container:focus-within {

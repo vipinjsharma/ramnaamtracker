@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const submitBtn = document.getElementById('submitBtn');
     const shareBtn = document.getElementById('shareBtn');
     const downloadBtn = document.getElementById('downloadBtn');
+    const whatsappShareBtn = document.getElementById('whatsappShareBtn');
     
     // Get menu and overlay elements
     const menuOverlay = document.getElementById('menuOverlay');
@@ -257,6 +258,10 @@ document.addEventListener('DOMContentLoaded', function() {
     submitBtn.addEventListener('click', submitDrawing);
     shareBtn.addEventListener('click', shareStats);
     downloadBtn.addEventListener('click', downloadStats);
+    // WhatsApp share button on writing page
+    if (whatsappShareBtn) {
+        whatsappShareBtn.addEventListener('click', shareViaWhatsApp);
+    }
     
     // Profile page event listeners
     if (adminButton) adminButton.addEventListener('click', navigateToAdmin);
@@ -661,7 +666,18 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Calculate mala values for accurate display
         const monthlyMalaGoal = Math.ceil(monthlyGoal / MALA_COUNT);
-        const currentMonthMalas = Math.floor(currentMonthCount / MALA_COUNT);
+        
+        // Fix for display when count is low but not zero
+        let currentMonthMalasDisplay;
+        if (currentMonthCount === 0) {
+            currentMonthMalasDisplay = "0";  // Truly zero
+        } else if (currentMonthCount < MALA_COUNT) {
+            // Show partial mala completion as a fraction
+            currentMonthMalasDisplay = currentMonthCount + "/" + MALA_COUNT + " of first mala";
+        } else {
+            // Standard calculation for full malas
+            currentMonthMalasDisplay = Math.floor(currentMonthCount / MALA_COUNT).toString();
+        }
         
         // Update goal text displays if they exist
         if (document.getElementById('daily-goal-display')) {
@@ -670,8 +686,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         if (document.getElementById('monthly-goal-display')) {
-            document.getElementById('monthly-goal-display').textContent = 
-                `${currentMonthMalas}/${monthlyMalaGoal} malas (${Math.round(monthProgress)}%)`;
+            // Use the special formatting when count is low
+            if (currentMonthCount < MALA_COUNT && currentMonthCount > 0) {
+                document.getElementById('monthly-goal-display').textContent = 
+                    `${currentMonthMalasDisplay} of ${monthlyMalaGoal} malas (${Math.round(monthProgress)}%)`;
+            } else {
+                document.getElementById('monthly-goal-display').textContent = 
+                    `${currentMonthMalasDisplay}/${monthlyMalaGoal} malas (${Math.round(monthProgress)}%)`;
+            }
         }
         
         // Show/hide admin button based on user role
@@ -2539,6 +2561,70 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             // Fallback for browsers that don't support sharing
             alert(shareText);
+        }
+    }
+    
+    function shareViaWhatsApp() {
+        // Get today's date formatted for better reading
+        const today = new Date();
+        const dateFormatted = today.toLocaleDateString();
+        
+        // Create a motivational message based on streak and progress
+        let motivationalMessage = "";
+        if (currentStreak > 7) {
+            motivationalMessage = "🔥 Amazing consistency! Keep the spiritual journey going.";
+        } else if (currentStreak > 3) {
+            motivationalMessage = "🌟 Great progress! Your dedication is inspiring.";
+        } else if (currentStreak > 0) {
+            motivationalMessage = "✨ Every day of practice matters. Keep going!";
+        } else {
+            motivationalMessage = "💫 Today is a perfect day to continue your spiritual journey.";
+        }
+        
+        // Calculate daily goal progress
+        const dailyGoalPercentage = Math.round((todayCount / dailyGoal) * 100);
+        
+        // Format the WhatsApp message with today's stats and motivation
+        const shareText = `🕉️ *Ram Naam Writing - Today's Progress* 🕉️\n\n`
+            + `Date: ${dateFormatted}\n`
+            + `Today's Count: ${todayCount} राम\n`
+            + `Today's Malas: ${todayMalaCount}\n`
+            + `Daily Goal: ${dailyGoalPercentage}% completed\n`
+            + `Current Streak: ${currentStreak} days\n\n`
+            + `${motivationalMessage}\n\n`
+            + `🙏 Ram Ram 🙏`;
+        
+        // Try to use the native sharing if available
+        try {
+            // Check if we're in the Android app with custom interface
+            if (window.AndroidInterface && typeof window.AndroidInterface.shareToWhatsApp === 'function') {
+                window.AndroidInterface.shareToWhatsApp(shareText);
+                
+                // Provide haptic feedback if available
+                if (typeof window.AndroidInterface.vibrate === 'function') {
+                    window.AndroidInterface.vibrate(20);
+                }
+                
+                showToast("Sharing via WhatsApp...");
+                return;
+            }
+        } catch (e) {
+            console.warn("Error using Android interface for sharing:", e);
+        }
+        
+        // Fallback to standard web approach
+        const encodedText = encodeURIComponent(shareText);
+        const whatsappUrl = `https://wa.me/?text=${encodedText}`;
+        
+        // Open WhatsApp in a new tab
+        window.open(whatsappUrl, '_blank');
+        
+        // Show a confirmation toast
+        showToast("Opening WhatsApp...");
+        
+        // Vibrate device if possible for feedback
+        if ('vibrate' in navigator) {
+            navigator.vibrate(20);
         }
     }
     
