@@ -173,6 +173,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Functions
     function initializeApp() {
+        // Check for URL parameters (used when launched from Android WebView)
+        checkUrlParameters();
+        
         // Set up canvas
         setupCanvas();
         
@@ -183,8 +186,63 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCountDisplay();
         updateProfileStats();
         
+        // Apply language settings
+        applyLanguage();
+        
         // Show home page initially
         navigateToHome();
+    }
+    
+    function checkUrlParameters() {
+        // Parse URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const langParam = urlParams.get('lang');
+        
+        // Check if we have a language parameter
+        if (langParam) {
+            console.log("Detected language from URL parameter:", langParam);
+            if (langParam === 'hi' || langParam === 'en') {
+                appLanguage = langParam;
+                console.log("Setting app language to:", appLanguage);
+            }
+        }
+        
+        // Check if we're running in Android WebView
+        const isAndroidApp = window.AndroidInterface !== undefined || 
+                            navigator.userAgent.includes('RamLekhakApp') ||
+                            document.body.classList.contains('android-app');
+        
+        if (isAndroidApp) {
+            console.log("Running in Android WebView");
+            document.body.classList.add('android-app');
+            
+            // Check for admin mode from Android
+            try {
+                if (window.AndroidInterface && typeof window.AndroidInterface.isAdminEnabled === 'function') {
+                    isAdminUser = window.AndroidInterface.isAdminEnabled();
+                    console.log("Admin mode from Android:", isAdminUser);
+                }
+            } catch (error) {
+                console.warn("Error checking admin mode from Android interface:", error);
+            }
+            
+            // Check if we can get language from Android interface
+            try {
+                if (window.AndroidInterface && typeof window.AndroidInterface.getDeviceLanguage === 'function') {
+                    const deviceLang = window.AndroidInterface.getDeviceLanguage();
+                    console.log("Detected language from Android:", deviceLang);
+                    if (deviceLang === 'hi' || deviceLang === 'en') {
+                        // Only override if not already set from URL parameter
+                        if (!langParam) {
+                            appLanguage = deviceLang;
+                            console.log("Setting app language from Android interface:", appLanguage);
+                        }
+                    }
+                }
+            } catch (error) {
+                console.warn("Error getting language from Android interface:", error);
+            }
+        }
     }
     
     function setupCanvas() {

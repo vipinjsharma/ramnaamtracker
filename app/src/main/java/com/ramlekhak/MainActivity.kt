@@ -1,103 +1,336 @@
 package com.ramlekhak
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.view.MenuItem
-import androidx.appcompat.app.ActionBarDrawerToggle
+import android.view.View
+import android.webkit.*
+import java.util.Locale
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.navigation.NavigationView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.webkit.WebViewCompat
+import androidx.webkit.WebViewFeature
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity() {
+    private lateinit var webView: WebView
+    private lateinit var progressBar: ProgressBar
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var errorLayout: LinearLayout
+    private lateinit var retryButton: Button
+    private lateinit var errorTextView: TextView
 
-    private lateinit var drawerLayout: DrawerLayout
-    private lateinit var navController: NavController
-    private lateinit var appBarConfiguration: AppBarConfiguration
-
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_webview)
 
-        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        // Initialize views
+        webView = findViewById(R.id.webView)
+        progressBar = findViewById(R.id.progressBar)
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
+        errorLayout = findViewById(R.id.errorLayout)
+        retryButton = findViewById(R.id.retryButton)
+        errorTextView = findViewById(R.id.errorTextView)
 
-        drawerLayout = findViewById(R.id.drawer_layout)
-        val navView = findViewById<NavigationView>(R.id.nav_view)
-        navController = findNavController(R.id.nav_host_fragment)
-
-        // Setup the drawer navigation
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.homeFragment,
-                R.id.writingFragment,
-                R.id.statisticsFragment,
-                R.id.benefitsFragment,
-                R.id.settingsFragment
-            ),
-            drawerLayout
-        )
-
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
-        navView.setNavigationItemSelectedListener(this)
-
-        // Setup drawer toggle
-        val toggle = ActionBarDrawerToggle(
-            this, drawerLayout, toolbar,
-            R.string.app_name, R.string.app_name
-        )
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.nav_home -> navController.navigate(R.id.homeFragment)
-            R.id.nav_writing -> navController.navigate(R.id.writingFragment)
-            R.id.nav_statistics -> navController.navigate(R.id.statisticsFragment)
-            R.id.nav_benefits -> navController.navigate(R.id.benefitsFragment)
-            R.id.nav_settings -> navController.navigate(R.id.settingsFragment)
-            R.id.nav_share -> shareApp()
-            R.id.nav_feedback -> sendFeedback()
+        // Set retry button click listener
+        retryButton.setOnClickListener {
+            errorLayout.visibility = View.GONE
+            loadWebApp()
         }
-        
-        drawerLayout.closeDrawer(GravityCompat.START)
+
+        setupWebView()
+        setupSwipeRefresh()
+
+        // Load the web app
+        if (savedInstanceState == null) {
+            loadWebApp()
+        }
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private fun setupWebView() {
+        // Configure WebView settings
+        with(webView.settings) {
+            javaScriptEnabled = true
+            domStorageEnabled = true
+            allowFileAccess = true
+            allowContentAccess = true
+            databaseEnabled = true
+            
+            // Use modern web engine if available
+            setAppCacheEnabled(true)
+            cacheMode = WebSettings.LOAD_DEFAULT
+            
+            // Set user agent to ensure proper rendering
+            userAgentString = "$userAgentString RamLekhakApp"
+
+            // Enable mixed content for development (remove for production)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+            }
+            
+            // Enable modern features if available
+            if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK) && 
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                WebViewCompat.setForceDark(webView, WebSettings.FORCE_DARK_AUTO)
+            }
+        }
+
+        // Set WebView client for handling page navigation
+        webView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+                // Handle external links
+                if (url.startsWith("http:") || url.startsWith("https:")) {
+                    if (!url.contains(Uri.parse("file:///android_asset").toString())) {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        startActivity(intent)
+                        return true
+                    }
+                }
+                return false
+            }
+            
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                progressBar.visibility = View.VISIBLE
+                errorLayout.visibility = View.GONE
+                super.onPageStarted(view, url, favicon)
+            }
+            
+            override fun onPageFinished(view: WebView?, url: String?) {
+                progressBar.visibility = View.GONE
+                swipeRefreshLayout.isRefreshing = false
+                
+                // Add a class to the body to indicate we're on Android
+                view?.evaluateJavascript(
+                    "document.body.classList.add('android-app');",
+                    null
+                )
+                
+                super.onPageFinished(view, url)
+            }
+            
+            override fun onReceivedError(
+                view: WebView?,
+                request: WebResourceRequest?,
+                error: WebResourceError?
+            ) {
+                if (request?.isForMainFrame == true) {
+                    showErrorView(getString(R.string.error_loading))
+                }
+                super.onReceivedError(view, request, error)
+            }
+        }
+
+        // Set WebChromeClient for handling JavaScript alerts and progress
+        webView.webChromeClient = object : WebChromeClient() {
+            override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                if (newProgress < 100) {
+                    progressBar.visibility = View.VISIBLE
+                    progressBar.progress = newProgress
+                } else {
+                    progressBar.visibility = View.GONE
+                }
+                super.onProgressChanged(view, newProgress)
+            }
+            
+            override fun onJsAlert(
+                view: WebView?,
+                url: String?,
+                message: String?,
+                result: JsResult?
+            ): Boolean {
+                AlertDialog.Builder(this@MainActivity)
+                    .setMessage(message)
+                    .setPositiveButton(getString(R.string.ok)) { _, _ -> result?.confirm() }
+                    .setCancelable(false)
+                    .create()
+                    .show()
+                return true
+            }
+            
+            override fun onJsConfirm(
+                view: WebView?,
+                url: String?,
+                message: String?,
+                result: JsResult?
+            ): Boolean {
+                AlertDialog.Builder(this@MainActivity)
+                    .setMessage(message)
+                    .setPositiveButton(getString(R.string.yes)) { _, _ -> result?.confirm() }
+                    .setNegativeButton(getString(R.string.no)) { _, _ -> result?.cancel() }
+                    .setCancelable(false)
+                    .create()
+                    .show()
+                return true
+            }
+        }
+
+        // Setup JavaScript interface to bridge web and native code
+        webView.addJavascriptInterface(WebAppInterface(this), "AndroidInterface")
+    }
+
+    private fun setupSwipeRefresh() {
+        swipeRefreshLayout.setOnRefreshListener {
+            loadWebApp()
+        }
+        swipeRefreshLayout.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light
+        )
+    }
+
+    private fun loadWebApp() {
+        if (isNetworkAvailable()) {
+            progressBar.visibility = View.VISIBLE
+            // Detect system language and pass it as a URL parameter
+            val deviceLanguage = getCurrentLanguage()
+            webView.loadUrl("file:///android_asset/index.html?lang=$deviceLanguage")
+        } else {
+            showErrorView(getString(R.string.no_internet))
+        }
+    }
+    
+    // Making this public so WebAppInterface can access it
+    fun getCurrentLanguage(): String {
+        val locale = Locale.getDefault()
+        return when (locale.language) {
+            "hi" -> "hi" // Hindi
+            else -> "en" // Default to English
+        }
+    }
+    
+    private fun showErrorView(errorMessage: String) {
+        webView.visibility = View.GONE
+        errorLayout.visibility = View.VISIBLE
+        errorTextView.text = errorMessage
+        progressBar.visibility = View.GONE
+        swipeRefreshLayout.isRefreshing = false
+    }
+    
+    private fun isNetworkAvailable(): Boolean {
+        // For loading local assets, we don't necessarily need network
+        // But we'll keep this function for future use if we need online resources
         return true
+        
+        /*
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val network = connectivityManager.activeNetwork ?: return false
+            val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+            
+            return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+        } else {
+            val networkInfo = connectivityManager.activeNetworkInfo
+            return networkInfo != null && networkInfo.isConnected
+        }
+        */
     }
 
-    private fun shareApp() {
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, getString(R.string.share_message))
-        }
-        startActivity(Intent.createChooser(intent, "Share via"))
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        webView.saveState(outState)
     }
 
-    private fun sendFeedback() {
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            type = "message/rfc822"
-            putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.feedback_email)))
-            putExtra(Intent.EXTRA_SUBJECT, "Feedback for Ram Lekhak App")
-        }
-        startActivity(Intent.createChooser(intent, getString(R.string.send_feedback)))
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        webView.restoreState(savedInstanceState)
     }
 
     override fun onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
+        when {
+            errorLayout.visibility == View.VISIBLE -> {
+                // If error view is showing, retry loading the app
+                errorLayout.visibility = View.GONE
+                loadWebApp()
+            }
+            webView.canGoBack() -> {
+                // If WebView can go back, navigate back in WebView history
+                webView.goBack()
+            }
+            else -> {
+                // Otherwise, show exit confirmation
+                showExitConfirmationDialog()
+            }
+        }
+    }
+    
+    private fun showExitConfirmationDialog() {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.exit_title))
+            .setMessage(getString(R.string.exit_message))
+            .setPositiveButton(getString(R.string.yes)) { _, _ -> finish() }
+            .setNegativeButton(getString(R.string.no), null)
+            .show()
+    }
+}
+
+// JavaScript interface to provide native functionality to web app
+class WebAppInterface(private val context: Context) {
+    @JavascriptInterface
+    fun showToast(message: String) {
+        android.widget.Toast.makeText(context, message, android.widget.Toast.LENGTH_SHORT).show()
+    }
+    
+    @JavascriptInterface
+    fun getDeviceInfo(): String {
+        return "Android ${Build.VERSION.RELEASE}"
+    }
+    
+    @JavascriptInterface
+    fun getDeviceLanguage(): String {
+        return (context as? MainActivity)?.getCurrentLanguage() ?: "en"
+    }
+    
+    @JavascriptInterface
+    fun isAdminEnabled(): Boolean {
+        // By default, admin is disabled in app
+        return false
+    }
+    
+    @JavascriptInterface
+    fun shareText(title: String, text: String) {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, title)
+            putExtra(Intent.EXTRA_TEXT, text)
+        }
+        val shareTitle = (context as? MainActivity)?.getString(R.string.share_title) ?: "Share Ram Lekhak Stats"
+        context.startActivity(Intent.createChooser(intent, shareTitle))
+    }
+    
+    @JavascriptInterface
+    fun vibrate() {
+        try {
+            val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as android.os.VibratorManager
+                vibratorManager.defaultVibrator
+            } else {
+                @Suppress("DEPRECATION")
+                context.getSystemService(Context.VIBRATOR_SERVICE) as android.os.Vibrator
+            }
+            
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(android.os.VibrationEffect.createOneShot(50, android.os.VibrationEffect.DEFAULT_AMPLITUDE))
+            } else {
+                @Suppress("DEPRECATION")
+                vibrator.vibrate(50)
+            }
+        } catch (e: Exception) {
+            // Ignore vibration errors
         }
     }
 }

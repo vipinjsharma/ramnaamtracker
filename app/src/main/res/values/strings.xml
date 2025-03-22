@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">राम लेखक</string>
+    <string name="app_name">Ram Lekhak</string>
     <string name="app_name_transliterated">Ram Lekhak</string>
     
     <!-- Navigation Drawer -->
@@ -9,7 +9,7 @@
     
     <!-- Menu Items -->
     <string name="menu_home">Home</string>
-    <string name="menu_writing">Write Ram</string>
+    <string name="menu_writing">Ram Writing</string>
     <string name="menu_statistics">Statistics</string>
     <string name="menu_benefits">Benefits</string>
     <string name="menu_settings">Settings</string>
@@ -24,7 +24,7 @@
     
     <!-- Statistics Screen -->
     <string name="total_written">Total Ram Written</string>
-    <string name="total_mala">Total Mala Completed</string>
+    <string name="total_mala">Total Malas Completed</string>
     <string name="today_written">Written Today</string>
     <string name="this_week">Written This Week</string>
     <string name="this_month">Written This Month</string>
@@ -32,18 +32,33 @@
     <string name="streak">Current Streak</string>
     
     <!-- Benefits Screen -->
-    <string name="benefits_title">Benefits of Writing Ram Naam</string>
-    <string name="benefit_1">Brings Peace and Calmness to Mind</string>
-    <string name="benefit_2">Improves Concentration and Focus</string>
-    <string name="benefit_3">Builds Discipline and Patience</string>
-    <string name="benefit_4">Connects to Divine Energy</string>
-    <string name="benefit_5">Reduces Stress and Anxiety</string>
+    <string name="benefits_title">Benefits of Ram Naam Writing</string>
+    <string name="benefit_1">Brings peace and stability to the mind</string>
+    <string name="benefit_2">Improves concentration and focus</string>
+    <string name="benefit_3">Builds discipline and patience</string>
+    <string name="benefit_4">Connects to divine energy</string>
+    <string name="benefit_5">Reduces stress and anxiety</string>
     
     <!-- Settings Screen -->
     <string name="language_setting">Language</string>
     <string name="theme_setting">Theme</string>
     <string name="goal_setting">Daily Goal</string>
     <string name="notification_setting">Notifications</string>
-    <string name="backup_setting">Backup Data</string>
+    <string name="backup_setting">Data Backup</string>
     <string name="reset_setting">Reset Data</string>
+    
+    <!-- Error Handling -->
+    <string name="error_title">Oops! Something went wrong</string>
+    <string name="error_loading">Unable to load the app. Please check your connection and try again.</string>
+    <string name="retry_button">Retry</string>
+    <string name="no_internet">No internet connection available. Please check your network settings and try again.</string>
+    
+    <!-- Dialogs -->
+    <string name="exit_title">Exit App</string>
+    <string name="exit_message">Are you sure you want to exit?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="share_title">Share Ram Lekhak Stats</string>
 </resources>

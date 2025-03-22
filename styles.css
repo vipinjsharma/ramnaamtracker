@@ -681,6 +681,40 @@ input:checked + .toggle-slider-large:before {
     background-color: rgba(255, 255, 255, 0.05);
 }
 
+/* Special styling for Android WebView */
+body.android-app {
+    /* Remove extra padding that might be around the body in WebView */
+    margin: 0;
+    padding: 0;
+    /* Prevent browser-specific behaviors like pull-to-refresh */
+    overscroll-behavior: none;
+    /* Better touch response */
+    touch-action: manipulation;
+}
+
+/* Adjust canvas size for Android */
+body.android-app .canvas-container {
+    margin: 0 auto;
+    /* Ensure canvas works well in portrait mode */
+    height: 40vh;  
+}
+
+/* Improve tap targets for Android */
+body.android-app button, 
+body.android-app .menu-item,
+body.android-app .profile-item {
+    min-height: 44px;
+    padding: 12px 16px;
+}
+
+/* Fix header in Android view */
+body.android-app .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--primary-color);
+}
+
 /* Modal Styles */
 .modal {
     display: none;

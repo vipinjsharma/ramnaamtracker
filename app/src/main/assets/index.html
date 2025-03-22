@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ram Lekhak</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="light-theme">
+    <div class="container">
+        <!-- Header -->
+        <header class="app-header">
+            <button class="header-icon back-button hidden">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1 class="app-title">Ram Lekhak</h1>
+            <div class="header-icons">
+                <button id="menuButton" class="header-icon">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <button id="profileMenuButton" class="header-icon">
+                    <i class="fas fa-user-circle"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Home Page -->
+        <div id="homePage" class="page">
+            <div class="card">
+                <div class="card-header">
+                    <span data-text="home_title">Ram Naam Writing</span>
+                </div>
+                <div class="home-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalCount">0</div>
+                        <div class="stat-label" data-text="total_count">Total Count</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="todayCount">0</div>
+                        <div class="stat-label" data-text="today_count">Today's Count</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value"><span id="streakCount">0</span> <span class="small" data-text="days">days</span></div>
+                        <div class="stat-label" data-text="current_streak">Current Streak</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="malaCount">0</div>
+                        <div class="stat-label" data-text="mala_count">Mala Count</div>
+                    </div>
+                </div>
+                <div class="stars-container" id="starsContainer">
+                    <!-- Stars will be added dynamically -->
+                </div>
+            </div>
+            <div class="main-action">
+                <button id="writeButton" class="btn btn-primary btn-icon">
+                    <i class="fas fa-pen"></i>
+                    <span data-text="write_button">Write</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Writing Page -->
+        <div id="writingPage" class="page">
+            <div class="canvas-container">
+                <canvas id="drawingCanvas"></canvas>
+            </div>
+            <div class="canvas-actions">
+                <button id="clearButton" class="btn btn-secondary">
+                    <span data-text="clear">Clear</span>
+                </button>
+                <button id="autoButton" class="btn btn-secondary">
+                    <span data-text="auto">Auto</span>
+                </button>
+                <button id="submitButton" class="btn btn-primary">
+                    <span data-text="submit">Submit</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Profile Page -->
+        <div id="profilePage" class="page">
+            <div class="card">
+                <div class="card-header">
+                    <span data-text="profile_stats">Your Stats</span>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="profileTotalCount">0</div>
+                        <div class="stat-label" data-text="total_count">Total Count</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="profileDailyAvg">0</div>
+                        <div class="stat-label">Daily Avg</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="profileTotalDays">0</div>
+                        <div class="stat-label">Total Days</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="profileMalas">0</div>
+                        <div class="stat-label" data-text="mala_count">Mala Count</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <span data-text="settings">Settings</span>
+                </div>
+                <div class="profile-menu">
+                    <div class="profile-menu-item" id="profileView">
+                        <span>View Stats</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="profile-menu-item" id="profileAccount">
+                        <span data-text="account">Account</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="profile-menu-item" id="profileTheme">
+                        <span data-text="theme">Theme</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="profile-menu-item" id="profileReminder">
+                        <span data-text="reminder">Daily Reminder</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="profile-menu-item" id="profileLogout">
+                        <span data-text="logout">Logout</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Page (Hidden until activated) -->
+        <div id="adminPage" class="page">
+            <div class="card">
+                <div class="card-header">
+                    <span data-text="admin_panel">Admin Panel</span>
+                </div>
+                <div class="admin-actions">
+                    <button id="exportButton" class="btn btn-primary">
+                        <span data-text="export">Export Data</span>
+                    </button>
+                    <button id="backupButton" class="btn btn-primary">
+                        <span data-text="backup">Backup Data</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Overlay -->
+        <div id="menuOverlay" class="overlay">
+            <div class="overlay-header">
+                <h2 class="overlay-title">Menu</h2>
+                <button class="overlay-close">&times;</button>
+            </div>
+            <div class="overlay-content">
+                <div class="menu-item" id="menuWrite">
+                    <span class="menu-icon"><i class="fas fa-pen"></i></span>
+                    <span data-text="menu_write">Ram Naam Writing</span>
+                </div>
+                <div class="menu-item" id="menuShare">
+                    <span class="menu-icon"><i class="fas fa-share-alt"></i></span>
+                    <span data-text="menu_share">Share</span>
+                </div>
+                <div class="menu-item" id="menuRate">
+                    <span class="menu-icon"><i class="fas fa-star"></i></span>
+                    <span data-text="menu_rate">Rate App</span>
+                </div>
+                <div class="menu-item" id="menuFeedback">
+                    <span class="menu-icon"><i class="fas fa-comment"></i></span>
+                    <span data-text="menu_feedback">Feedback</span>
+                </div>
+                <div class="menu-item" id="menuHowTo">
+                    <span class="menu-icon"><i class="fas fa-question-circle"></i></span>
+                    <span data-text="menu_howto">How to Use</span>
+                </div>
+                <div class="menu-item" id="menuLanguage">
+                    <span class="menu-icon"><i class="fas fa-language"></i></span>
+                    <span data-text="menu_language">Language</span>
+                </div>
+                <div class="menu-item" id="menuTerms">
+                    <span class="menu-icon"><i class="fas fa-file-contract"></i></span>
+                    <span data-text="menu_terms">Terms of Service</span>
+                </div>
+                <div class="menu-item" id="menuPrivacy">
+                    <span class="menu-icon"><i class="fas fa-shield-alt"></i></span>
+                    <span data-text="menu_privacy">Privacy Policy</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Overlay -->
+        <div id="profileOverlay" class="overlay">
+            <div class="overlay-header">
+                <h2 class="overlay-title">Profile</h2>
+                <button class="overlay-close">&times;</button>
+            </div>
+            <div class="overlay-content">
+                <div class="profile-item" id="profileView">
+                    <span class="profile-icon"><i class="fas fa-chart-bar"></i></span>
+                    <span>View Stats</span>
+                </div>
+                <div class="profile-item" id="profileAccount">
+                    <span class="profile-icon"><i class="fas fa-user"></i></span>
+                    <span data-text="account">Account</span>
+                </div>
+                <div class="profile-item" id="profileTheme">
+                    <span class="profile-icon"><i class="fas fa-palette"></i></span>
+                    <span data-text="theme">Theme</span>
+                </div>
+                <div class="profile-item" id="profileReminder">
+                    <span class="profile-icon"><i class="fas fa-bell"></i></span>
+                    <span data-text="reminder">Daily Reminder</span>
+                </div>
+                <div class="profile-item" id="profileAdmin">
+                    <span class="profile-icon"><i class="fas fa-cog"></i></span>
+                    <span data-text="admin">Admin Panel</span>
+                </div>
+                <div class="profile-item" id="profileLogout">
+                    <span class="profile-icon"><i class="fas fa-sign-out-alt"></i></span>
+                    <span data-text="logout">Logout</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Language Settings Overlay -->
+        <div id="languageOverlay" class="overlay">
+            <div class="overlay-header">
+                <h2 class="overlay-title" data-text="menu_language">Language</h2>
+                <button class="overlay-close">&times;</button>
+            </div>
+            <div class="overlay-content">
+                <div class="settings-section">
+                    <div class="input-group">
+                        <select id="languageSelector" class="input-field">
+                            <option value="en">English</option>
+                            <option value="hi">हिंदी (Hindi)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Theme Settings Overlay -->
+        <div id="themeOverlay" class="overlay">
+            <div class="overlay-header">
+                <h2 class="overlay-title" data-text="theme">Theme</h2>
+                <button class="overlay-close">&times;</button>
+            </div>
+            <div class="overlay-content">
+                <div class="settings-section">
+                    <div class="input-group">
+                        <select id="themeSelector" class="input-field">
+                            <option value="light" data-text="light_theme">Light Theme</option>
+                            <option value="dark" data-text="dark_theme">Dark Theme</option>
+                            <option value="auto" data-text="auto_theme">Auto Theme</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reminder Settings Overlay -->
+        <div id="reminderOverlay" class="overlay">
+            <div class="overlay-header">
+                <h2 class="overlay-title" data-text="reminder">Daily Reminder</h2>
+                <button class="overlay-close">&times;</button>
+            </div>
+            <div class="overlay-content">
+                <div class="settings-section">
+                    <div class="input-group">
+                        <label class="input-label" data-text="remind_time">Reminder Time</label>
+                        <input type="time" id="reminderTime" class="input-field">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label" data-text="remind_days">Reminder Days</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="day-mon" class="reminder-day-checkbox" value="mon">
+                                <label for="day-mon" data-text="monday">Monday</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="day-tue" class="reminder-day-checkbox" value="tue">
+                                <label for="day-tue" data-text="tuesday">Tuesday</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="day-wed" class="reminder-day-checkbox" value="wed">
+                                <label for="day-wed" data-text="wednesday">Wednesday</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="day-thu" class="reminder-day-checkbox" value="thu">
+                                <label for="day-thu" data-text="thursday">Thursday</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="day-fri" class="reminder-day-checkbox" value="fri">
+                                <label for="day-fri" data-text="friday">Friday</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="day-sat" class="reminder-day-checkbox" value="sat">
+                                <label for="day-sat" data-text="saturday">Saturday</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="day-sun" class="reminder-day-checkbox" value="sun">
+                                <label for="day-sun" data-text="sunday">Sunday</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <button id="saveReminderButton" class="btn btn-primary">
+                            <span data-text="save">Save</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rate App Overlay -->
+        <div id="rateOverlay" class="overlay">
+            <div class="overlay-header">
+                <h2 class="overlay-title" data-text="rate_experience">Rate your experience</h2>
+                <button class="overlay-close">&times;</button>
+            </div>
+            <div class="overlay-content text-center">
+                <div class="stars-container" style="margin: 2rem 0;">
+                    <span class="star" onclick="setRating(1)">★</span>
+                    <span class="star" onclick="setRating(2)">★</span>
+                    <span class="star" onclick="setRating(3)">★</span>
+                    <span class="star" onclick="setRating(4)">★</span>
+                    <span class="star" onclick="setRating(5)">★</span>
+                </div>
+                <p class="mb-2">Thank you for your feedback!</p>
+            </div>
+        </div>
+
+        <!-- Feedback Overlay -->
+        <div id="feedbackOverlay" class="overlay">
+            <div class="overlay-header">
+                <h2 class="overlay-title" data-text="send_feedback">Send Feedback</h2>
+                <button class="overlay-close">&times;</button>
+            </div>
+            <div class="overlay-content">
+                <div class="input-group">
+                    <textarea class="input-field" rows="6" placeholder="Share your thoughts about the app..."></textarea>
+                </div>
+                <div class="input-group">
+                    <button class="btn btn-primary" data-text="send_feedback">Send Feedback</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- How To Use Overlay -->
+        <div id="howToOverlay" class="overlay">
+            <div class="overlay-header">
+                <h2 class="overlay-title" data-text="menu_howto">How to Use</h2>
+                <button class="overlay-close">&times;</button>
+            </div>
+            <div class="overlay-content">
+                <div class="card">
+                    <h3>1. Write राम</h3>
+                    <p>Tap the Write button and draw "राम" on the canvas.</p>
+                </div>
+                <div class="card">
+                    <h3>2. Submit Your Writing</h3>
+                    <p>After writing, tap Submit to count your entry.</p>
+                </div>
+                <div class="card">
+                    <h3>3. Track Your Progress</h3>
+                    <p>View your statistics on the home screen or profile page.</p>
+                </div>
+                <div class="card">
+                    <h3>4. Auto Draw</h3>
+                    <p>Use Auto button for automated राम writing.</p>
+                </div>
+                <div class="card">
+                    <h3>5. Daily Practice</h3>
+                    <p>Maintain your streak by writing daily.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terms of Service Overlay -->
+        <div id="termsOverlay" class="overlay">
+            <div class="overlay-header">
+                <h2 class="overlay-title" data-text="menu_terms">Terms of Service</h2>
+                <button class="overlay-close">&times;</button>
+            </div>
+            <div class="overlay-content">
+                <div class="card">
+                    <h3>Terms of Service</h3>
+                    <p>This application is provided for spiritual and educational purposes.</p>
+                    <p>By using this application, you agree to these terms.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Privacy Policy Overlay -->
+        <div id="privacyOverlay" class="overlay">
+            <div class="overlay-header">
+                <h2 class="overlay-title" data-text="menu_privacy">Privacy Policy</h2>
+                <button class="overlay-close">&times;</button>
+            </div>
+            <div class="overlay-content">
+                <div class="card">
+                    <h3>Privacy Policy</h3>
+                    <p>All your data is stored locally on your device.</p>
+                    <p>We do not collect any personal information.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Overlay -->
+        <div id="statsOverlay" class="overlay">
+            <div class="overlay-header">
+                <h2 class="overlay-title" data-text="ram_stats">Ram Naam Stats</h2>
+                <button class="overlay-close">&times;</button>
+            </div>
+            <div class="overlay-content">
+                <div class="card">
+                    <div class="card-header">
+                        <span data-text="daily_stats">Daily Stats</span>
+                    </div>
+                    <div id="dailyStatsContent">
+                        <!-- Daily stats will be populated here -->
+                    </div>
+                </div>
+                <div class="input-group">
+                    <button id="downloadStatsButton" class="btn btn-primary">
+                        <span data-text="download">Download</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Logout Confirmation Overlay -->
+        <div id="logoutConfirmOverlay" class="overlay">
+            <div class="overlay-header">
+                <h2 class="overlay-title" data-text="logout">Logout</h2>
+                <button class="overlay-close">&times;</button>
+            </div>
+            <div class="overlay-content text-center">
+                <p class="mb-2">Are you sure you want to logout? This will clear all your data.</p>
+                <div class="input-group">
+                    <button onclick="handleLogout()" class="btn btn-primary" data-text="logout">Logout</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast notification -->
+        <div id="toast" class="toast"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
