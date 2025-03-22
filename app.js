@@ -1116,7 +1116,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Apply translations to elements using our getTranslation helper
             
             // Update header and main page elements
-            document.querySelector('.app-header h1').textContent = getTranslation('app_title');
+            document.querySelector('.header-center h1').textContent = getTranslation('app_title');
             
             // Update stats labels
             const todayCountLabel = document.querySelector('.today-count h3');
