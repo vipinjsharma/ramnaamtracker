@@ -1378,11 +1378,21 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleProfileThemeClick() {
         closeProfileOverlay();
         
-        // Create theme selection modal
+        // Create theme selection modal with cultural theme palette
         const themeOptions = `
             <div class="theme-options">
                 <h3>Select Theme</h3>
-                <p>Choose your preferred theme for the app:</p>
+                <p>Tap a color to instantly change the theme:</p>
+                
+                <div class="cultural-theme-palette">
+                    <button id="themeRam" class="theme-palette-btn theme-ram ${currentTheme === 'theme-ram' ? 'active' : ''}" data-name="Ram"></button>
+                    <button id="themeKrishna" class="theme-palette-btn theme-krishna ${currentTheme === 'theme-krishna' ? 'active' : ''}" data-name="Krishna"></button>
+                    <button id="themeLakshmi" class="theme-palette-btn theme-lakshmi ${currentTheme === 'theme-lakshmi' ? 'active' : ''}" data-name="Lakshmi"></button>
+                    <button id="themeGanesh" class="theme-palette-btn theme-ganesh ${currentTheme === 'theme-ganesh' ? 'active' : ''}" data-name="Ganesh"></button>
+                    <button id="themeShiva" class="theme-palette-btn theme-shiva ${currentTheme === 'theme-shiva' ? 'active' : ''}" data-name="Shiva"></button>
+                </div>
+                
+                <p>Or choose from standard options:</p>
                 
                 <div class="theme-buttons">
                     <button id="themeLight" class="theme-button ${currentTheme === 'light' ? 'active' : ''}">
@@ -1436,7 +1446,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 300);
         });
         
-        // Theme selection functionality
+        // Theme selection functionality - Standard themes
         const lightBtn = modal.querySelector('#themeLight');
         const darkBtn = modal.querySelector('#themeDark');
         const systemBtn = modal.querySelector('#themeSystem');
@@ -1464,6 +1474,58 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.body.removeChild(modal);
             }, 300);
         });
+        
+        // Cultural Theme Selection
+        const ramBtn = modal.querySelector('#themeRam');
+        const krishnaBtn = modal.querySelector('#themeKrishna');
+        const lakshmiBtn = modal.querySelector('#themeLakshmi');
+        const ganeshBtn = modal.querySelector('#themeGanesh');
+        const shivaBtn = modal.querySelector('#themeShiva');
+        
+        ramBtn.addEventListener('click', () => {
+            setTheme('theme-ram');
+            vibrateDevice(50, 'medium'); // Haptic feedback
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
+        
+        krishnaBtn.addEventListener('click', () => {
+            setTheme('theme-krishna');
+            vibrateDevice(50, 'medium'); // Haptic feedback
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
+        
+        lakshmiBtn.addEventListener('click', () => {
+            setTheme('theme-lakshmi');
+            vibrateDevice(50, 'medium'); // Haptic feedback
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
+        
+        ganeshBtn.addEventListener('click', () => {
+            setTheme('theme-ganesh');
+            vibrateDevice(50, 'medium'); // Haptic feedback
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
+        
+        shivaBtn.addEventListener('click', () => {
+            setTheme('theme-shiva');
+            vibrateDevice(50, 'medium'); // Haptic feedback
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
     }
     
     function setTheme(theme) {
@@ -1480,8 +1542,30 @@ document.addEventListener('DOMContentLoaded', function() {
         // Save the preference
         saveData();
         
-        // Show feedback
-        showToast(`Theme changed to ${theme.charAt(0).toUpperCase() + theme.slice(1)}`);
+        // Show feedback with more descriptive names for cultural themes
+        let themeName = '';
+        
+        if (theme === 'light') {
+            themeName = 'Light';
+        } else if (theme === 'dark') {
+            themeName = 'Dark';
+        } else if (theme === 'system') {
+            themeName = 'System';
+        } else if (theme === 'theme-ram') {
+            themeName = 'Ram (Saffron)';
+        } else if (theme === 'theme-krishna') {
+            themeName = 'Krishna (Blue)';
+        } else if (theme === 'theme-lakshmi') {
+            themeName = 'Lakshmi (Gold)';
+        } else if (theme === 'theme-ganesh') {
+            themeName = 'Ganesh (Red)';
+        } else if (theme === 'theme-shiva') {
+            themeName = 'Shiva (Purple)';
+        } else {
+            themeName = theme.charAt(0).toUpperCase() + theme.slice(1);
+        }
+        
+        showToast(`Theme changed to ${themeName}`);
     }
     
     function handleProfileReminderClick() {
@@ -1910,10 +1994,36 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function applyTheme(theme) {
+        // Remove all theme classes first
+        document.documentElement.classList.remove(
+            'dark-theme',
+            'theme-ram',
+            'theme-krishna',
+            'theme-lakshmi', 
+            'theme-ganesh',
+            'theme-shiva'
+        );
+        
+        // Apply the selected theme
         if (theme === 'dark') {
             document.documentElement.classList.add('dark-theme');
-        } else {
+        } else if (theme.startsWith('theme-')) {
+            // For cultural themes like 'theme-ram', 'theme-krishna', etc.
+            document.documentElement.classList.add(theme);
+            
+            // Also remove dark mode if it was applied
             document.documentElement.classList.remove('dark-theme');
+        }
+        
+        // Update app header color for Android status bar if using WebView
+        if (window.AndroidInterface) {
+            try {
+                // Get the computed primary color from CSS
+                const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim();
+                window.AndroidInterface.updateStatusBarColor(primaryColor);
+            } catch (e) {
+                console.error('Error updating Android status bar color:', e);
+            }
         }
     }
     

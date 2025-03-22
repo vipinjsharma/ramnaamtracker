@@ -704,6 +704,91 @@ input:checked + .toggle-slider-large:before {
     background-color: rgba(255, 255, 255, 0.05);
 }
 
+/* Cultural Theme: Ram (Saffron) - Default */
+.theme-ram {
+    --primary-color: #ff7817;
+    --secondary-color: #e67e22;
+    --accent-color: #ff7817;
+    --accent-color-rgb: 255, 120, 23;
+    --button-color: #ff7817;
+    --button-hover: #d35400;
+    --background-color: #fff7e6;
+    --text-color: #333333;
+    --card-bg-color: #ffffff;
+    --border-color: #ffebcc;
+    --clear-button-color: #e74c3c;
+    --table-header-bg: #f5b642;
+    --table-stripe-bg: #fff7e6;
+}
+
+/* Cultural Theme: Krishna (Blue) */
+.theme-krishna {
+    --primary-color: #2874A6;
+    --secondary-color: #1A5276;
+    --accent-color: #3498DB;
+    --accent-color-rgb: 52, 152, 219;
+    --button-color: #3498DB;
+    --button-hover: #2874A6;
+    --background-color: #EBF5FB;
+    --text-color: #1A5276;
+    --card-bg-color: #ffffff;
+    --border-color: #D6EAF8;
+    --clear-button-color: #E74C3C;
+    --table-header-bg: #3498DB;
+    --table-stripe-bg: #EBF5FB;
+}
+
+/* Cultural Theme: Lakshmi (Gold) */
+.theme-lakshmi {
+    --primary-color: #D4AC0D;
+    --secondary-color: #B7950B;
+    --accent-color: #F1C40F;
+    --accent-color-rgb: 241, 196, 15;
+    --button-color: #F1C40F;
+    --button-hover: #D4AC0D;
+    --background-color: #FEF9E7;
+    --text-color: #7D6608;
+    --card-bg-color: #ffffff;
+    --border-color: #F9E79F;
+    --clear-button-color: #8E44AD;
+    --table-header-bg: #F1C40F;
+    --table-stripe-bg: #FEF9E7;
+}
+
+/* Cultural Theme: Ganesh (Red) */
+.theme-ganesh {
+    --primary-color: #C0392B;
+    --secondary-color: #922B21;
+    --accent-color: #E74C3C;
+    --accent-color-rgb: 231, 76, 60;
+    --button-color: #E74C3C;
+    --button-hover: #C0392B;
+    --background-color: #FDEDEC;
+    --text-color: #641E16;
+    --card-bg-color: #ffffff;
+    --border-color: #F5B7B1;
+    --clear-button-color: #16A085;
+    --table-header-bg: #E74C3C;
+    --table-stripe-bg: #FDEDEC;
+}
+
+/* Cultural Theme: Shiva (Purple) */
+.theme-shiva {
+    --primary-color: #7D3C98;
+    --secondary-color: #6C3483;
+    --accent-color: #8E44AD;
+    --accent-color-rgb: 142, 68, 173;
+    --button-color: #8E44AD;
+    --button-hover: #7D3C98;
+    --background-color: #F4ECF7;
+    --text-color: #4A235A;
+    --card-bg-color: #ffffff;
+    --border-color: #D7BDE2;
+    --clear-button-color: #2ECC71;
+    --table-header-bg: #8E44AD;
+    --table-stripe-bg: #F4ECF7;
+}
+
 /* Special styling for Android WebView */
 body.android-app {
     /* Remove extra padding that might be around the body in WebView */
@@ -1144,6 +1229,75 @@ body.android-app .header {
     flex-direction: column;
     gap: 15px;
     margin: 20px 0;
+}
+
+/* Cultural Theme Palette */
+.cultural-theme-palette {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: var(--card-bg-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.theme-palette-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-palette-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.theme-palette-btn.active {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px white, 0 0 0 4px var(--accent-color);
+}
+
+.theme-palette-btn::after {
+    content: attr(data-name);
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    white-space: nowrap;
+    color: var(--text-color);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.theme-palette-btn:hover::after {
+    opacity: 1;
+}
+
+.theme-ram {
+    background: linear-gradient(45deg, #ff7817, #f5b642);
+}
+
+.theme-krishna {
+    background: linear-gradient(45deg, #2874A6, #3498DB);
+}
+
+.theme-lakshmi {
+    background: linear-gradient(45deg, #D4AC0D, #F1C40F);
+}
+
+.theme-ganesh {
+    background: linear-gradient(45deg, #C0392B, #E74C3C);
+}
+
+.theme-shiva {
+    background: linear-gradient(45deg, #7D3C98, #8E44AD);
 }
 
 .theme-button {
