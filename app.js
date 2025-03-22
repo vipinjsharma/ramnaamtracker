@@ -557,16 +557,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 <p>We value your feedback! Please rate your experience:</p>
                 
                 <div class="star-rating">
-                    <input type="radio" id="star1" name="rating" value="1">
-                    <label for="star1">★</label>
-                    <input type="radio" id="star2" name="rating" value="2">
-                    <label for="star2">★</label>
-                    <input type="radio" id="star3" name="rating" value="3">
-                    <label for="star3">★</label>
-                    <input type="radio" id="star4" name="rating" value="4">
-                    <label for="star4">★</label>
                     <input type="radio" id="star5" name="rating" value="5">
                     <label for="star5">★</label>
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4">★</label>
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3">★</label>
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2">★</label>
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label for="star1">★</label>
                 </div>
                 
                 <textarea placeholder="Tell us what you like about the app or how we can improve it..."></textarea>
@@ -1619,63 +1619,95 @@ document.addEventListener('DOMContentLoaded', function() {
         // Clear the canvas first
         clearCanvas();
         
-        // The points to draw राम (Ram)
-        const ramPoints = [
-            // र (Ra)
-            [[0.2, 0.3], [0.2, 0.7], [0.15, 0.7], [0.3, 0.7], [0.3, 0.55], [0.2, 0.55]],
-            // ा (Aa matra)
-            [[0.3, 0.4], [0.35, 0.4]],
-            // म (Ma)
-            [[0.4, 0.3], [0.4, 0.7], [0.5, 0.7], [0.5, 0.5], [0.4, 0.5], [0.5, 0.3]]
-        ];
+        // SVG path commands for RAM
+        const ramPathData = "M70,30 L110,30 L150,30 L190,30 L210,50 L210,100 L190,120 L150,120 L130,140 L110,160 L90,180 M130,75 L170,75 M170,75 L190,55 M170,75 L170,120";
         
-        // Draw राम
-        let partIndex = 0;
-        let pointIndex = 0;
+        // Parse the SVG path into commands
+        const commands = parseSVGPath(ramPathData);
         
-        function drawNextPoint() {
-            if (partIndex >= ramPoints.length) {
+        // Set drawing properties
+        drawingContext.lineWidth = 8;
+        drawingContext.lineCap = 'round';
+        drawingContext.lineJoin = 'round';
+        drawingContext.strokeStyle = '#E95420';
+        
+        // Keep track of current command
+        let commandIndex = 0;
+        
+        function drawNextSegment() {
+            if (commandIndex >= commands.length) {
                 // Drawing complete
+                setTimeout(submitDrawing, 500);
                 return;
             }
             
-            const currentPart = ramPoints[partIndex];
+            const command = commands[commandIndex];
             
-            if (pointIndex === 0) {
-                // Start a new part
-                const startPoint = currentPart[0];
+            if (command.type === 'M') {
+                // Move to point
+                const x = scaleX(command.x);
+                const y = scaleY(command.y);
                 drawingContext.beginPath();
-                drawingContext.moveTo(
-                    startPoint[0] * canvas.width,
-                    startPoint[1] * canvas.height
-                );
-                pointIndex++;
-            } else if (pointIndex < currentPart.length) {
-                // Continue drawing current part
-                const nextPoint = currentPart[pointIndex];
-                drawingContext.lineTo(
-                    nextPoint[0] * canvas.width,
-                    nextPoint[1] * canvas.height
-                );
+                drawingContext.moveTo(x, y);
+            } else if (command.type === 'L') {
+                // Line to point
+                const x = scaleX(command.x);
+                const y = scaleY(command.y);
+                drawingContext.lineTo(x, y);
                 drawingContext.stroke();
-                pointIndex++;
-            } else {
-                // Move to next part
-                partIndex++;
-                pointIndex = 0;
             }
             
-            // Continue animation
-            if (partIndex < ramPoints.length) {
-                requestAnimationFrame(drawNextPoint);
-            } else {
-                // Automatically submit after drawing
-                setTimeout(submitDrawing, 500);
+            commandIndex++;
+            
+            // Continue animation with slight delay for visual effect
+            setTimeout(() => {
+                requestAnimationFrame(drawNextSegment);
+            }, 50);
+        }
+        
+        // Helper function to scale SVG coordinates to canvas
+        function scaleX(x) {
+            return (x / 300) * canvas.width;
+        }
+        
+        function scaleY(y) {
+            return (y / 200) * canvas.height;
+        }
+        
+        // Helper function to parse SVG path data
+        function parseSVGPath(pathData) {
+            const commands = [];
+            const parts = pathData.trim().split(/\s+/);
+            
+            let currentType = null;
+            
+            for (let i = 0; i < parts.length; i++) {
+                const part = parts[i];
+                
+                if (part === 'M' || part === 'L') {
+                    currentType = part;
+                } else if (currentType) {
+                    // If the part starts with a comma or is a comma, skip it
+                    if (part === ',' || part.startsWith(',')) continue;
+                    
+                    // Extract coordinates
+                    if (i + 1 < parts.length) {
+                        const x = parseFloat(part.replace(',', ''));
+                        const y = parseFloat(parts[i + 1].replace(',', ''));
+                        
+                        if (!isNaN(x) && !isNaN(y)) {
+                            commands.push({ type: currentType, x, y });
+                            i++; // Skip the y coordinate as we've already processed it
+                        }
+                    }
+                }
             }
+            
+            return commands;
         }
         
         // Start the animated drawing
-        drawNextPoint();
+        drawNextSegment();
     }
     
     function submitDrawing() {
