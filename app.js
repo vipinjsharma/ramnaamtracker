@@ -77,6 +77,108 @@ document.addEventListener('DOMContentLoaded', function() {
     // App settings
     let appLanguage = 'en'; // Default language (en = English, hi = Hindi)
     let currentTheme = 'light'; // Default theme (light, dark, system)
+    
+    // Translations
+    const translations = {
+        'en': {
+            // Home Page
+            'app_title': 'Ram Lekhak',
+            'today_count': 'Today\'s Count',
+            'today_mala': 'Today\'s Malas',
+            'total_count': 'Total Count',
+            'write_ram': 'Write RAM',
+            'stats': 'Stats',
+            
+            // Writing Page
+            'clear': 'Clear',
+            'auto_draw': 'Auto Draw',
+            'submit': 'Submit',
+            
+            // Profile Page
+            'profile': 'Profile',
+            'total_written': 'Total RAM Written',
+            'total_malas': 'Total Malas',
+            'current_streak': 'Current Streak',
+            'longest_streak': 'Longest Streak',
+            'daily_goal': 'Daily Goal',
+            'monthly_goal': 'Monthly Goal',
+            'writing_goals': 'Writing Goals',
+            'account': 'Account',
+            'theme': 'Theme',
+            'daily_reminders': 'Daily Reminders',
+            'admin': 'Admin',
+            'logout': 'Logout',
+            
+            // Theme Settings
+            'light': 'Light',
+            'dark': 'Dark',
+            'system': 'System',
+            'save': 'Save',
+            
+            // Menu
+            'ram_writing': 'Ram Naam Writing',
+            'share': 'Share',
+            'rate_app': 'Rate App',
+            'feedback': 'Feedback',
+            'how_to_use': 'How to Use',
+            'language': 'Language',
+            'terms': 'Terms',
+            'privacy': 'Privacy',
+            
+            // Other
+            'cancel': 'Cancel',
+            'confirm': 'Confirm'
+        },
+        'hi': {
+            // Home Page
+            'app_title': 'राम लेखक',
+            'today_count': 'आज की गिनती',
+            'today_mala': 'आज की माला',
+            'total_count': 'कुल गिनती',
+            'write_ram': 'राम लिखें',
+            'stats': 'आंकड़े',
+            
+            // Writing Page
+            'clear': 'साफ़ करें',
+            'auto_draw': 'स्वतः बनाएं',
+            'submit': 'जमा करें',
+            
+            // Profile Page
+            'profile': 'प्रोफ़ाइल',
+            'total_written': 'कुल लिखित राम',
+            'total_malas': 'कुल मालाएँ',
+            'current_streak': 'वर्तमान स्ट्रीक',
+            'longest_streak': 'सबसे लंबी स्ट्रीक',
+            'daily_goal': 'दैनिक लक्ष्य',
+            'monthly_goal': 'मासिक लक्ष्य',
+            'writing_goals': 'लेखन लक्ष्य',
+            'account': 'खाता',
+            'theme': 'थीम',
+            'daily_reminders': 'दैनिक अनुस्मारक',
+            'admin': 'प्रशासन',
+            'logout': 'लॉगआउट',
+            
+            // Theme Settings
+            'light': 'उजला',
+            'dark': 'अंधेरा',
+            'system': 'सिस्टम',
+            'save': 'सहेजें',
+            
+            // Menu
+            'ram_writing': 'राम नाम लेखन',
+            'share': 'साझा करें',
+            'rate_app': 'ऐप रेट करें',
+            'feedback': 'प्रतिक्रिया',
+            'how_to_use': 'उपयोग कैसे करें',
+            'language': 'भाषा',
+            'terms': 'नियम और शर्तें',
+            'privacy': 'गोपनीयता',
+            
+            // Other
+            'cancel': 'रद्द करें',
+            'confirm': 'पुष्टि करें'
+        }
+    };
     let reminderEnabled = false; // Default reminder state
     let reminderTime = ''; // Default reminder time (empty - no selection)
     let reminderDays = []; // Default reminder days (empty - no selection)
@@ -154,21 +256,61 @@ document.addEventListener('DOMContentLoaded', function() {
     profileReminderLink.addEventListener('click', handleProfileReminderClick);
     profileLogoutLink.addEventListener('click', handleProfileLogoutClick);
     
-    // Secret admin mode (click profile title 5 times)
-    const profileTitle = document.querySelector('.profile-page h2') || document.querySelector('.profile-info h2');
-    let titleClickCount = 0;
-    if (profileTitle) {
-        profileTitle.addEventListener('click', () => {
-            titleClickCount++;
-            if (titleClickCount === 5) {
+    // Helper function to get translated text
+    function getTranslation(key) {
+        const currentLang = translations[appLanguage] || translations['en'];
+        return currentLang[key] || key;
+    }
+    
+    // Secret admin mode (click app logo 5 times)
+    const appLogo = document.querySelector('.app-header h1');
+    let logoClickCount = 0;
+    let clickTimer = null;
+    
+    if (appLogo) {
+        appLogo.addEventListener('click', () => {
+            logoClickCount++;
+            
+            // Clear previous timer
+            if (clickTimer) {
+                clearTimeout(clickTimer);
+            }
+            
+            // Set timer to reset count after 3 seconds of inactivity
+            clickTimer = setTimeout(() => {
+                logoClickCount = 0;
+            }, 3000);
+            
+            // Check if we've reached 5 clicks
+            if (logoClickCount === 5) {
+                // Toggle admin mode
                 isAdminUser = !isAdminUser;
+                
+                // Update UI
                 updateProfileStats();
-                showToast(isAdminUser ? 'Admin mode activated' : 'Admin mode deactivated');
-                titleClickCount = 0;
+                
+                // Show toast message
+                const message = isAdminUser ? 
+                    getTranslation('admin_activated') || 'Admin mode activated' : 
+                    getTranslation('admin_deactivated') || 'Admin mode deactivated';
+                
+                showToast(message);
+                
+                // Vibrate device if possible
+                try {
+                    if (window.AndroidInterface && typeof window.AndroidInterface.vibrate === 'function') {
+                        window.AndroidInterface.vibrate();
+                    }
+                } catch (e) {
+                    console.warn("Could not vibrate device:", e);
+                }
+                
+                // Reset click count
+                logoClickCount = 0;
             }
         });
     } else {
-        console.warn("Profile title element not found for admin mode activation");
+        console.warn("App logo element not found for admin mode activation");
     }
     
     // Functions
@@ -923,60 +1065,47 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function applyLanguage() {
-        // Update UI text based on selected language
-        const translations = {
-            en: {
-                homeTitle: 'RAM Naam Writing',
-                todayCount: 'Today\'s Count',
-                totalCount: 'Total Count',
-                malaCount: 'Mala Count',
-                streak: 'Current Streak',
-                drawBtn: 'DRAW',
-                submitBtn: 'SUBMIT',
-                clearBtn: 'CLEAR',
-                // Add more translations as needed
-            },
-            hi: {
-                homeTitle: 'राम नाम लेखन',
-                todayCount: 'आज की संख्या',
-                totalCount: 'कुल संख्या',
-                malaCount: 'माला संख्या',
-                streak: 'वर्तमान स्ट्रीक',
-                drawBtn: 'स्वतः लिखें',
-                submitBtn: 'जमा करें',
-                clearBtn: 'साफ़ करें',
-                // Add more translations as needed
-            }
-        };
-        
-        // Get current language translations
-        const lang = translations[appLanguage] || translations.en;
+        // Use our global translations dictionary
         
         try {
-            // Apply translations to UI elements - check for elements first
-            const homeTitle = document.querySelector('.home-title');
-            if (homeTitle) homeTitle.textContent = lang.homeTitle;
+            // Apply translations to elements using our getTranslation helper
             
-            const statCards = document.querySelectorAll('.stat-card');
-            if (statCards && statCards.length >= 4) {
-                const todayCountLabel = statCards[0].querySelector('.stat-label');
-                const totalCountLabel = statCards[1].querySelector('.stat-label');
-                const malaCountLabel = statCards[2].querySelector('.stat-label');
-                const streakLabel = statCards[3].querySelector('.stat-label');
-                
-                if (todayCountLabel) todayCountLabel.textContent = lang.todayCount;
-                if (totalCountLabel) totalCountLabel.textContent = lang.totalCount;
-                if (malaCountLabel) malaCountLabel.textContent = lang.malaCount;
-                if (streakLabel) streakLabel.textContent = lang.streak;
-            }
+            // Update header and main page elements
+            document.querySelector('.app-header h1').textContent = getTranslation('app_title');
             
-            const drawButton = document.querySelector('#draw-button');
-            const submitButton = document.querySelector('#submit-button');
-            const clearButton = document.querySelector('#clear-button');
+            // Update stats labels
+            const todayCountLabel = document.querySelector('.today-count h3');
+            const todayMalaLabel = document.querySelector('.today-mala h3');
+            const totalCountLabel = document.querySelector('.total-count h3');
             
-            if (drawButton) drawButton.textContent = lang.drawBtn;
-            if (submitButton) submitButton.textContent = lang.submitBtn;
-            if (clearButton) clearButton.textContent = lang.clearBtn;
+            if (todayCountLabel) todayCountLabel.textContent = getTranslation('today_count');
+            if (todayMalaLabel) todayMalaLabel.textContent = getTranslation('today_mala');
+            if (totalCountLabel) totalCountLabel.textContent = getTranslation('total_count');
+            
+            // Update buttons
+            if (clearBtn) clearBtn.textContent = getTranslation('clear');
+            if (drawBtn) drawBtn.textContent = getTranslation('auto_draw');
+            if (submitBtn) submitBtn.textContent = getTranslation('submit');
+            
+            // Update menu items
+            if (menuWriteLink) menuWriteLink.textContent = getTranslation('ram_writing');
+            if (menuShareLink) menuShareLink.textContent = getTranslation('share');
+            if (menuRateLink) menuRateLink.textContent = getTranslation('rate_app');
+            if (menuFeedbackLink) menuFeedbackLink.textContent = getTranslation('feedback');
+            if (menuHowToLink) menuHowToLink.textContent = getTranslation('how_to_use');
+            if (menuLanguageLink) menuLanguageLink.textContent = getTranslation('language');
+            if (menuTermsLink) menuTermsLink.textContent = getTranslation('terms');
+            if (menuPrivacyLink) menuPrivacyLink.textContent = getTranslation('privacy');
+            
+            // Update profile elements
+            if (profileAccountLink) profileAccountLink.textContent = getTranslation('account');
+            if (profileThemeLink) profileThemeLink.textContent = getTranslation('theme');
+            if (profileReminderLink) profileReminderLink.textContent = getTranslation('daily_reminders');
+            if (profileLogoutLink) profileLogoutLink.textContent = getTranslation('logout');
+            if (adminButton) adminButton.textContent = getTranslation('admin');
+            
+            // Writing button
+            if (startWritingBtn) startWritingBtn.textContent = getTranslation('write_ram');
         } catch (e) {
             console.warn('Error applying language changes:', e);
         }
