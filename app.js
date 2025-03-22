@@ -555,6 +555,20 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update writing page counts
         writingTodayCount.textContent = todayCount;
         writingTodayMalaCount.textContent = todayMalaCount;
+        writingCurrentStreak.textContent = `${currentStreak} Days`;
+        
+        // Update daily progress bar on writing page
+        const dailyProgress = Math.min(100, (todayCount / dailyGoal) * 100);
+        const progressBar = document.getElementById('dailyProgressBar');
+        if (progressBar) {
+            progressBar.style.width = `${dailyProgress}%`;
+            
+            // Also update the percentage text
+            const progressPercentage = document.getElementById('progress-percentage');
+            if (progressPercentage) {
+                progressPercentage.textContent = `${Math.round(dailyProgress)}%`;
+            }
+        }
     }
     
     function updateProfileStats() {
@@ -1130,6 +1144,27 @@ document.addEventListener('DOMContentLoaded', function() {
             if (todayMalaLabel) todayMalaLabel.textContent = getTranslation('today_mala');
             if (totalCountLabel) totalCountLabel.textContent = getTranslation('total_count');
             
+            // Update stat cards on writing page
+            const writingStatLabels = document.querySelectorAll('.stat-card .label');
+            if (writingStatLabels && writingStatLabels.length > 0) {
+                writingStatLabels.forEach(label => {
+                    // Map element text to translation keys
+                    if (label.textContent.includes('Current Streak')) {
+                        label.textContent = getTranslation('current_streak');
+                    } else if (label.textContent.includes('Today\'s Malas')) {
+                        label.textContent = getTranslation('today_mala');
+                    } else if (label.textContent.includes('Today\'s Count')) {
+                        label.textContent = getTranslation('today_count');
+                    }
+                });
+            }
+            
+            // Update daily goal progress label
+            const progressLabel = document.querySelector('.progress-label span:first-child');
+            if (progressLabel) {
+                progressLabel.textContent = getTranslation('daily_goal');
+            }
+            
             // Update buttons
             if (clearBtn) clearBtn.textContent = getTranslation('clear');
             if (drawBtn) drawBtn.textContent = getTranslation('auto_draw');
@@ -1156,6 +1191,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (startWritingBtn) startWritingBtn.textContent = getTranslation('write_ram');
         } catch (e) {
             console.warn('Error applying language changes:', e);
+            // Log more detailed error information for debugging
+            console.log('Current language:', appLanguage);
+            console.log('Available translations:', Object.keys(translations));
         }
         
         // Alert user about the language change
