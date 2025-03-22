@@ -666,18 +666,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Calculate mala values for accurate display
         const monthlyMalaGoal = Math.ceil(monthlyGoal / MALA_COUNT);
-        
-        // Fix for display when count is low but not zero
-        let currentMonthMalasDisplay;
-        if (currentMonthCount === 0) {
-            currentMonthMalasDisplay = "0";  // Truly zero
-        } else if (currentMonthCount < MALA_COUNT) {
-            // Show partial mala completion as a fraction
-            currentMonthMalasDisplay = currentMonthCount + "/" + MALA_COUNT + " of first mala";
-        } else {
-            // Standard calculation for full malas
-            currentMonthMalasDisplay = Math.floor(currentMonthCount / MALA_COUNT).toString();
-        }
+        const totalMonthlyEntries = monthlyMalaGoal * MALA_COUNT;
+        const completedMalas = Math.floor(currentMonthCount / MALA_COUNT);
         
         // Update goal text displays if they exist
         if (document.getElementById('daily-goal-display')) {
@@ -686,14 +676,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         if (document.getElementById('monthly-goal-display')) {
-            // Use the special formatting when count is low
-            if (currentMonthCount < MALA_COUNT && currentMonthCount > 0) {
-                document.getElementById('monthly-goal-display').textContent = 
-                    `${currentMonthMalasDisplay} of ${monthlyMalaGoal} malas (${Math.round(monthProgress)}%)`;
-            } else {
-                document.getElementById('monthly-goal-display').textContent = 
-                    `${currentMonthMalasDisplay}/${monthlyMalaGoal} malas (${Math.round(monthProgress)}%)`;
-            }
+            // New clearer format: "168/3240 (1 of 30 malas completed)"
+            document.getElementById('monthly-goal-display').textContent = 
+                `${currentMonthCount}/${totalMonthlyEntries} (${completedMalas} of ${monthlyMalaGoal} malas completed)`;
+        }
+        
+        // Add detailed subtext for monthly goal if element exists
+        const monthlyGoalSubtext = document.getElementById('monthly-goal-subtext');
+        if (monthlyGoalSubtext) {
+            const percentComplete = Math.round(monthProgress);
+            monthlyGoalSubtext.innerHTML = `<span>${percentComplete}%</span> of your monthly goal achieved`;
         }
         
         // Show/hide admin button based on user role
