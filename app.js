@@ -78,8 +78,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let appLanguage = 'en'; // Default language (en = English, hi = Hindi)
     let currentTheme = 'light'; // Default theme (light, dark, system)
     let reminderEnabled = false; // Default reminder state
-    let reminderTime = '07:00'; // Default reminder time (7:00 AM)
-    let reminderDays = ['mon', 'tue', 'wed', 'thu', 'fri']; // Default reminder days (weekdays)
+    let reminderTime = ''; // Default reminder time (empty - no selection)
+    let reminderDays = []; // Default reminder days (empty - no selection)
     let isAdminUser = false; // Default user role (non-admin)
     const DAILY_GOAL = 108; // Default daily goal (1 mala)
     const MONTHLY_GOAL = 21; // Default monthly goal (21 malas)
@@ -1272,7 +1272,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="reminder-time-section ${!reminderEnabled ? 'disabled' : ''}">
                     <div class="time-selection">
                         <label for="reminderTime">Reminder Time:</label>
-                        <input type="time" id="reminderTime" value="${reminderTime || '07:00'}" ${!reminderEnabled ? 'disabled' : ''}>
+                        <input type="time" id="reminderTime" value="${reminderTime}" ${!reminderEnabled ? 'disabled' : ''}>
                         
                         <div class="time-presets">
                             <button class="time-preset-btn" data-time="07:00" ${!reminderEnabled ? 'disabled' : ''}>Morning (7 AM)</button>
@@ -1289,13 +1289,13 @@ document.addEventListener('DOMContentLoaded', function() {
                             <button class="day-preset-btn" data-preset="everyday" ${!reminderEnabled ? 'disabled' : ''}>Every Day</button>
                         </div>
                         <div class="day-buttons">
-                            <button class="day-button ${reminderDays.includes('sun') ? 'active' : ''}" data-day="sun" ${!reminderEnabled ? 'disabled' : ''}>S</button>
-                            <button class="day-button ${reminderDays.includes('mon') ? 'active' : ''}" data-day="mon" ${!reminderEnabled ? 'disabled' : ''}>M</button>
-                            <button class="day-button ${reminderDays.includes('tue') ? 'active' : ''}" data-day="tue" ${!reminderEnabled ? 'disabled' : ''}>T</button>
-                            <button class="day-button ${reminderDays.includes('wed') ? 'active' : ''}" data-day="wed" ${!reminderEnabled ? 'disabled' : ''}>W</button>
-                            <button class="day-button ${reminderDays.includes('thu') ? 'active' : ''}" data-day="thu" ${!reminderEnabled ? 'disabled' : ''}>T</button>
-                            <button class="day-button ${reminderDays.includes('fri') ? 'active' : ''}" data-day="fri" ${!reminderEnabled ? 'disabled' : ''}>F</button>
-                            <button class="day-button ${reminderDays.includes('sat') ? 'active' : ''}" data-day="sat" ${!reminderEnabled ? 'disabled' : ''}>S</button>
+                            <button class="day-button" data-day="sun" ${!reminderEnabled ? 'disabled' : ''}>S</button>
+                            <button class="day-button" data-day="mon" ${!reminderEnabled ? 'disabled' : ''}>M</button>
+                            <button class="day-button" data-day="tue" ${!reminderEnabled ? 'disabled' : ''}>T</button>
+                            <button class="day-button" data-day="wed" ${!reminderEnabled ? 'disabled' : ''}>W</button>
+                            <button class="day-button" data-day="thu" ${!reminderEnabled ? 'disabled' : ''}>T</button>
+                            <button class="day-button" data-day="fri" ${!reminderEnabled ? 'disabled' : ''}>F</button>
+                            <button class="day-button" data-day="sat" ${!reminderEnabled ? 'disabled' : ''}>S</button>
                         </div>
                     </div>
                 </div>

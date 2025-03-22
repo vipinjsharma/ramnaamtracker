@@ -814,14 +814,17 @@ input:checked + .toggle-slider-large:before {
     font-size: 32px;
 }
 
-.star-rating input:checked ~ label,
-.star-rating input:checked + label {
-    color: #FFD700;
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
 }
 
 .star-rating label:hover,
 .star-rating label:hover ~ label,
-.star-rating label:hover + label {
+.star-rating input:checked ~ label {
     color: #FFD700;
 }
 
