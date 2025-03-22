@@ -2502,32 +2502,41 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Apply accent colors to specific text elements but exclude elements in the header
-        const accentTextElements = document.querySelectorAll('.profile-section-title, .total-count, .current-streak, .main-content h1, .main-content h2, .main-content h3, .main-content h4');
+        const accentTextElements = document.querySelectorAll('.profile-section-title, .total-count, .current-streak, .main-content h1, .main-content h2, .main-content h3, .main-content h4, .profile-section h3');
         accentTextElements.forEach(element => {
             element.style.color = colors.accent;
         });
         
-        // Update progress bars
-        const progressBars = document.querySelectorAll('.progress-bar, .progress-fill');
+        // Update progress bars - make them more visible
+        const progressBars = document.querySelectorAll('.progress-bar');
         progressBars.forEach(bar => {
-            bar.style.backgroundColor = colors.accent;
+            bar.style.backgroundColor = "#e0e0e0";
         });
         
-        // Update buttons with accent color
-        const accentButtons = document.querySelectorAll('.primary-button, .action-button');
+        // Make progress fill more visible
+        const progressFills = document.querySelectorAll('.progress-fill');
+        progressFills.forEach(fill => {
+            fill.style.backgroundColor = colors.accent;
+        });
+        
+        // Update buttons with accent color and white text (orange buttons with white text)
+        const accentButtons = document.querySelectorAll('.primary-button, .action-button, .secondary-button');
         accentButtons.forEach(button => {
+            button.style.backgroundColor = colors.accent;
             button.style.borderColor = colors.accent;
-            button.style.color = colors.accent;
+            button.style.color = 'white';
             
             // Add hover effect
             button.onmouseover = () => {
                 button.style.backgroundColor = colors.accent;
+                button.style.opacity = '0.9';
                 button.style.color = 'white';
             };
             
             button.onmouseout = () => {
-                button.style.backgroundColor = 'transparent';
-                button.style.color = colors.accent;
+                button.style.backgroundColor = colors.accent;
+                button.style.opacity = '1';
+                button.style.color = 'white';
             };
         });
         
