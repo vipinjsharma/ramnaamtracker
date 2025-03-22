@@ -2819,3 +2819,136 @@ body.theme-dark .theme-selector-dialog .theme-label {
     max-width: 100%;
     display: inline-block;
 }
+
+/* Tutorial styles */
+@keyframes draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.tutorial-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: modalFadeIn 0.3s forwards;
+}
+
+.tutorial-modal {
+    background-color: var(--md-surface);
+    border-radius: var(--md-shape-large);
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--md-shadow-4);
+    overflow: hidden;
+}
+
+.tutorial-svg-container {
+    flex: 1;
+    background-color: var(--md-primary-container);
+    padding: 20px;
+    min-height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tutorial-svg {
+    width: 100%;
+    height: 100%;
+    max-height: 250px;
+}
+
+.tutorial-guide-text {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.tutorial-instruction-area {
+    padding: 20px;
+}
+
+.tutorial-instruction-area h3 {
+    font-size: var(--md-title-large-size);
+    color: var(--md-primary);
+    margin-bottom: 10px;
+}
+
+.tutorial-instruction-area p {
+    font-size: var(--md-body-medium-size);
+    color: var(--md-on-surface-variant);
+    margin-bottom: 20px;
+}
+
+.tutorial-progress {
+    height: 6px;
+    background-color: var(--md-surface-variant);
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+
+.tutorial-progress-bar {
+    height: 100%;
+    background-color: var(--md-primary);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.tutorial-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.tutorial-navigation button {
+    padding: 8px 16px;
+}
+
+.tutorial-navigation button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#tutorial-step-counter {
+    font-size: var(--md-body-small-size);
+    color: var(--md-on-surface-variant);
+}
+
+#tutorial-close-btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.tutorial-button {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    background-color: var(--md-secondary-container);
+    color: var(--md-on-secondary-container);
+    border: none;
+    border-radius: var(--md-shape-small);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.tutorial-button:hover {
+    background-color: var(--md-secondary);
+    color: var(--md-on-secondary);
+}
+
+.tutorial-path {
+    transition: stroke-dashoffset 1.5s ease;
+}

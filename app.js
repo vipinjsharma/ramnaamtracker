@@ -142,7 +142,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Name Editing
             'name_updated': 'Name updated!',
             'name_length_error': 'Name must be between 2 and 30 characters',
-            'edit_name': 'Edit Name'
+            'edit_name': 'Edit Name',
+            
+            // Tutorial
+            'show_writing_tutorial': 'Show Writing Tutorial',
+            'tutorial_complete': 'Great job! Now practice writing राम on your own.'
         },
         'hi': {
             // Home Page
@@ -196,7 +200,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Name Editing
             'name_updated': 'नाम अपडेट हो गया!',
             'name_length_error': 'नाम 2 से 30 अक्षरों के बीच होना चाहिए',
-            'edit_name': 'नाम संपादित करें'
+            'edit_name': 'नाम संपादित करें',
+            
+            // Tutorial
+            'show_writing_tutorial': 'लिखने का ट्यूटोरियल दिखाएं',
+            'tutorial_complete': 'बहुत अच्छा! अब खुद से राम लिखने का अभ्यास करें।'
         }
     };
     let reminderEnabled = false; // Default reminder state
@@ -459,6 +467,12 @@ document.addEventListener('DOMContentLoaded', function() {
         drawingContext.lineJoin = 'round';
         drawingContext.lineCap = 'round';
         drawingContext.lineWidth = 5;
+        
+        // Add event listener for the writing tutorial button
+        const writingTutorialBtn = document.getElementById('writingTutorialBtn');
+        if (writingTutorialBtn) {
+            writingTutorialBtn.addEventListener('click', showRamWritingTutorial);
+        }
     }
     
     function loadData() {
@@ -1136,7 +1150,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleMenuHowToClick() {
         closeMenuOverlay();
         
-        // Create how-to guide HTML content
+        // Create how-to guide HTML content with Writing Tutorial button
         const howToGuide = `
             <h3>How to Use Ram Naam Writing App</h3>
             <div class="howto-guide">
@@ -1148,6 +1162,17 @@ document.addEventListener('DOMContentLoaded', function() {
                         <li><strong>Auto-Draw:</strong> Tap the "DRAW" button to automatically write राम.</li>
                     </ul>
                     <p>After writing, tap "Submit" to add to your count. The "Auto-Draw" option automatically submits after drawing.</p>
+                    
+                    <!-- New Writing Tutorial Button -->
+                    <button id="startWritingTutorial" class="secondary-button tutorial-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+                            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+                            <path d="M2 2l7.586 7.586"></path>
+                            <circle cx="11" cy="11" r="2"></circle>
+                        </svg>
+                        Start Writing Tutorial
+                    </button>
                 </section>
                 
                 <section class="guide-section">
@@ -1232,6 +1257,209 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 document.body.removeChild(modal);
             }, 300);
+        });
+        
+        // Tutorial button functionality
+        const tutorialBtn = modal.querySelector('#startWritingTutorial');
+        if (tutorialBtn) {
+            tutorialBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+                setTimeout(() => {
+                    document.body.removeChild(modal);
+                    showRamWritingTutorial();
+                }, 300);
+            });
+        }
+    }
+    
+    // New function for character writing tutorial
+    function showRamWritingTutorial() {
+        // Navigate to the writing page first if not already there
+        navigateToWriting();
+        
+        // Create tutorial overlay content
+        const tutorialSteps = [
+            {
+                title: "Writing राम - Step 1",
+                description: "Let's start with the first character 'र' (Ra). Begin with a curved vertical line on the left.",
+                path: "M 100,100 C 100,120 100,140 110,160",
+                animation: "draw 1.5s forwards"
+            },
+            {
+                title: "Writing राम - Step 2",
+                description: "Now add a horizontal line to the right, connecting to the vertical line.",
+                path: "M 110,120 L 140,120",
+                animation: "draw 1s forwards"
+            },
+            {
+                title: "Writing राम - Step 3",
+                description: "Complete 'र' (Ra) by adding the small curved tail at the bottom.",
+                path: "M 110,160 C 120,165 130,160 135,155",
+                animation: "draw 1s forwards"
+            },
+            {
+                title: "Writing राम - Step 4",
+                description: "Now for 'ा' (matra). Draw a vertical line to the right of the first character.",
+                path: "M 150,100 L 150,160",
+                animation: "draw 1.2s forwards"
+            },
+            {
+                title: "Writing राम - Step 5",
+                description: "Let's move to 'म' (Ma). Start with the left vertical line.",
+                path: "M 180,110 L 180,160",
+                animation: "draw 1.2s forwards"
+            },
+            {
+                title: "Writing राम - Step 6",
+                description: "Add the top curved line connecting to the right side.",
+                path: "M 180,110 C 190,100 200,100 210,110",
+                animation: "draw 1s forwards"
+            },
+            {
+                title: "Writing राम - Step 7",
+                description: "Now draw the right vertical line down.",
+                path: "M 210,110 L 210,160",
+                animation: "draw 1.2s forwards"
+            },
+            {
+                title: "Writing राम - Step 8",
+                description: "Complete 'म' (Ma) by adding the connecting line at the bottom.",
+                path: "M 180,160 L 210,160",
+                animation: "draw 1s forwards"
+            },
+            {
+                title: "राम Completed!",
+                description: "Excellent! You've completed writing राम. Practice this a few times to get comfortable with the strokes.",
+                path: "",
+                animation: ""
+            }
+        ];
+
+        // Create tutorial container
+        const tutorialContainer = document.createElement('div');
+        tutorialContainer.className = 'tutorial-container';
+        
+        // Create the main tutorial modal
+        const tutorialModal = document.createElement('div');
+        tutorialModal.className = 'tutorial-modal';
+        
+        // Create SVG animation area
+        const svgContainer = document.createElement('div');
+        svgContainer.className = 'tutorial-svg-container';
+        svgContainer.innerHTML = `
+            <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" class="tutorial-svg">
+                <!-- Paths will be added here dynamically -->
+                <g class="tutorial-paths-group"></g>
+                
+                <!-- Guide text for राम -->
+                <text x="150" y="130" class="tutorial-guide-text" opacity="0.2" text-anchor="middle" font-size="70">राम</text>
+            </svg>
+        `;
+        
+        // Create instruction area
+        const instructionArea = document.createElement('div');
+        instructionArea.className = 'tutorial-instruction-area';
+        instructionArea.innerHTML = `
+            <h3 id="tutorial-step-title">Writing राम - Learn the Strokes</h3>
+            <p id="tutorial-step-description">Follow along as we guide you through each stroke of writing राम.</p>
+            
+            <div class="tutorial-progress">
+                <div class="tutorial-progress-bar" id="tutorialProgressBar" style="width: 0%"></div>
+            </div>
+            
+            <div class="tutorial-navigation">
+                <button id="tutorial-prev-btn" class="secondary-button" disabled>Previous</button>
+                <span id="tutorial-step-counter">Step 1 of ${tutorialSteps.length}</span>
+                <button id="tutorial-next-btn" class="primary-button">Next</button>
+            </div>
+            
+            <button id="tutorial-close-btn" class="secondary-button">Close Tutorial</button>
+        `;
+        
+        // Assemble the modal
+        tutorialModal.appendChild(svgContainer);
+        tutorialModal.appendChild(instructionArea);
+        tutorialContainer.appendChild(tutorialModal);
+        document.body.appendChild(tutorialContainer);
+        
+        // Initialize animation and interaction
+        let currentStep = 0;
+        const pathsGroup = tutorialContainer.querySelector('.tutorial-paths-group');
+        const progressBar = tutorialContainer.querySelector('#tutorialProgressBar');
+        const stepTitle = tutorialContainer.querySelector('#tutorial-step-title');
+        const stepDescription = tutorialContainer.querySelector('#tutorial-step-description');
+        const stepCounter = tutorialContainer.querySelector('#tutorial-step-counter');
+        const prevBtn = tutorialContainer.querySelector('#tutorial-prev-btn');
+        const nextBtn = tutorialContainer.querySelector('#tutorial-next-btn');
+        const closeBtn = tutorialContainer.querySelector('#tutorial-close-btn');
+        
+        // Function to update the tutorial step
+        function updateTutorialStep(stepIndex) {
+            // Update progress bar
+            const progress = ((stepIndex + 1) / tutorialSteps.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            // Update step counter
+            stepCounter.textContent = `Step ${stepIndex + 1} of ${tutorialSteps.length}`;
+            
+            // Update title and description
+            stepTitle.textContent = tutorialSteps[stepIndex].title;
+            stepDescription.textContent = tutorialSteps[stepIndex].description;
+            
+            // Update buttons
+            prevBtn.disabled = stepIndex === 0;
+            nextBtn.textContent = stepIndex === tutorialSteps.length - 1 ? "Finish" : "Next";
+            
+            // Handle animation of the current step
+            if (tutorialSteps[stepIndex].path) {
+                // Create a new path element
+                const pathElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                pathElement.setAttribute("d", tutorialSteps[stepIndex].path);
+                pathElement.setAttribute("stroke", "var(--accent-color, #ff7817)");
+                pathElement.setAttribute("stroke-width", "5");
+                pathElement.setAttribute("fill", "none");
+                pathElement.setAttribute("stroke-linecap", "round");
+                pathElement.setAttribute("stroke-linejoin", "round");
+                pathElement.setAttribute("class", "tutorial-path");
+                pathElement.style.strokeDasharray = 1000;
+                pathElement.style.strokeDashoffset = 1000;
+                pathElement.style.animation = tutorialSteps[stepIndex].animation;
+                
+                // Add path to SVG
+                pathsGroup.appendChild(pathElement);
+            }
+        }
+        
+        // Initialize first step
+        updateTutorialStep(currentStep);
+        
+        // Event listeners for navigation
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 0) {
+                // Remove the current path (it will be redrawn)
+                if (pathsGroup.lastChild) {
+                    pathsGroup.removeChild(pathsGroup.lastChild);
+                }
+                currentStep--;
+                updateTutorialStep(currentStep);
+            }
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            if (currentStep < tutorialSteps.length - 1) {
+                currentStep++;
+                updateTutorialStep(currentStep);
+            } else {
+                // On the last step, clicking "Finish" closes the tutorial
+                tutorialContainer.remove();
+                
+                // Show a toast with encouragement
+                showToast(getTranslation('tutorial_complete'), 3000, 'success');
+            }
+        });
+        
+        closeBtn.addEventListener('click', () => {
+            tutorialContainer.remove();
         });
     }
     
@@ -1389,6 +1617,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Writing button
             if (startWritingBtn) startWritingBtn.textContent = getTranslation('write_ram');
+            
+            // Tutorial button
+            const tutorialBtn = document.querySelector('#writingTutorialBtn .i18n[data-i18n="show_writing_tutorial"]');
+            if (tutorialBtn) tutorialBtn.textContent = getTranslation('show_writing_tutorial');
         } catch (e) {
             console.warn('Error applying language changes:', e);
             // Log more detailed error information for debugging
