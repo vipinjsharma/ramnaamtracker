@@ -1653,12 +1653,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 <h3>Select Theme</h3>
                 <p>Tap a color to instantly change the theme:</p>
                 
+                <div id="selectedThemeDisplay" class="selected-theme-display ${currentTheme.startsWith('theme-') ? '' : 'hidden'}">
+                    Selected: <span id="currentThemeName">${currentTheme.replace('theme-', '').charAt(0).toUpperCase() + currentTheme.replace('theme-', '').slice(1)}</span>
+                </div>
+                
                 <div class="cultural-theme-palette">
-                    <button id="themeRam" class="theme-palette-btn theme-ram ${currentTheme === 'theme-ram' ? 'active' : ''}" data-name="Ram"></button>
-                    <button id="themeKrishna" class="theme-palette-btn theme-krishna ${currentTheme === 'theme-krishna' ? 'active' : ''}" data-name="Krishna"></button>
-                    <button id="themeLakshmi" class="theme-palette-btn theme-lakshmi ${currentTheme === 'theme-lakshmi' ? 'active' : ''}" data-name="Lakshmi"></button>
-                    <button id="themeGanesh" class="theme-palette-btn theme-ganesh ${currentTheme === 'theme-ganesh' ? 'active' : ''}" data-name="Ganesh"></button>
-                    <button id="themeShiva" class="theme-palette-btn theme-shiva ${currentTheme === 'theme-shiva' ? 'active' : ''}" data-name="Shiva"></button>
+                    <div class="theme-color-option">
+                        <button id="themeRam" class="theme-palette-btn theme-ram ${currentTheme === 'theme-ram' ? 'active' : ''}" data-theme="theme-ram" data-name="Ram"></button>
+                        <span class="theme-label">Ram</span>
+                    </div>
+                    <div class="theme-color-option">
+                        <button id="themeKrishna" class="theme-palette-btn theme-krishna ${currentTheme === 'theme-krishna' ? 'active' : ''}" data-theme="theme-krishna" data-name="Krishna"></button>
+                        <span class="theme-label">Krishna</span>
+                    </div>
+                    <div class="theme-color-option">
+                        <button id="themeLakshmi" class="theme-palette-btn theme-lakshmi ${currentTheme === 'theme-lakshmi' ? 'active' : ''}" data-theme="theme-lakshmi" data-name="Lakshmi"></button>
+                        <span class="theme-label">Lakshmi</span>
+                    </div>
+                    <div class="theme-color-option">
+                        <button id="themeGanesh" class="theme-palette-btn theme-ganesh ${currentTheme === 'theme-ganesh' ? 'active' : ''}" data-theme="theme-ganesh" data-name="Ganesh"></button>
+                        <span class="theme-label">Ganesh</span>
+                    </div>
+                    <div class="theme-color-option">
+                        <button id="themeShiva" class="theme-palette-btn theme-shiva ${currentTheme === 'theme-shiva' ? 'active' : ''}" data-theme="theme-shiva" data-name="Shiva"></button>
+                        <span class="theme-label">Shiva</span>
+                    </div>
                 </div>
                 
                 <p>Or choose from standard options:</p>
@@ -1832,6 +1851,31 @@ document.addEventListener('DOMContentLoaded', function() {
             themeName = 'Shiva (Purple)';
         } else {
             themeName = theme.charAt(0).toUpperCase() + theme.slice(1);
+        }
+        
+        // Update theme display if open
+        const themeDisplay = document.getElementById('selectedThemeDisplay');
+        const themeNameElement = document.getElementById('currentThemeName');
+        
+        if (themeDisplay && themeNameElement) {
+            if (theme.startsWith('theme-')) {
+                const displayName = theme.replace('theme-', '').charAt(0).toUpperCase() + theme.replace('theme-', '').slice(1);
+                themeNameElement.textContent = displayName;
+                themeDisplay.classList.remove('hidden');
+            } else {
+                themeDisplay.classList.add('hidden');
+            }
+            
+            // Update active buttons
+            const buttons = document.querySelectorAll('.theme-palette-btn, .theme-button');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                
+                if (btn.id === `theme${theme.replace('theme-', '').charAt(0).toUpperCase() + theme.replace('theme-', '').slice(1)}` || 
+                    btn.id === `theme${theme.charAt(0).toUpperCase() + theme.slice(1)}`) {
+                    btn.classList.add('active');
+                }
+            });
         }
         
         showToast(`Theme changed to ${themeName}`);
@@ -2282,6 +2326,25 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Also remove dark mode if it was applied
             document.documentElement.classList.remove('dark-theme');
+        }
+        
+        // Update theme selection indicators
+        const themeButtons = document.querySelectorAll('.theme-palette-btn');
+        themeButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.theme === theme) {
+                btn.classList.add('active');
+            }
+        });
+        
+        // Update theme display if available
+        const themeDisplay = document.getElementById('selectedThemeDisplay');
+        const themeNameElement = document.getElementById('currentThemeName');
+        
+        if (themeDisplay && themeNameElement && theme.startsWith('theme-')) {
+            const displayName = theme.replace('theme-', '').charAt(0).toUpperCase() + theme.replace('theme-', '').slice(1);
+            themeNameElement.textContent = displayName;
+            themeDisplay.classList.remove('hidden');
         }
         
         // Update app header color for Android status bar if using WebView
