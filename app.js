@@ -1167,10 +1167,13 @@ document.addEventListener('DOMContentLoaded', function() {
         showToast(message);
     }
     
-    function showToast(message, duration = 3000) {
+    function showToast(message, duration = 3000, type = '') {
         // Create toast element
         const toast = document.createElement('div');
         toast.className = 'toast';
+        if (type) {
+            toast.classList.add(type);
+        }
         toast.textContent = message;
         
         // Add toast to the document
@@ -1188,6 +1191,57 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.body.removeChild(toast);
             }, 300);
         }, duration);
+    }
+    
+    // Confetti animation for mala completion
+    function showConfetti() {
+        const confettiContainer = document.getElementById('confettiContainer');
+        confettiContainer.innerHTML = ''; // Clear any existing confetti
+        
+        // Define confetti colors based on our theme
+        const colors = [
+            '#FF6F00', // Primary
+            '#D84315', // Accent
+            '#FFC107', // Progress bar
+            '#FFD54F', // Light yellow
+            '#FF9800'  // Orange
+        ];
+        
+        // Create confetti pieces
+        for (let i = 0; i < 100; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            // Randomize sizes
+            const size = Math.random() * 10 + 5;
+            confetti.style.width = size + 'px';
+            confetti.style.height = size + 'px';
+            
+            // Add some rotation and delay
+            confetti.style.animationDelay = Math.random() * 2 + 's';
+            confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+            
+            // Add different shapes
+            if (Math.random() > 0.6) {
+                confetti.style.borderRadius = '50%'; // Circle
+            } else if (Math.random() > 0.5) {
+                confetti.style.borderRadius = '2px'; // Square
+            } else {
+                confetti.style.width = '8px';
+                confetti.style.height = '12px';
+                confetti.style.borderRadius = '0'; // Rectangle
+            }
+            
+            confettiContainer.appendChild(confetti);
+        }
+        
+        // Remove confetti after animation completes
+        setTimeout(() => {
+            confettiContainer.innerHTML = '';
+        }, 5000);
     }
     
     function handleMenuTermsClick() {
@@ -2229,13 +2283,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function submitDrawing() {
+        // Store previous mala count to check if a mala was completed
+        const prevMalaCount = Math.floor(todayCount / MALA_COUNT);
+        
         // Increment counts
         todayCount++;
         totalCount++;
         currentMonthCount++; // Also increment the current month count
         
-        // Calculate mala count (1 mala = 108 rams)
+        // Calculate new mala count (1 mala = 108 rams)
         todayMalaCount = Math.floor(todayCount / MALA_COUNT);
+        
+        // Check if a mala was just completed
+        if (todayMalaCount > prevMalaCount) {
+            // Show confetti animation
+            showConfetti();
+            // Show toast notification
+            showToast(`Congratulations! You completed ${todayMalaCount} mala${todayMalaCount > 1 ? 's' : ''}! 🎉`, 4000, 'success');
+            
+            // Add haptic feedback if available
+            if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 100, 50, 200]);
+            }
+        }
         
         // Clear the canvas for next drawing
         clearCanvas();

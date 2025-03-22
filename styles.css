@@ -1313,6 +1313,55 @@ input:checked + .toggle-slider-large:before {
     transform: scale(1.1);
 }
 
+/* Theme toggle switch within menu */
+.menu-item .theme-toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 22px;
+    margin-left: auto;
+}
+
+.menu-item .theme-toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.menu-item .theme-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--md-surface-variant);
+    transition: .4s;
+    border-radius: 22px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.menu-item .theme-toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.menu-item input:checked + .theme-toggle-slider {
+    background-color: var(--md-primary);
+}
+
+.menu-item input:checked + .theme-toggle-slider:before {
+    transform: translateX(22px);
+}
+
 .profile-quick-info {
     display: flex;
     align-items: center;
@@ -1958,6 +2007,39 @@ body.android-app .header {
     min-width: 200px;
     max-width: 80%;
     border-left: 4px solid var(--md-primary);
+}
+
+/* Confetti Animation */
+.confetti-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: var(--md-primary);
+    opacity: 0.8;
+    border-radius: 2px;
+    animation: confetti-fall 3s ease-in-out forwards;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
 }
 
 .toast.show {
