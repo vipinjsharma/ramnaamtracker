@@ -117,7 +117,7 @@
                     </div>
                 </div>
                 <div class="menu-items">
-                    <a href="#" id="profileAccountLink" class="menu-item">
+                    <a href="#" id="profileGoalsLink" class="menu-item">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 20h9"></path>
                             <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
@@ -272,14 +272,21 @@
                 <div class="profile-section">
                     <h3>Personal Goals</h3>
                     <div class="goal-progress">
-                        <p>Daily Goal: 108 Rams</p>
+                        <div class="goal-header">
+                            <p>Daily Goal:</p>
+                            <span id="daily-goal-display">0/108 (0%)</span>
+                        </div>
                         <div class="progress-bar">
                             <div id="dailyGoalProgress" class="progress-fill" style="width: 0%"></div>
                         </div>
-                        <p>Monthly Goal: 21 Malas</p>
+                        <div class="goal-header">
+                            <p>Monthly Goal:</p>
+                            <span id="monthly-goal-display">0/30 malas (0%)</span>
+                        </div>
                         <div class="progress-bar">
                             <div id="monthlyGoalProgress" class="progress-fill" style="width: 0%"></div>
                         </div>
+                        <button id="editGoalsBtn" class="secondary-button">Edit Goals</button>
                     </div>
                 </div>
                 

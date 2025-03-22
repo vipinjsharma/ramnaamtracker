@@ -314,6 +314,12 @@ class WebAppInterface(private val context: Context) {
     
     @JavascriptInterface
     fun vibrate() {
+        // Default vibration with medium intensity
+        vibrate(50, "medium")
+    }
+    
+    @JavascriptInterface
+    fun vibrate(duration: Int, intensity: String) {
         try {
             val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as android.os.VibratorManager
@@ -324,10 +330,39 @@ class WebAppInterface(private val context: Context) {
             }
             
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator.vibrate(android.os.VibrationEffect.createOneShot(50, android.os.VibrationEffect.DEFAULT_AMPLITUDE))
+                // Set vibration amplitude based on intensity
+                val amplitude = when (intensity) {
+                    "high" -> android.os.VibrationEffect.DEFAULT_AMPLITUDE
+                    "medium" -> (android.os.VibrationEffect.DEFAULT_AMPLITUDE * 0.7).toInt()
+                    "low" -> (android.os.VibrationEffect.DEFAULT_AMPLITUDE * 0.4).toInt()
+                    else -> android.os.VibrationEffect.DEFAULT_AMPLITUDE
+                }
+                
+                // Create different patterns based on intensity
+                when (intensity) {
+                    "high" -> {
+                        // Strong double pulse for high precision
+                        val timings = longArrayOf(0, duration.toLong(), 50, duration.toLong())
+                        val amplitudes = intArrayOf(0, amplitude, 0, amplitude)
+                        vibrator.vibrate(android.os.VibrationEffect.createWaveform(timings, amplitudes, -1))
+                    }
+                    "low" -> {
+                        // Short single pulse for low precision
+                        vibrator.vibrate(android.os.VibrationEffect.createOneShot((duration * 0.5).toLong(), amplitude))
+                    }
+                    else -> {
+                        // Medium single pulse for medium precision
+                        vibrator.vibrate(android.os.VibrationEffect.createOneShot(duration.toLong(), amplitude))
+                    }
+                }
             } else {
+                // For older Android versions, just use duration
                 @Suppress("DEPRECATION")
-                vibrator.vibrate(50)
+                when (intensity) {
+                    "high" -> vibrator.vibrate(longArrayOf(0, duration.toLong(), 50, duration.toLong()), -1)
+                    "low" -> vibrator.vibrate((duration * 0.5).toLong())
+                    else -> vibrator.vibrate(duration.toLong())
+                }
             }
         } catch (e: Exception) {
             // Ignore vibration errors

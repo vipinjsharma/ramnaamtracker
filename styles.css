@@ -715,6 +715,85 @@ body.android-app .header {
     background-color: var(--primary-color);
 }
 
+/* Goals Edit Form Styles */
+.goals-edit-form {
+    padding: 10px;
+}
+
+.goals-edit-form h3 {
+    color: var(--accent-color);
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.goals-form-section {
+    margin: 20px 0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.input-with-presets {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input-with-presets input {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.preset-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.preset-btn {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 6px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.preset-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.preset-btn.active {
+    background-color: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+.form-info {
+    background-color: rgba(var(--accent-color-rgb), 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+.form-info p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
 /* Modal Styles */
 .modal {
     display: none;

@@ -35,11 +35,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const menuPrivacyLink = document.getElementById('menuPrivacyLink');
     
     // Profile navigation links
-    const profileAccountLink = document.getElementById('profileAccountLink');
-    const profileLanguageLink = document.getElementById('profileLanguageLink');
+    const profileGoalsLink = document.getElementById('profileGoalsLink');
     const profileThemeLink = document.getElementById('profileThemeLink');
     const profileReminderLink = document.getElementById('profileReminderLink');
     const profileLogoutLink = document.getElementById('profileLogoutLink');
+    const editGoalsBtn = document.getElementById('editGoalsBtn');
     
     // Profile page elements
     const adminButton = document.getElementById('adminButton');
@@ -198,6 +198,11 @@ document.addEventListener('DOMContentLoaded', function() {
     let drawingContext;
     let lastActivePage = homePage;
     
+    // Goal tracking
+    let dailyGoal = 108; // Default: 1 mala per day (108 Rams)
+    let monthlyGoal = 3240; // Default: 30 malas per month (30 days * 1 mala * 108)
+    let currentMonthCount = 0; // Total for current month
+    
     // Initialize the app
     initializeApp();
     
@@ -219,6 +224,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (logoutButton) logoutButton.addEventListener('click', handleLogout);
     if (languageSelect) languageSelect.addEventListener('change', handleLanguageChange);
     if (themeSelect) themeSelect.addEventListener('change', handleThemeChange);
+    
+    // Goal settings listeners
+    if (editGoalsBtn) editGoalsBtn.addEventListener('click', handleEditGoalsClick);
     
     // Admin page event listeners
     if (saveSettingsBtn) saveSettingsBtn.addEventListener('click', saveAppSettings);
@@ -251,10 +259,10 @@ document.addEventListener('DOMContentLoaded', function() {
     menuPrivacyLink.addEventListener('click', handleMenuPrivacyClick);
     
     // Profile menu event listeners
-    profileAccountLink.addEventListener('click', handleProfileAccountClick);
-    profileThemeLink.addEventListener('click', handleProfileThemeClick);
-    profileReminderLink.addEventListener('click', handleProfileReminderClick);
-    profileLogoutLink.addEventListener('click', handleProfileLogoutClick);
+    if (profileGoalsLink) profileGoalsLink.addEventListener('click', handleEditGoalsClick);
+    if (profileThemeLink) profileThemeLink.addEventListener('click', handleProfileThemeClick);
+    if (profileReminderLink) profileReminderLink.addEventListener('click', handleProfileReminderClick);
+    if (profileLogoutLink) profileLogoutLink.addEventListener('click', handleProfileLogoutClick);
     
     // Helper function to get translated text
     function getTranslation(key) {
@@ -405,6 +413,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function loadData() {
         // Get today's date for comparison
         const today = new Date().toDateString();
+        const thisMonth = new Date().getMonth() + 1; // 1-12 for month
         
         // Check if we have stored data
         const savedData = JSON.parse(localStorage.getItem('ramNaamData')) || {};
@@ -445,6 +454,19 @@ document.addEventListener('DOMContentLoaded', function() {
         
         totalCount = savedData.totalCount || 0;
         
+        // Load monthly count
+        if (savedData.currentMonth === thisMonth) {
+            // If same month, load saved monthly count
+            currentMonthCount = savedData.currentMonthCount || 0;
+        } else {
+            // Reset monthly count for new month
+            currentMonthCount = todayCount; // Start with today's count
+        }
+        
+        // Load custom goals
+        dailyGoal = savedData.dailyGoal || dailyGoal;
+        monthlyGoal = savedData.monthlyGoal || monthlyGoal;
+        
         // Load settings
         if (savedData.settings) {
             if (savedData.settings.language) {
@@ -480,6 +502,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function saveData() {
         const today = new Date().toDateString();
+        const thisMonth = new Date().getMonth() + 1; // 1-12 for month
         
         // Create settings object with null checks
         const settings = {
@@ -509,6 +532,10 @@ document.addEventListener('DOMContentLoaded', function() {
             totalCount: totalCount,
             currentStreak: currentStreak,
             longestStreak: longestStreak,
+            currentMonth: thisMonth,
+            currentMonthCount: currentMonthCount,
+            dailyGoal: dailyGoal,
+            monthlyGoal: monthlyGoal,
             settings: settings
         };
         
@@ -533,12 +560,26 @@ document.addEventListener('DOMContentLoaded', function() {
         profileCurrentStreak.textContent = `${currentStreak} days`;
         profileLongestStreak.textContent = `${longestStreak} days`;
         
-        // Update progress bars
-        const dailyProgress = Math.min(100, (todayCount / DAILY_GOAL) * 100);
+        // Update progress bars using custom goals
+        const dailyProgress = Math.min(100, (todayCount / dailyGoal) * 100);
         dailyGoalProgress.style.width = `${dailyProgress}%`;
         
-        const monthProgress = Math.min(100, (todayMalaCount / MONTHLY_GOAL) * 100);
+        // Calculate monthly progress based on malas
+        const monthlyMalaGoal = Math.floor(monthlyGoal / MALA_COUNT);
+        const currentMonthMalas = Math.floor(currentMonthCount / MALA_COUNT);
+        const monthProgress = Math.min(100, (currentMonthMalas / monthlyMalaGoal) * 100);
         monthlyGoalProgress.style.width = `${monthProgress}%`;
+        
+        // Update goal text displays if they exist
+        if (document.getElementById('daily-goal-display')) {
+            document.getElementById('daily-goal-display').textContent = 
+                `${todayCount}/${dailyGoal} (${Math.round(dailyProgress)}%)`;
+        }
+        
+        if (document.getElementById('monthly-goal-display')) {
+            document.getElementById('monthly-goal-display').textContent = 
+                `${currentMonthMalas}/${monthlyMalaGoal} malas (${Math.round(monthProgress)}%)`;
+        }
         
         // Show/hide admin button based on user role
         if (isAdminUser) {
@@ -1323,6 +1364,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleProfileAccountClick() {
         closeProfileOverlay();
         navigateToProfile();
+        
+        // After navigation, show the goals editing modal
+        handleEditGoalsClick();
     }
     
     // Removed handleProfileLanguageClick since we now only have language in the main menu
@@ -1681,6 +1725,157 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('ramNaamReminders', JSON.stringify(settings));
     }
     
+    function handleEditGoalsClick() {
+        // Create goals editing modal
+        const goalsEditForm = `
+            <div class="goals-edit-form">
+                <h3>Set Your Writing Goals</h3>
+                <p>Customize your daily and monthly goals to track your progress:</p>
+                
+                <div class="goals-form-section">
+                    <div class="form-group">
+                        <label for="dailyGoalInput">Daily Goal (RAM count):</label>
+                        <div class="input-with-presets">
+                            <input type="number" id="dailyGoalInput" min="1" max="10000" value="${dailyGoal}">
+                            <div class="preset-buttons">
+                                <button class="preset-btn" data-value="108">1 mala (108)</button>
+                                <button class="preset-btn" data-value="216">2 malas (216)</button>
+                                <button class="preset-btn" data-value="1080">10 malas (1080)</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="monthlyGoalInput">Monthly Goal (RAM count):</label>
+                        <div class="input-with-presets">
+                            <input type="number" id="monthlyGoalInput" min="1" max="100000" value="${monthlyGoal}">
+                            <div class="preset-buttons">
+                                <button class="preset-btn" data-value="3240">30 malas (3240)</button>
+                                <button class="preset-btn" data-value="10800">100 malas (10800)</button>
+                                <button class="preset-btn" data-value="21600">200 malas (21600)</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-info">
+                    <p><strong>Note:</strong> 1 mala = 108 repetitions of RAM</p>
+                    <p>Setting realistic goals helps maintain consistency and build a strong practice.</p>
+                </div>
+                
+                <button id="saveGoalsBtn" class="primary-button">Save Goals</button>
+            </div>
+        `;
+        
+        // Create a modal for the goals edit form
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                ${goalsEditForm}
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Show the modal
+        setTimeout(() => {
+            modal.style.display = 'flex';
+        }, 10);
+        
+        // Close button functionality
+        const closeBtn = modal.querySelector('.close');
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        });
+        
+        // Preset buttons functionality for daily goal
+        const dailyPresetBtns = modal.querySelectorAll('.form-group:nth-child(1) .preset-btn');
+        const dailyGoalInput = modal.querySelector('#dailyGoalInput');
+        
+        dailyPresetBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                dailyGoalInput.value = btn.dataset.value;
+                
+                // Visual feedback
+                dailyPresetBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+            
+            // Set initial active state
+            if (parseInt(btn.dataset.value) === dailyGoal) {
+                btn.classList.add('active');
+            }
+        });
+        
+        // Preset buttons functionality for monthly goal
+        const monthlyPresetBtns = modal.querySelectorAll('.form-group:nth-child(2) .preset-btn');
+        const monthlyGoalInput = modal.querySelector('#monthlyGoalInput');
+        
+        monthlyPresetBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                monthlyGoalInput.value = btn.dataset.value;
+                
+                // Visual feedback
+                monthlyPresetBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+            
+            // Set initial active state
+            if (parseInt(btn.dataset.value) === monthlyGoal) {
+                btn.classList.add('active');
+            }
+        });
+        
+        // Save button functionality
+        const saveBtn = modal.querySelector('#saveGoalsBtn');
+        saveBtn.addEventListener('click', () => {
+            // Get and validate goal values
+            const newDailyGoal = parseInt(dailyGoalInput.value);
+            const newMonthlyGoal = parseInt(monthlyGoalInput.value);
+            
+            if (isNaN(newDailyGoal) || newDailyGoal <= 0) {
+                showToast('Please enter a valid daily goal');
+                return;
+            }
+            
+            if (isNaN(newMonthlyGoal) || newMonthlyGoal <= 0) {
+                showToast('Please enter a valid monthly goal');
+                return;
+            }
+            
+            // Update goals
+            dailyGoal = newDailyGoal;
+            monthlyGoal = newMonthlyGoal;
+            
+            // Save to storage
+            saveData();
+            
+            // Update UI displays
+            updateProfileStats();
+            
+            // Provide feedback and close modal
+            showToast('Your goals have been updated');
+            modal.style.display = 'none';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+            
+            // Vibrate device if supported
+            try {
+                if (window.AndroidInterface && typeof window.AndroidInterface.vibrate === 'function') {
+                    window.AndroidInterface.vibrate(200, 50); // Longer vibration for confirmation
+                }
+            } catch (e) {
+                console.warn("Could not vibrate device:", e);
+            }
+        });
+    }
+    
     function handleProfileAdminClick() {
         closeProfileOverlay();
         navigateToAdmin();
@@ -1775,6 +1970,9 @@ document.addEventListener('DOMContentLoaded', function() {
         drawingContext.stroke();
         
         [lastX, lastY] = [e.offsetX, e.offsetY];
+        
+        // Add haptic feedback for drawing precision
+        providePrecisionFeedback(e.offsetX, e.offsetY);
     }
     
     function drawTouch(e) {
@@ -1792,10 +1990,77 @@ document.addEventListener('DOMContentLoaded', function() {
         drawingContext.stroke();
         
         [lastX, lastY] = [offsetX, offsetY];
+        
+        // Add haptic feedback for touch drawing precision
+        providePrecisionFeedback(offsetX, offsetY);
     }
     
     function stopDrawing() {
         isDrawing = false;
+    }
+    
+    // Haptic feedback functions for drawing precision
+    function providePrecisionFeedback(x, y) {
+        // Get canvas dimensions
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
+        
+        // Define the ideal Ram character area (center of canvas)
+        const idealCenterX = canvasWidth / 2;
+        const idealCenterY = canvasHeight / 2;
+        
+        // Calculate distance from ideal center
+        const distanceFromIdeal = Math.sqrt(
+            Math.pow(x - idealCenterX, 2) + 
+            Math.pow(y - idealCenterY, 2)
+        );
+        
+        // Normalize the distance to a percentage of canvas size
+        const normalizedDistance = distanceFromIdeal / (Math.min(canvasWidth, canvasHeight) / 2);
+        
+        // Provide haptic feedback based on precision
+        if (normalizedDistance < 0.2) {
+            // Very precise - strong vibration
+            vibrateDevice(100, 'high');
+        } else if (normalizedDistance < 0.4) {
+            // Moderately precise - medium vibration
+            vibrateDevice(50, 'medium');
+        } else if (normalizedDistance < 0.6) {
+            // Less precise - light vibration
+            vibrateDevice(20, 'low');
+        }
+        // No vibration for very imprecise drawing (> 0.6)
+    }
+    
+    function vibrateDevice(duration, intensity) {
+        // Check if in Android WebView with our interface
+        if (window.AndroidInterface && typeof window.AndroidInterface.vibrate === 'function') {
+            try {
+                // Use our enhanced Android vibration API with intensity
+                window.AndroidInterface.vibrate(duration, intensity);
+                return; // Exit early if Android vibration worked
+            } catch (e) {
+                console.warn("Error using Android vibration:", e);
+                // Fall back to web vibration
+            }
+        }
+        
+        // Fallback for web browsers: Check if vibration API is available
+        if ('vibrate' in navigator) {
+            switch(intensity) {
+                case 'high':
+                    navigator.vibrate([duration, 50, duration]);
+                    break;
+                case 'medium':
+                    navigator.vibrate(duration);
+                    break;
+                case 'low':
+                    navigator.vibrate([duration/2, 20, duration/2]);
+                    break;
+                default:
+                    navigator.vibrate(duration);
+            }
+        }
     }
     
     function clearCanvas() {
