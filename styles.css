@@ -2556,6 +2556,17 @@ body.android-app .header {
     font-weight: 500;
 }
 
+/* Make the theme palette labels visible in all themes */
+body.theme-dark .theme-selector-dialog .theme-label {
+    color: rgba(255, 255, 255, 0.85) !important; /* Bright color for dark theme */
+}
+
+/* Force light theme text color for all cultural theme options */
+.cultural-theme-palette .theme-label {
+    color: rgba(255, 255, 255, 0.9) !important; /* Bright white for better contrast */
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4); /* Text shadow for better readability */
+}
+
 .selected-theme-display {
     margin: 0 0 20px 0;
     text-align: center;
