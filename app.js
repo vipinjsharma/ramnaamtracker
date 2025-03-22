@@ -1817,12 +1817,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function setTheme(theme) {
+        console.log('Setting theme to:', theme);
+        
+        // Store the selected theme
         currentTheme = theme;
         
         if (theme === 'system') {
             // Check system preference
             const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
             applyTheme(prefersDark ? 'dark' : 'light');
+            
+            // Setup media query listener for system theme changes
+            const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+            darkModeMediaQuery.addEventListener('change', (e) => {
+                if (currentTheme === 'system') {
+                    applyTheme(e.matches ? 'dark' : 'light');
+                }
+            });
         } else {
             applyTheme(theme);
         }
@@ -1853,6 +1864,17 @@ document.addEventListener('DOMContentLoaded', function() {
             themeName = theme.charAt(0).toUpperCase() + theme.slice(1);
         }
         
+        // Update all UI elements that depend on theme
+        updateThemeUI(theme);
+        
+        // Show a toast notification
+        showToast(`Theme changed to ${themeName}`);
+        
+        console.log('Theme set complete:', theme);
+    }
+    
+    // Helper function to update all UI elements that depend on theme
+    function updateThemeUI(theme) {
         // Update theme display if open
         const themeDisplay = document.getElementById('selectedThemeDisplay');
         const themeNameElement = document.getElementById('currentThemeName');
@@ -1865,20 +1887,29 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 themeDisplay.classList.add('hidden');
             }
-            
-            // Update active buttons
-            const buttons = document.querySelectorAll('.theme-palette-btn, .theme-button');
-            buttons.forEach(btn => {
-                btn.classList.remove('active');
-                
-                if (btn.id === `theme${theme.replace('theme-', '').charAt(0).toUpperCase() + theme.replace('theme-', '').slice(1)}` || 
-                    btn.id === `theme${theme.charAt(0).toUpperCase() + theme.slice(1)}`) {
-                    btn.classList.add('active');
-                }
-            });
         }
         
-        showToast(`Theme changed to ${themeName}`);
+        // Update active buttons
+        const buttons = document.querySelectorAll('.theme-palette-btn, .theme-button');
+        buttons.forEach(btn => {
+            btn.classList.remove('active');
+            
+            // Handle different button ID formats
+            if (btn.id === `theme${theme.replace('theme-', '').charAt(0).toUpperCase() + theme.replace('theme-', '').slice(1)}` || 
+                btn.id === `theme${theme.charAt(0).toUpperCase() + theme.slice(1)}`) {
+                btn.classList.add('active');
+            }
+            
+            // Also check data-theme attribute
+            if (btn.dataset && btn.dataset.theme === theme) {
+                btn.classList.add('active');
+            }
+        });
+        
+        // Force repaint of theme-related elements
+        document.body.style.display = 'none';
+        document.body.offsetHeight; // This triggers a reflow
+        document.body.style.display = '';
     }
     
     function handleProfileReminderClick() {
@@ -2307,8 +2338,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function applyTheme(theme) {
-        // Remove all theme classes first
+        console.log('Applying theme:', theme);
+        
+        // Remove all theme classes first from both documentElement and body
         document.documentElement.classList.remove(
+            'dark-theme',
+            'theme-ram',
+            'theme-krishna',
+            'theme-lakshmi', 
+            'theme-ganesh',
+            'theme-shiva'
+        );
+        
+        document.body.classList.remove(
             'dark-theme',
             'theme-ram',
             'theme-krishna',
@@ -2320,12 +2362,35 @@ document.addEventListener('DOMContentLoaded', function() {
         // Apply the selected theme
         if (theme === 'dark') {
             document.documentElement.classList.add('dark-theme');
+            document.body.classList.add('dark-theme');
         } else if (theme.startsWith('theme-')) {
             // For cultural themes like 'theme-ram', 'theme-krishna', etc.
             document.documentElement.classList.add(theme);
+            document.body.classList.add(theme);
             
             // Also remove dark mode if it was applied
             document.documentElement.classList.remove('dark-theme');
+            document.body.classList.remove('dark-theme');
+            
+            // Apply CSS variables from the theme
+            const themeColors = getComputedStyle(document.documentElement);
+            document.documentElement.style.setProperty('--primary-color', themeColors.getPropertyValue(`--primary-color`));
+            document.documentElement.style.setProperty('--secondary-color', themeColors.getPropertyValue(`--secondary-color`));
+            document.documentElement.style.setProperty('--accent-color', themeColors.getPropertyValue(`--accent-color`));
+            document.documentElement.style.setProperty('--accent-color-rgb', themeColors.getPropertyValue(`--accent-color-rgb`));
+            document.documentElement.style.setProperty('--background-color', themeColors.getPropertyValue(`--background-color`));
+            document.documentElement.style.setProperty('--text-color', themeColors.getPropertyValue(`--text-color`));
+            
+            // Update body background
+            document.body.style.backgroundColor = themeColors.getPropertyValue('--background-color');
+            document.body.style.color = themeColors.getPropertyValue('--text-color');
+            
+            // Update header background
+            const header = document.querySelector('header');
+            if (header) {
+                header.style.backgroundColor = themeColors.getPropertyValue('--primary-color');
+                header.style.color = 'white'; // Ensure header text is always white for better contrast
+            }
         }
         
         // Update theme selection indicators
@@ -2333,6 +2398,16 @@ document.addEventListener('DOMContentLoaded', function() {
         themeButtons.forEach(btn => {
             btn.classList.remove('active');
             if (btn.dataset.theme === theme) {
+                btn.classList.add('active');
+            }
+        });
+        
+        // Update standard theme buttons
+        const standardThemeButtons = document.querySelectorAll('.theme-button');
+        standardThemeButtons.forEach(btn => {
+            btn.classList.remove('active');
+            const btnId = btn.id.replace('theme', '').toLowerCase();
+            if (btnId === theme) {
                 btn.classList.add('active');
             }
         });
@@ -2345,6 +2420,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const displayName = theme.replace('theme-', '').charAt(0).toUpperCase() + theme.replace('theme-', '').slice(1);
             themeNameElement.textContent = displayName;
             themeDisplay.classList.remove('hidden');
+        } else if (themeDisplay) {
+            themeDisplay.classList.add('hidden');
         }
         
         // Update app header color for Android status bar if using WebView
@@ -2357,6 +2434,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error updating Android status bar color:', e);
             }
         }
+        
+        console.log('Theme application complete:', theme);
     }
     
     function saveAppSettings() {
