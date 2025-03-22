@@ -274,9 +274,22 @@ header h1 {
 }
 
 /* Home Page */
-.greeting-message, .benefits-title {
-    color: white !important; /* Ensure these elements are always white */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Add subtle shadow for better readability */
+.greeting-message {
+    color: var(--md-primary) !important; /* Using primary theme color for better branding */
+    font-weight: 700; /* Bold for better visibility */
+    font-size: 1.2rem; /* Slightly larger */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Enhanced shadow for readability */
+    margin-bottom: 16px; /* Add some spacing below */
+    letter-spacing: 0.02em; /* Slight letter spacing for better readability */
+    padding: 6px 12px; /* Add some padding */
+    border-radius: 8px; /* Rounded corners */
+    background-color: rgba(255, 255, 255, 0.8); /* Subtle background for better contrast */
+    display: inline-block; /* To make background only as wide as the text */
+}
+
+.benefits-title {
+    color: white !important; /* Keep benefits title white */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Subtle shadow for readability */
 }
 .page {
     padding-top: 24px;
