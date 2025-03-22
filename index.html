@@ -239,9 +239,39 @@
                 <p>Write <span class="hindi-text">राम</span> in above space or tap below draw button to automatically draw on board and submit to increase count.</p>
             </div>
 
-            <div class="writing-stats">
-                <p>Today's count: <span id="writingTodayCount">0</span></p>
-                <p>Today's mala count: <span id="writingTodayMalaCount">0</span></p>
+            <div class="stat-cards">
+                <div class="stat-card streak-card">
+                    <div class="icon">🔥</div>
+                    <div class="details">
+                        <div class="label">Current Streak</div>
+                        <div class="value" id="writingCurrentStreak">3 Days</div>
+                    </div>
+                </div>
+                <div class="stat-card mala-card">
+                    <div class="icon">🧠</div>
+                    <div class="details">
+                        <div class="label">Today's Malas</div>
+                        <div class="value" id="writingTodayMalaCount">0</div>
+                    </div>
+                </div>
+                <div class="stat-card count-card">
+                    <div class="icon">📝</div>
+                    <div class="details">
+                        <div class="label">Today's Count</div>
+                        <div class="value" id="writingTodayCount">0</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Progress bar for daily goal -->
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span>Daily Goal</span>
+                    <span id="progress-percentage">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="dailyProgressBar" style="width: 0%"></div>
+                </div>
             </div>
 
             <div class="action-buttons">

@@ -1,13 +1,13 @@
 /* Global Styles - Material Design 3 */
 :root {
-    /* MD3 Primary Colors */
-    --md-primary: #FF7817; /* Ram saffron as primary */
+    /* New Color Scheme: Calm + Spiritual + Clean */
+    --md-primary: #FF6F00; /* Primary (Saffron) - Inspired by devotion and energy */
     --md-primary-container: #FFF1E6;
     --md-on-primary: #FFFFFF;
     --md-on-primary-container: #331800;
     
     /* MD3 Secondary Colors */
-    --md-secondary: #E67E22;
+    --md-secondary: #D84315; /* Accent (Deep Orange) - For buttons and highlights */
     --md-secondary-container: #FFE5C3;
     --md-on-secondary: #FFFFFF;
     --md-on-secondary-container: #2E1500;
@@ -15,12 +15,20 @@
     /* MD3 Surface Colors */
     --md-surface: #FFFBFF;
     --md-surface-variant: #F3DFD2;
-    --md-on-surface: #1F1B16;
+    --md-on-surface: #212121; /* Text (Primary) - High contrast text for readability */
     --md-on-surface-variant: #52443C;
     
     /* MD3 Background Colors */
-    --md-background: #FFFBFF;
-    --md-on-background: #1F1B16;
+    --md-background: #FFF8E1; /* Background (Light) - Subtle parchment-style light theme */
+    --md-on-background: #212121;
+    
+    /* Dark Mode Colors */
+    --md-dark-background: #1E1E1E; /* Background (Dark) - Elegant dark mode base */
+    --md-dark-text: #FAFAFA; /* Text (Light) - For dark mode readability */
+    
+    /* Progress and Dividers */
+    --md-progress-bar: #FFC107; /* Warm yellow-orange for goal bars */
+    --md-divider: #E0E0E0; /* Subtle gray separators */
     
     /* MD3 Error Colors */
     --md-error: #BA1A1A;
@@ -56,42 +64,82 @@
     /* Display Typography */
     --md-display-large-size: 57px;
     --md-display-large-height: 64px;
+    --md-display-large-weight: 600;
+    --md-display-large-spacing: -0.5px;
+    
     --md-display-medium-size: 45px;
     --md-display-medium-height: 52px;
+    --md-display-medium-weight: 600;
+    --md-display-medium-spacing: -0.3px;
+    
     --md-display-small-size: 36px;
     --md-display-small-height: 44px;
+    --md-display-small-weight: 600;
+    --md-display-small-spacing: -0.15px;
     
     /* Headline Typography */
     --md-headline-large-size: 32px;
     --md-headline-large-height: 40px;
+    --md-headline-large-weight: 600;
+    --md-headline-large-spacing: -0.1px;
+    
     --md-headline-medium-size: 28px;
     --md-headline-medium-height: 36px;
+    --md-headline-medium-weight: 600;
+    --md-headline-medium-spacing: 0px;
+    
     --md-headline-small-size: 24px;
     --md-headline-small-height: 32px;
+    --md-headline-small-weight: 600;
+    --md-headline-small-spacing: 0px;
     
     /* Title Typography */
     --md-title-large-size: 22px;
     --md-title-large-height: 28px;
+    --md-title-large-weight: 600;
+    --md-title-large-spacing: 0px;
+    
     --md-title-medium-size: 16px;
     --md-title-medium-height: 24px;
+    --md-title-medium-weight: 500;
+    --md-title-medium-spacing: 0.1px;
+    
     --md-title-small-size: 14px;
     --md-title-small-height: 20px;
+    --md-title-small-weight: 500;
+    --md-title-small-spacing: 0.1px;
     
     /* Body Typography */
     --md-body-large-size: 16px;
     --md-body-large-height: 24px;
+    --md-body-large-weight: 400;
+    --md-body-large-spacing: 0.15px;
+    
     --md-body-medium-size: 14px;
     --md-body-medium-height: 20px;
+    --md-body-medium-weight: 400;
+    --md-body-medium-spacing: 0.25px;
+    
     --md-body-small-size: 12px;
     --md-body-small-height: 16px;
+    --md-body-small-weight: 400;
+    --md-body-small-spacing: 0.4px;
     
     /* Label Typography */
     --md-label-large-size: 14px;
     --md-label-large-height: 20px;
+    --md-label-large-weight: 500;
+    --md-label-large-spacing: 0.1px;
+    
     --md-label-medium-size: 12px;
     --md-label-medium-height: 16px;
+    --md-label-medium-weight: 500;
+    --md-label-medium-spacing: 0.5px;
+    
     --md-label-small-size: 11px;
     --md-label-small-height: 16px;
+    --md-label-small-weight: 500;
+    --md-label-small-spacing: 0.5px;
     
     /* Traditional color variables (for backward compatibility) */
     --primary-color: var(--md-primary);
@@ -409,29 +457,131 @@ header h1 {
     100% { transform: scale(1); }
 }
 
-.writing-stats {
+/* Stat Cards */
+.stat-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
     margin-bottom: 24px;
-    font-size: var(--md-body-large-size);
+}
+
+.stat-card {
+    background-color: var(--md-surface);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(var(--accent-color-rgb), 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--md-shadow-3);
+}
+
+.stat-card .icon {
+    font-size: 28px;
+    margin-right: 12px;
+    border-radius: 8px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.streak-card .icon {
+    background-color: rgba(255, 111, 0, 0.1);
+}
+
+.mala-card .icon {
+    background-color: rgba(33, 150, 243, 0.1);
+}
+
+.count-card .icon {
+    background-color: rgba(76, 175, 80, 0.1);
+}
+
+.stat-card .details {
+    flex: 1;
+}
+
+.stat-card .label {
+    font-size: var(--md-label-large-size);
+    font-weight: var(--md-label-large-weight);
+    color: var(--md-on-surface-variant);
+    margin-bottom: 4px;
+}
+
+.stat-card .value {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--md-primary);
+}
+
+/* Progress Bar */
+.progress-container {
+    margin-bottom: 24px;
     background-color: var(--md-surface);
     padding: 16px;
-    border-radius: var(--md-shape-medium);
+    border-radius: 12px;
     box-shadow: var(--md-shadow-1);
 }
 
-.writing-stats p {
-    margin: 0;
+.progress-label {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: var(--md-body-medium-size);
+    font-weight: 500;
 }
 
-.writing-stats p span {
-    font-weight: 700;
-    font-size: 24px;
+.progress-label span:last-child {
     color: var(--md-primary);
-    margin-top: 4px;
+    font-weight: 600;
+}
+
+.progress-bar {
+    height: 10px;
+    background: #E0E0E0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 75%;
+    background: #FFC107;
+    border-radius: 5px;
+    height: 100%;
+    transition: width 0.6s ease-in-out;
+    background: linear-gradient(to right, #FF6F00, #D84315);
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+                rgba(255,255,255,0) 0%, 
+                rgba(255,255,255,0.4) 50%, 
+                rgba(255,255,255,0) 100%);
+    transform: translateX(-100%);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    to {
+        transform: translateX(100%);
+    }
 }
 
 .action-buttons {
@@ -839,34 +989,33 @@ input:checked + .toggle-slider:before {
 
 /* Buttons */
 .primary-button {
-    background-color: var(--md-primary);
-    color: var(--md-on-primary);
+    background: linear-gradient(to right, #FF6F00, #D84315);
+    color: white;
     border: none;
-    border-radius: var(--md-shape-small);
-    padding: 14px 24px;
+    border-radius: 50px;
+    padding: 12px 24px;
     font-family: 'Poppins', sans-serif;
     font-size: var(--md-body-large-size);
-    font-weight: 500;
+    font-weight: bold;
     cursor: pointer;
     text-align: center;
     transition: all var(--md-transition-medium);
     width: 100%;
     margin: 12px 0;
-    box-shadow: var(--md-shadow-1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     position: relative;
     overflow: hidden;
     transform: translateZ(0);
 }
 
 .primary-button:hover, .primary-button:focus {
-    background-color: var(--md-secondary);
-    box-shadow: var(--md-shadow-2);
-    transform: translateY(-1px);
+    transform: scale(1.03);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .primary-button:active {
-    transform: translateY(1px);
-    box-shadow: var(--md-shadow-1);
+    transform: scale(0.98);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 /* Ripple effect */
