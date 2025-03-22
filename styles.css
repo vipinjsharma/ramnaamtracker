@@ -1731,6 +1731,14 @@ input:checked + .toggle-slider-large:before {
         background-color: #2c2c2c;
         color: #f0f0f0;
     }
+
+    & p {
+        color: #f0f0f0; /* Ensure all paragraph text is light colored */
+    }
+
+    & span {
+        color: #ffffff; /* Make spans (often used for values) brighter */
+    }
 }
 
 .dark-theme .canvas-container {
@@ -1755,6 +1763,45 @@ input:checked + .toggle-slider-large:before {
 /* Ensure profile section headers remain blue in dark theme */
 .dark-theme .profile-section h3 {
     color: #3498DB; /* Krishna theme blue */
+}
+
+/* Fix statistics text visibility in dark theme */
+.dark-theme .statistics-card {
+    background-color: #3c3c3c;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.dark-theme .statistics-card h2 {
+    color: #FF9800; /* Use brighter orange for headers */
+}
+
+.dark-theme .stat-row {
+    color: #f0f0f0; /* Bright text for stats */
+}
+
+.dark-theme .stat-value {
+    color: #FFFFFF; /* White for stat values */
+    font-weight: 600;
+}
+
+/* Improve progress bar visibility in dark theme */
+.dark-theme .progress-bar {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark-theme .progress-fill {
+    box-shadow: 0 0 15px rgba(255, 120, 23, 0.6); /* Stronger glow effect in dark theme */
+}
+
+/* Improve home page stats visibility in dark theme */
+.dark-theme [id^="home"] {
+    color: #FFFFFF; /* Bright white for all counter values */
+    font-weight: 600;
+}
+
+.dark-theme #homePage p {
+    color: #f0f0f0; /* Light gray for text labels */
 }
 
 /* Ensure all orange/saffron buttons have white text */
