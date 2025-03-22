@@ -1619,95 +1619,44 @@ document.addEventListener('DOMContentLoaded', function() {
         // Clear the canvas first
         clearCanvas();
         
-        // SVG path commands for RAM
-        const ramPathData = "M70,30 L110,30 L150,30 L190,30 L210,50 L210,100 L190,120 L150,120 L130,140 L110,160 L90,180 M130,75 L170,75 M170,75 L190,55 M170,75 L170,120";
+        // Set drawing properties for the RAM text
+        drawingContext.font = "bold 48px Devanagari, Arial, sans-serif";
+        drawingContext.fillStyle = "orange";
+        drawingContext.strokeStyle = "#ff8c00";
+        drawingContext.lineWidth = 1;
         
-        // Parse the SVG path into commands
-        const commands = parseSVGPath(ramPathData);
+        // Center position for the text
+        const x = canvas.width / 2 - 50;
+        const y = canvas.height / 2 + 15;
         
-        // Set drawing properties
-        drawingContext.lineWidth = 8;
-        drawingContext.lineCap = 'round';
-        drawingContext.lineJoin = 'round';
-        drawingContext.strokeStyle = '#E95420';
+        // Text to draw
+        const ramText = "राम";
         
-        // Keep track of current command
-        let commandIndex = 0;
+        // Draw the text with animation
+        let charIndex = 0;
+        let timer = null;
         
-        function drawNextSegment() {
-            if (commandIndex >= commands.length) {
-                // Drawing complete
+        function drawNextChar() {
+            if (charIndex > ramText.length) {
+                clearTimeout(timer);
                 setTimeout(submitDrawing, 500);
                 return;
             }
             
-            const command = commands[commandIndex];
+            // Clear canvas and redraw the text up to current character
+            clearCanvas();
+            const partialText = ramText.substring(0, charIndex);
+            drawingContext.fillText(partialText, x, y);
+            drawingContext.strokeText(partialText, x, y);
             
-            if (command.type === 'M') {
-                // Move to point
-                const x = scaleX(command.x);
-                const y = scaleY(command.y);
-                drawingContext.beginPath();
-                drawingContext.moveTo(x, y);
-            } else if (command.type === 'L') {
-                // Line to point
-                const x = scaleX(command.x);
-                const y = scaleY(command.y);
-                drawingContext.lineTo(x, y);
-                drawingContext.stroke();
-            }
+            charIndex++;
             
-            commandIndex++;
-            
-            // Continue animation with slight delay for visual effect
-            setTimeout(() => {
-                requestAnimationFrame(drawNextSegment);
-            }, 50);
-        }
-        
-        // Helper function to scale SVG coordinates to canvas
-        function scaleX(x) {
-            return (x / 300) * canvas.width;
-        }
-        
-        function scaleY(y) {
-            return (y / 200) * canvas.height;
-        }
-        
-        // Helper function to parse SVG path data
-        function parseSVGPath(pathData) {
-            const commands = [];
-            const parts = pathData.trim().split(/\s+/);
-            
-            let currentType = null;
-            
-            for (let i = 0; i < parts.length; i++) {
-                const part = parts[i];
-                
-                if (part === 'M' || part === 'L') {
-                    currentType = part;
-                } else if (currentType) {
-                    // If the part starts with a comma or is a comma, skip it
-                    if (part === ',' || part.startsWith(',')) continue;
-                    
-                    // Extract coordinates
-                    if (i + 1 < parts.length) {
-                        const x = parseFloat(part.replace(',', ''));
-                        const y = parseFloat(parts[i + 1].replace(',', ''));
-                        
-                        if (!isNaN(x) && !isNaN(y)) {
-                            commands.push({ type: currentType, x, y });
-                            i++; // Skip the y coordinate as we've already processed it
-                        }
-                    }
-                }
-            }
-            
-            return commands;
+            // Continue animation with slight delay
+            timer = setTimeout(drawNextChar, 400);
         }
         
         // Start the animated drawing
-        drawNextSegment();
+        drawNextChar();
     }
     
     function submitDrawing() {
