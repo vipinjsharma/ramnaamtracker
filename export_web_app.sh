@@ -10,7 +10,7 @@ mkdir -p $EXPORT_DIR
 
 # Copy main web app files
 echo "Copying web app files..."
-cp index.html app.js styles.css $EXPORT_DIR/
+cp index.html app.js styles.css translation-fix.js $EXPORT_DIR/
 
 # Copy public folder if it exists
 if [ -d "public" ]; then
