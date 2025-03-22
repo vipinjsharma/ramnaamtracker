@@ -144,9 +144,10 @@ document.addEventListener('DOMContentLoaded', function() {
             'name_length_error': 'Name must be between 2 and 30 characters',
             'edit_name': 'Edit Name',
             
-            // Tutorial
+            // Tutorial and Walkthrough
             'show_writing_tutorial': 'Show Writing Tutorial',
-            'tutorial_complete': 'Great job! Now practice writing राम on your own.'
+            'tutorial_complete': 'Great job! Now practice writing राम on your own.',
+            'walkthrough_complete': 'App walkthrough complete! Explore and enjoy using Ram Lekhak.'
         },
         'hi': {
             // Home Page
@@ -202,9 +203,10 @@ document.addEventListener('DOMContentLoaded', function() {
             'name_length_error': 'नाम 2 से 30 अक्षरों के बीच होना चाहिए',
             'edit_name': 'नाम संपादित करें',
             
-            // Tutorial
+            // Tutorial and Walkthrough
             'show_writing_tutorial': 'लिखने का ट्यूटोरियल दिखाएं',
-            'tutorial_complete': 'बहुत अच्छा! अब खुद से राम लिखने का अभ्यास करें।'
+            'tutorial_complete': 'बहुत अच्छा! अब खुद से राम लिखने का अभ्यास करें।',
+            'walkthrough_complete': 'ऐप वॉकथ्रू पूरा! राम लेखक का उपयोग करके आनंद लें।'
         }
     };
     let reminderEnabled = false; // Default reminder state
@@ -469,10 +471,7 @@ document.addEventListener('DOMContentLoaded', function() {
         drawingContext.lineWidth = 5;
         
         // Add event listener for the writing tutorial button
-        const writingTutorialBtn = document.getElementById('writingTutorialBtn');
-        if (writingTutorialBtn) {
-            writingTutorialBtn.addEventListener('click', showRamWritingTutorial);
-        }
+        // App walkthrough tutorial will be added here
     }
     
     function loadData() {
@@ -1163,15 +1162,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     </ul>
                     <p>After writing, tap "Submit" to add to your count. The "Auto-Draw" option automatically submits after drawing.</p>
                     
-                    <!-- New Writing Tutorial Button -->
-                    <button id="startWritingTutorial" class="secondary-button tutorial-button">
+                    <!-- App Walkthrough Button -->
+                    <button id="startAppWalkthrough" class="secondary-button tutorial-button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
-                            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
-                            <path d="M2 2l7.586 7.586"></path>
-                            <circle cx="11" cy="11" r="2"></circle>
+                            <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                            <line x1="6" y1="1" x2="6" y2="4"></line>
+                            <line x1="10" y1="1" x2="10" y2="4"></line>
+                            <line x1="14" y1="1" x2="14" y2="4"></line>
                         </svg>
-                        Start Writing Tutorial
+                        Start App Walkthrough
                     </button>
                 </section>
                 
@@ -1259,208 +1259,460 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 300);
         });
         
-        // Tutorial button functionality
-        const tutorialBtn = modal.querySelector('#startWritingTutorial');
-        if (tutorialBtn) {
-            tutorialBtn.addEventListener('click', () => {
+        // App Walkthrough button functionality
+        const walkthoughBtn = modal.querySelector('#startAppWalkthrough');
+        if (walkthoughBtn) {
+            walkthoughBtn.addEventListener('click', () => {
                 modal.style.display = 'none';
                 setTimeout(() => {
                     document.body.removeChild(modal);
-                    showRamWritingTutorial();
+                    showAppWalkthrough();
                 }, 300);
             });
         }
     }
     
-    // New function for character writing tutorial
-    function showRamWritingTutorial() {
-        // Navigate to the writing page first if not already there
-        navigateToWriting();
-        
-        // Create tutorial overlay content
-        const tutorialSteps = [
+    // App walkthrough tutorial function
+    function showAppWalkthrough() {
+        // Create walkthrough data for all app features
+        const walkthroughSteps = [
             {
-                title: "Writing राम - Step 1",
-                description: "Let's start with the first character 'र' (Ra). Begin with a curved vertical line on the left.",
-                path: "M 100,100 C 100,120 100,140 110,160",
-                animation: "draw 1.5s forwards"
+                title: "Welcome to Ram Lekhak",
+                description: "Thank you for using Ram Lekhak! This quick walkthrough will guide you through the main features of the app.",
+                targetPage: "home",
+                highlightSelector: ".app-logo",
+                position: "bottom"
             },
             {
-                title: "Writing राम - Step 2",
-                description: "Now add a horizontal line to the right, connecting to the vertical line.",
-                path: "M 110,120 L 140,120",
-                animation: "draw 1s forwards"
+                title: "Home Page",
+                description: "This is your home page. Here you can see your daily progress and access all features of the app.",
+                targetPage: "home",
+                highlightSelector: ".home-page",
+                position: "center"
             },
             {
-                title: "Writing राम - Step 3",
-                description: "Complete 'र' (Ra) by adding the small curved tail at the bottom.",
-                path: "M 110,160 C 120,165 130,160 135,155",
-                animation: "draw 1s forwards"
+                title: "Personal Greeting",
+                description: "Your name appears here. You can edit it from your profile settings.",
+                targetPage: "home",
+                highlightSelector: ".greeting-message",
+                position: "bottom"
             },
             {
-                title: "Writing राम - Step 4",
-                description: "Now for 'ा' (matra). Draw a vertical line to the right of the first character.",
-                path: "M 150,100 L 150,160",
-                animation: "draw 1.2s forwards"
+                title: "Daily Statistics",
+                description: "Track your daily progress here - today's count, malas completed, and total count.",
+                targetPage: "home",
+                highlightSelector: ".stats-container",
+                position: "top"
             },
             {
-                title: "Writing राम - Step 5",
-                description: "Let's move to 'म' (Ma). Start with the left vertical line.",
-                path: "M 180,110 L 180,160",
-                animation: "draw 1.2s forwards"
+                title: "Start Writing",
+                description: "Tap this button to start writing राम.",
+                targetPage: "home",
+                highlightSelector: ".start-writing-btn",
+                position: "bottom"
             },
             {
-                title: "Writing राम - Step 6",
-                description: "Add the top curved line connecting to the right side.",
-                path: "M 180,110 C 190,100 200,100 210,110",
-                animation: "draw 1s forwards"
+                title: "Writing Page",
+                description: "This is where you write राम. The canvas captures your strokes.",
+                targetPage: "writing",
+                highlightSelector: ".writing-area",
+                position: "center"
             },
             {
-                title: "Writing राम - Step 7",
-                description: "Now draw the right vertical line down.",
-                path: "M 210,110 L 210,160",
-                animation: "draw 1.2s forwards"
+                title: "Writing Statistics",
+                description: "Track your current streak, today's malas, and today's count while writing.",
+                targetPage: "writing",
+                highlightSelector: ".stat-cards",
+                position: "top"
             },
             {
-                title: "Writing राम - Step 8",
-                description: "Complete 'म' (Ma) by adding the connecting line at the bottom.",
-                path: "M 180,160 L 210,160",
-                animation: "draw 1s forwards"
+                title: "Daily Goal Progress",
+                description: "Monitor your progress toward your daily writing goal.",
+                targetPage: "writing",
+                highlightSelector: ".progress-container",
+                position: "bottom"
             },
             {
-                title: "राम Completed!",
-                description: "Excellent! You've completed writing राम. Practice this a few times to get comfortable with the strokes.",
-                path: "",
-                animation: ""
+                title: "Writing Tools",
+                description: "Clear your canvas, auto-draw राम, or submit your completed राम.",
+                targetPage: "writing",
+                highlightSelector: ".writing-buttons",
+                position: "top"
+            },
+            {
+                title: "Main Menu",
+                description: "Access app settings, tutorials, and more from the menu.",
+                targetPage: "home",
+                highlightSelector: ".menu-toggle",
+                position: "left"
+            },
+            {
+                title: "Profile Settings",
+                description: "Access your profile, account settings, reminders, and theme preferences.",
+                targetPage: "home",
+                highlightSelector: ".profile-toggle",
+                position: "right"
+            },
+            {
+                title: "Profile Page",
+                description: "View and update your profile information and stats.",
+                targetPage: "profile",
+                highlightSelector: ".profile-page",
+                position: "center"
+            },
+            {
+                title: "Theme Selection",
+                description: "Personalize your app by choosing from different color themes.",
+                targetPage: "profile",
+                navigateTo: "handleProfileThemeClick", 
+                highlightSelector: ".theme-options",
+                position: "center"
+            },
+            {
+                title: "Language Settings",
+                description: "Switch between English and Hindi language interfaces.",
+                targetPage: "home",
+                navigateTo: "handleMenuLanguageClick",
+                highlightSelector: ".language-options",
+                position: "center"
+            },
+            {
+                title: "Walkthrough Complete!",
+                description: "You're all set to start your journey with Ram Lekhak. Happy writing!",
+                targetPage: "home",
+                highlightSelector: ".app-container",
+                position: "center"
             }
         ];
 
-        // Create tutorial container
-        const tutorialContainer = document.createElement('div');
-        tutorialContainer.className = 'tutorial-container';
+        // Create walkthrough container
+        const walkthroughContainer = document.createElement('div');
+        walkthroughContainer.className = 'walkthrough-container';
+        document.body.appendChild(walkthroughContainer);
         
-        // Create the main tutorial modal
-        const tutorialModal = document.createElement('div');
-        tutorialModal.className = 'tutorial-modal';
+        // Create spotlight overlay
+        const spotlightOverlay = document.createElement('div');
+        spotlightOverlay.className = 'spotlight-overlay';
+        walkthroughContainer.appendChild(spotlightOverlay);
         
-        // Create SVG animation area
-        const svgContainer = document.createElement('div');
-        svgContainer.className = 'tutorial-svg-container';
-        svgContainer.innerHTML = `
-            <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" class="tutorial-svg">
-                <!-- Paths will be added here dynamically -->
-                <g class="tutorial-paths-group"></g>
-                
-                <!-- Guide text for राम -->
-                <text x="150" y="130" class="tutorial-guide-text" opacity="0.2" text-anchor="middle" font-size="70">राम</text>
-            </svg>
-        `;
+        // Create modal box
+        const walkthroughModal = document.createElement('div');
+        walkthroughModal.className = 'walkthrough-modal';
+        walkthroughContainer.appendChild(walkthroughModal);
         
-        // Create instruction area
-        const instructionArea = document.createElement('div');
-        instructionArea.className = 'tutorial-instruction-area';
-        instructionArea.innerHTML = `
-            <h3 id="tutorial-step-title">Writing राम - Learn the Strokes</h3>
-            <p id="tutorial-step-description">Follow along as we guide you through each stroke of writing राम.</p>
-            
-            <div class="tutorial-progress">
-                <div class="tutorial-progress-bar" id="tutorialProgressBar" style="width: 0%"></div>
-            </div>
-            
-            <div class="tutorial-navigation">
-                <button id="tutorial-prev-btn" class="secondary-button" disabled>Previous</button>
-                <span id="tutorial-step-counter">Step 1 of ${tutorialSteps.length}</span>
-                <button id="tutorial-next-btn" class="primary-button">Next</button>
-            </div>
-            
-            <button id="tutorial-close-btn" class="secondary-button">Close Tutorial</button>
-        `;
-        
-        // Assemble the modal
-        tutorialModal.appendChild(svgContainer);
-        tutorialModal.appendChild(instructionArea);
-        tutorialContainer.appendChild(tutorialModal);
-        document.body.appendChild(tutorialContainer);
-        
-        // Initialize animation and interaction
-        let currentStep = 0;
-        const pathsGroup = tutorialContainer.querySelector('.tutorial-paths-group');
-        const progressBar = tutorialContainer.querySelector('#tutorialProgressBar');
-        const stepTitle = tutorialContainer.querySelector('#tutorial-step-title');
-        const stepDescription = tutorialContainer.querySelector('#tutorial-step-description');
-        const stepCounter = tutorialContainer.querySelector('#tutorial-step-counter');
-        const prevBtn = tutorialContainer.querySelector('#tutorial-prev-btn');
-        const nextBtn = tutorialContainer.querySelector('#tutorial-next-btn');
-        const closeBtn = tutorialContainer.querySelector('#tutorial-close-btn');
-        
-        // Function to update the tutorial step
-        function updateTutorialStep(stepIndex) {
-            // Update progress bar
-            const progress = ((stepIndex + 1) / tutorialSteps.length) * 100;
-            progressBar.style.width = `${progress}%`;
-            
-            // Update step counter
-            stepCounter.textContent = `Step ${stepIndex + 1} of ${tutorialSteps.length}`;
-            
-            // Update title and description
-            stepTitle.textContent = tutorialSteps[stepIndex].title;
-            stepDescription.textContent = tutorialSteps[stepIndex].description;
-            
-            // Update buttons
-            prevBtn.disabled = stepIndex === 0;
-            nextBtn.textContent = stepIndex === tutorialSteps.length - 1 ? "Finish" : "Next";
-            
-            // Handle animation of the current step
-            if (tutorialSteps[stepIndex].path) {
-                // Create a new path element
-                const pathElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                pathElement.setAttribute("d", tutorialSteps[stepIndex].path);
-                pathElement.setAttribute("stroke", "var(--accent-color, #ff7817)");
-                pathElement.setAttribute("stroke-width", "5");
-                pathElement.setAttribute("fill", "none");
-                pathElement.setAttribute("stroke-linecap", "round");
-                pathElement.setAttribute("stroke-linejoin", "round");
-                pathElement.setAttribute("class", "tutorial-path");
-                pathElement.style.strokeDasharray = 1000;
-                pathElement.style.strokeDashoffset = 1000;
-                pathElement.style.animation = tutorialSteps[stepIndex].animation;
-                
-                // Add path to SVG
-                pathsGroup.appendChild(pathElement);
+        // Add CSS for the walkthrough
+        const walkthroughStyles = document.createElement('style');
+        walkthroughStyles.textContent = `
+            .walkthrough-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+                overflow: hidden;
             }
+            
+            .spotlight-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.7);
+                transition: all 0.3s ease;
+            }
+            
+            .spotlight-highlight {
+                position: absolute;
+                box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.7);
+                border-radius: 12px;
+                z-index: 10000;
+                pointer-events: none;
+                transition: all 0.3s ease;
+            }
+            
+            .walkthrough-modal {
+                position: absolute;
+                width: 85%;
+                max-width: 350px;
+                background-color: var(--card-bg-color, #fff);
+                border-radius: 12px;
+                padding: 20px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                z-index: 10001;
+                transition: all 0.3s ease;
+            }
+            
+            .walkthrough-title {
+                color: var(--accent-color, #ff7817);
+                font-size: 1.2rem;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+            
+            .walkthrough-description {
+                color: var(--text-color, #333);
+                margin-bottom: 20px;
+                line-height: 1.5;
+            }
+            
+            .walkthrough-progress {
+                height: 4px;
+                background-color: #e0e0e0;
+                border-radius: 4px;
+                margin-bottom: 20px;
+                overflow: hidden;
+            }
+            
+            .walkthrough-progress-bar {
+                height: 100%;
+                background-color: var(--accent-color, #ff7817);
+                transition: width 0.3s ease;
+            }
+            
+            .walkthrough-buttons {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .walkthrough-counter {
+                color: var(--text-color-secondary, #777);
+                font-size: 0.9rem;
+            }
+            
+            .walkthrough-skip {
+                background: none;
+                border: none;
+                color: var(--text-color-secondary, #777);
+                font-size: 0.9rem;
+                cursor: pointer;
+                padding: 5px;
+            }
+            
+            .walkthrough-prev, .walkthrough-next {
+                padding: 8px 15px;
+                border: none;
+                border-radius: 6px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            
+            .walkthrough-prev {
+                background-color: var(--card-bg-color, #fff);
+                color: var(--accent-color, #ff7817);
+                border: 1px solid var(--accent-color, #ff7817);
+                margin-right: 10px;
+            }
+            
+            .walkthrough-next {
+                background-color: var(--accent-color, #ff7817);
+                color: white;
+            }
+            
+            .walkthrough-prev:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+        `;
+        document.head.appendChild(walkthroughStyles);
+        
+        // Populate modal with content
+        walkthroughModal.innerHTML = `
+            <h3 class="walkthrough-title">Welcome</h3>
+            <p class="walkthrough-description">Loading walkthrough...</p>
+            
+            <div class="walkthrough-progress">
+                <div class="walkthrough-progress-bar" style="width: 0%"></div>
+            </div>
+            
+            <div class="walkthrough-buttons">
+                <div>
+                    <button class="walkthrough-prev" disabled>Previous</button>
+                    <button class="walkthrough-next">Next</button>
+                </div>
+                <span class="walkthrough-counter">1/${walkthroughSteps.length}</span>
+                <button class="walkthrough-skip">Skip</button>
+            </div>
+        `;
+        
+        // Get UI elements
+        const spotlightHighlight = document.createElement('div');
+        spotlightHighlight.className = 'spotlight-highlight';
+        spotlightOverlay.appendChild(spotlightHighlight);
+        
+        const title = walkthroughModal.querySelector('.walkthrough-title');
+        const description = walkthroughModal.querySelector('.walkthrough-description');
+        const progressBar = walkthroughModal.querySelector('.walkthrough-progress-bar');
+        const counter = walkthroughModal.querySelector('.walkthrough-counter');
+        const prevButton = walkthroughModal.querySelector('.walkthrough-prev');
+        const nextButton = walkthroughModal.querySelector('.walkthrough-next');
+        const skipButton = walkthroughModal.querySelector('.walkthrough-skip');
+        
+        // Create spotlight effect for highlighting elements
+        function highlightElement(selector, position) {
+            const element = document.querySelector(selector);
+            
+            if (!element) {
+                // If element not found, show general view without spotlight
+                spotlightHighlight.style.width = '0';
+                spotlightHighlight.style.height = '0';
+                spotlightHighlight.style.top = '50%';
+                spotlightHighlight.style.left = '50%';
+                
+                // Center the modal
+                walkthroughModal.style.top = '50%';
+                walkthroughModal.style.left = '50%';
+                walkthroughModal.style.transform = 'translate(-50%, -50%)';
+                return;
+            }
+            
+            // Get element position and size
+            const rect = element.getBoundingClientRect();
+            const padding = 10; // Extra padding around the element
+            
+            // Update spotlight position and size
+            spotlightHighlight.style.width = `${rect.width + padding * 2}px`;
+            spotlightHighlight.style.height = `${rect.height + padding * 2}px`;
+            spotlightHighlight.style.top = `${rect.top - padding}px`;
+            spotlightHighlight.style.left = `${rect.left - padding}px`;
+            
+            // Position the modal based on target position
+            const modalHeight = walkthroughModal.offsetHeight;
+            const modalWidth = walkthroughModal.offsetWidth;
+            
+            let modalTop, modalLeft;
+            
+            switch (position) {
+                case 'top':
+                    modalTop = rect.top - modalHeight - 20;
+                    modalLeft = rect.left + rect.width / 2 - modalWidth / 2;
+                    break;
+                case 'bottom':
+                    modalTop = rect.bottom + 20;
+                    modalLeft = rect.left + rect.width / 2 - modalWidth / 2;
+                    break;
+                case 'left':
+                    modalTop = rect.top + rect.height / 2 - modalHeight / 2;
+                    modalLeft = rect.left - modalWidth - 20;
+                    break;
+                case 'right':
+                    modalTop = rect.top + rect.height / 2 - modalHeight / 2;
+                    modalLeft = rect.right + 20;
+                    break;
+                default: // center
+                    modalTop = rect.top + rect.height / 2 - modalHeight / 2;
+                    modalLeft = rect.left + rect.width / 2 - modalWidth / 2;
+            }
+            
+            // Ensure modal is visible within viewport
+            if (modalTop < 10) modalTop = 10;
+            if (modalTop > window.innerHeight - modalHeight - 10) {
+                modalTop = window.innerHeight - modalHeight - 10;
+            }
+            
+            if (modalLeft < 10) modalLeft = 10;
+            if (modalLeft > window.innerWidth - modalWidth - 10) {
+                modalLeft = window.innerWidth - modalWidth - 10;
+            }
+            
+            walkthroughModal.style.top = `${modalTop}px`;
+            walkthroughModal.style.left = `${modalLeft}px`;
+            walkthroughModal.style.transform = 'none';
+        }
+        
+        // Function to update step content
+        let currentStepIndex = 0;
+        
+        function updateStep(stepIndex) {
+            const step = walkthroughSteps[stepIndex];
+            
+            // Update content
+            title.textContent = step.title;
+            description.textContent = step.description;
+            progressBar.style.width = `${((stepIndex + 1) / walkthroughSteps.length) * 100}%`;
+            counter.textContent = `${stepIndex + 1}/${walkthroughSteps.length}`;
+            
+            // Update navigation buttons
+            prevButton.disabled = stepIndex === 0;
+            nextButton.textContent = stepIndex === walkthroughSteps.length - 1 ? 'Finish' : 'Next';
+            
+            // Navigate to the target page if needed
+            if (step.targetPage) {
+                const currentPage = document.querySelector('.active-page').id.replace('-page', '');
+                
+                if (currentPage !== step.targetPage) {
+                    switch (step.targetPage) {
+                        case 'home':
+                            navigateToHome();
+                            break;
+                        case 'writing':
+                            navigateToWriting();
+                            break;
+                        case 'profile':
+                            navigateToProfile();
+                            break;
+                    }
+                }
+            }
+            
+            // Special navigation for specific features
+            if (step.navigateTo) {
+                // Execute after a short delay to ensure page transition is complete
+                setTimeout(() => {
+                    switch (step.navigateTo) {
+                        case 'handleMenuLanguageClick':
+                            handleMenuLanguageClick();
+                            break;
+                        case 'handleProfileThemeClick':
+                            handleProfileThemeClick();
+                            break;
+                    }
+                }, 300);
+            }
+            
+            // Highlight the element after a short delay to allow for page transitions
+            setTimeout(() => {
+                highlightElement(step.highlightSelector, step.position);
+            }, 300);
         }
         
         // Initialize first step
-        updateTutorialStep(currentStep);
+        updateStep(currentStepIndex);
         
-        // Event listeners for navigation
-        prevBtn.addEventListener('click', () => {
-            if (currentStep > 0) {
-                // Remove the current path (it will be redrawn)
-                if (pathsGroup.lastChild) {
-                    pathsGroup.removeChild(pathsGroup.lastChild);
-                }
-                currentStep--;
-                updateTutorialStep(currentStep);
+        // Event listeners
+        prevButton.addEventListener('click', () => {
+            if (currentStepIndex > 0) {
+                currentStepIndex--;
+                updateStep(currentStepIndex);
             }
         });
         
-        nextBtn.addEventListener('click', () => {
-            if (currentStep < tutorialSteps.length - 1) {
-                currentStep++;
-                updateTutorialStep(currentStep);
+        nextButton.addEventListener('click', () => {
+            if (currentStepIndex < walkthroughSteps.length - 1) {
+                currentStepIndex++;
+                updateStep(currentStepIndex);
             } else {
-                // On the last step, clicking "Finish" closes the tutorial
-                tutorialContainer.remove();
-                
-                // Show a toast with encouragement
-                showToast(getTranslation('tutorial_complete'), 3000, 'success');
+                // Complete the walkthrough
+                endWalkthrough();
             }
         });
         
-        closeBtn.addEventListener('click', () => {
-            tutorialContainer.remove();
-        });
+        skipButton.addEventListener('click', endWalkthrough);
+        
+        function endWalkthrough() {
+            // Remove the walkthrough elements
+            document.body.removeChild(walkthroughContainer);
+            document.head.removeChild(walkthroughStyles);
+            
+            // Navigate back to home if needed
+            navigateToHome();
+            
+            // Show completion toast
+            showToast(getTranslation('walkthrough_complete'), 3000, 'success');
+        }
     }
     
     function handleMenuLanguageClick() {
