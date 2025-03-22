@@ -450,8 +450,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get drawing context
         drawingContext = canvas.getContext('2d');
         
-        // Set up context style
-        drawingContext.strokeStyle = '#ff7817'; // Orange color like in the mockup
+        // Get current theme accent color
+        let accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim() || "#ff7817";
+        
+        // Set up context style based on current theme
+        drawingContext.strokeStyle = accentColor;
         drawingContext.lineJoin = 'round';
         drawingContext.lineCap = 'round';
         drawingContext.lineWidth = 5;
@@ -2415,37 +2418,43 @@ document.addEventListener('DOMContentLoaded', function() {
                               (theme === 'dark' || theme === 'dark-theme') ? 'dark-theme' : 
                               `theme-${theme}`;
         
-        // Theme color mapping
+        // Theme color mapping with accent colors for headings
         const themeColors = {
             'theme-ram': {
                 primary: '#ff7817',
-                background: '#fff7e6',
-                text: '#333333'
+                background: '#fff7e6', 
+                text: '#333333',
+                accent: '#ff7817' // Accent color for headings and stats
             },
             'theme-krishna': {
                 primary: '#2874A6',
                 background: '#EBF5FB',
-                text: '#1A5276'
+                text: '#1A5276',
+                accent: '#2874A6' // Blue for Krishna theme
             },
             'theme-lakshmi': {
                 primary: '#D4AC0D',
                 background: '#FEF9E7',
-                text: '#7D6608'
+                text: '#7D6608',
+                accent: '#D4AC0D' // Gold for Lakshmi theme
             },
             'theme-ganesh': {
                 primary: '#C0392B',
                 background: '#FDEDEC',
-                text: '#641E16'
+                text: '#641E16',
+                accent: '#C0392B' // Red for Ganesh theme
             },
             'theme-shiva': {
                 primary: '#7D3C98',
                 background: '#F4ECF7',
-                text: '#4A235A'
+                text: '#4A235A',
+                accent: '#7D3C98' // Purple for Shiva theme
             },
             'dark-theme': {
                 primary: '#FF6F00',
                 background: '#2c2c2c',
-                text: '#f0f0f0'
+                text: '#f0f0f0',
+                accent: '#FF6F00' // Keep orange accent in dark theme
             }
         };
         
@@ -2474,10 +2483,53 @@ document.addEventListener('DOMContentLoaded', function() {
         document.documentElement.style.setProperty('--primary-color', colors.primary);
         document.documentElement.style.setProperty('--background-color', colors.background);
         document.documentElement.style.setProperty('--text-color', colors.text);
+        document.documentElement.style.setProperty('--accent-color', colors.accent);
         
         // Apply to body directly as well
         document.body.style.backgroundColor = colors.background;
         document.body.style.color = colors.text;
+        
+        // Apply accent color to headings and stats
+        const headings = document.querySelectorAll('.card-title, .section-title, .stat-label, h2, h3, .stat-title, .card-header');
+        headings.forEach(heading => {
+            heading.style.color = colors.accent;
+        });
+        
+        // Apply to stat values and other important numbers
+        const statValues = document.querySelectorAll('.stat-value, .profile-stat-value, .count-value, .mala-count, .streak-value');
+        statValues.forEach(value => {
+            value.style.color = colors.accent;
+        });
+        
+        // Apply accent colors to specific text elements
+        const accentTextElements = document.querySelectorAll('h1, h2, h3, h4, .profile-section-title, .total-count, .current-streak');
+        accentTextElements.forEach(element => {
+            element.style.color = colors.accent;
+        });
+        
+        // Update progress bars
+        const progressBars = document.querySelectorAll('.progress-bar, .progress-fill');
+        progressBars.forEach(bar => {
+            bar.style.backgroundColor = colors.accent;
+        });
+        
+        // Update buttons with accent color
+        const accentButtons = document.querySelectorAll('.primary-button, .action-button');
+        accentButtons.forEach(button => {
+            button.style.borderColor = colors.accent;
+            button.style.color = colors.accent;
+            
+            // Add hover effect
+            button.onmouseover = () => {
+                button.style.backgroundColor = colors.accent;
+                button.style.color = 'white';
+            };
+            
+            button.onmouseout = () => {
+                button.style.backgroundColor = 'transparent';
+                button.style.color = colors.accent;
+            };
+        });
         
         // Apply to header for immediate visibility
         const header = document.querySelector('header');
@@ -2698,10 +2750,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Clear the canvas first
         clearCanvas();
         
+        // Get current theme accent color
+        let accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim() || "#ff7817";
+        let strokeColor = accentColor;
+        
         // Set drawing properties for the RAM text
         drawingContext.font = "bold 48px Devanagari, Arial, sans-serif";
-        drawingContext.fillStyle = "orange";
-        drawingContext.strokeStyle = "#ff8c00";
+        drawingContext.fillStyle = accentColor;
+        drawingContext.strokeStyle = strokeColor;
         drawingContext.lineWidth = 1;
         
         // Center position for the text
