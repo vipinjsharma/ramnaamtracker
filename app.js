@@ -2501,8 +2501,8 @@ document.addEventListener('DOMContentLoaded', function() {
             value.style.color = colors.accent;
         });
         
-        // Apply accent colors to specific text elements
-        const accentTextElements = document.querySelectorAll('h1, h2, h3, h4, .profile-section-title, .total-count, .current-streak');
+        // Apply accent colors to specific text elements but exclude elements in the header
+        const accentTextElements = document.querySelectorAll('.profile-section-title, .total-count, .current-streak, .main-content h1, .main-content h2, .main-content h3, .main-content h4');
         accentTextElements.forEach(element => {
             element.style.color = colors.accent;
         });
@@ -2536,7 +2536,25 @@ document.addEventListener('DOMContentLoaded', function() {
         if (header) {
             header.style.backgroundColor = colors.primary;
             header.style.color = 'white'; // Consistent header text color
+            
+            // Explicitly set all header text elements to white
+            const headerTextElements = header.querySelectorAll('h1, h2, h3, h4, p, span, div, a');
+            headerTextElements.forEach(el => {
+                el.style.color = 'white';
+            });
         }
+        
+        // Also explicitly handle texts that are directly in header background areas
+        const headerTexts = document.querySelectorAll('.header-text, .app-title, .greeting-text, .welcome-text, .main-header-text, .header-area h1, .header-area h2, .header-area h3');
+        headerTexts.forEach(text => {
+            text.style.color = 'white';
+        });
+        
+        // Specifically target the welcome greeting text that appears on blue background
+        const greetingTexts = document.querySelectorAll('.greeting-message, .benefits-title');
+        greetingTexts.forEach(greeting => {
+            greeting.style.color = 'white';
+        });
         
         // Make sure Android app class is preserved if running in WebView
         if (window.isRunningInWebView || window.AndroidInterface) {
