@@ -1641,9 +1641,11 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Navigate to the target page if needed
             if (step.targetPage) {
-                const currentPage = document.querySelector('.active-page').id.replace('-page', '');
+                const activePage = document.querySelector('.active-page');
+                // Safely check if we have an active page element
+                const currentPage = activePage ? activePage.id.replace('-page', '') : null;
                 
-                if (currentPage !== step.targetPage) {
+                if (!currentPage || currentPage !== step.targetPage) {
                     switch (step.targetPage) {
                         case 'home':
                             navigateToHome();
@@ -1660,6 +1662,13 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Special navigation for specific features
             if (step.navigateTo) {
+                // We'll skip the special navigation for now since it might cause issues
+                // This feature will be handled more carefully in a future update
+                
+                // Note: For now, we just highlight the elements without triggering modals
+                console.log("Special navigation skipped for:", step.navigateTo);
+                
+                /* Original code - commented out for stability
                 // Execute after a short delay to ensure page transition is complete
                 setTimeout(() => {
                     switch (step.navigateTo) {
@@ -1671,6 +1680,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             break;
                     }
                 }, 300);
+                */
             }
             
             // Highlight the element after a short delay to allow for page transitions
