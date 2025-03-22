@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const writingPage = document.getElementById('writingPage');
     const profilePage = document.getElementById('profilePage');
     const adminPage = document.getElementById('adminPage');
-    const backButton = document.getElementById('backButton');
+    const homeButton = document.getElementById('homeButton');
     const menuButton = document.getElementById('menuButton');
     const profileButton = document.getElementById('profileButton');
     const startWritingBtn = document.getElementById('startWritingBtn');
@@ -208,8 +208,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
     
     // Event Listeners
-    backButton.addEventListener('click', handleBackNavigation);
     menuButton.addEventListener('click', toggleMenu);
+    homeButton.addEventListener('click', navigateToHome);
     profileButton.addEventListener('click', navigateToProfile);
     
     // Navigation listeners
@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Secret admin mode (click app logo 5 times)
-    const appLogo = document.querySelector('.app-header h1');
+    const appLogo = document.querySelector('.header-center h1');
     let logoClickCount = 0;
     let clickTimer = null;
     
@@ -603,15 +603,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show target page
         page.classList.add('active');
         
-        // Update back button visibility
+        // Update button visibility for different pages
         if (page === homePage) {
-            backButton.style.visibility = 'hidden';
-            profileButton.style.visibility = 'visible';
+            // On home page, show all navigation buttons
             menuButton.style.visibility = 'visible';
-        } else {
-            backButton.style.visibility = 'visible';
             profileButton.style.visibility = 'visible';
-            menuButton.style.visibility = 'hidden';
+        } else {
+            // On other pages, still show all buttons but make menu toggle smaller
+            menuButton.style.visibility = 'visible';
+            profileButton.style.visibility = 'visible';
         }
         
         // Save last active page for back navigation (if not admin)
@@ -1486,7 +1486,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function handleProfileReminderClick() {
         closeProfileOverlay();
-        navigateToHome(); // Go to home before showing modal
+        navigateToProfile(); // Stay on profile page when setting reminders
         
         // Create reminder settings modal
         const reminderOptions = `
