@@ -1835,6 +1835,65 @@ input:checked + .toggle-slider-large:before {
     color: #FF9800 !important; /* Make benefit headlines stand out with primary color */
 }
 
+/* Improve stats visibility in dark mode */
+.dark-theme .stats-card span,
+.dark-theme #statsSection span,
+.dark-theme .stat-box span,
+.dark-theme .count-value,
+.dark-theme .goal-stats-value,
+.dark-theme .ram-stats-value, 
+.dark-theme #todaysCount,
+.dark-theme #todaysMala,
+.dark-theme #totalCount {
+    color: #FFFFFF !important; /* Brighter stats values */
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.dark-theme .stats-card h3 {
+    color: #f0f0f0 !important; /* Clearer titles */
+}
+
+/* Enhance menu items in dark mode */
+.dark-theme .menu-overlay {
+    background-color: rgba(0, 0, 0, 0.9); /* Darker background */
+}
+
+.dark-theme .menu-item, 
+.dark-theme .profile-item {
+    color: #FFFFFF !important; /* White text for menu items */
+}
+
+.dark-theme .menu-section-title {
+    color: #FF9800 !important; /* Orange section titles for visibility */
+}
+
+/* Better profile card in dark mode */
+.dark-theme .profile-card,
+.dark-theme .stat-box,
+.dark-theme #statsSection,
+.dark-theme .stats-card {
+    background-color: #3c3c3c; /* Darker background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.dark-theme .profile-card p, 
+.dark-theme .profile-card span,
+.dark-theme .stat-box p,
+.dark-theme #statsSection p,
+.dark-theme .stats-card p {
+    color: #FFFFFF !important; /* White text */
+}
+
+/* Fix progress bars in dark mode */
+.dark-theme .progress-bar {
+    background-color: #555555; /* Darker background for progress bars */
+}
+
+.dark-theme .progress-fill {
+    background-color: #FF9800 !important; /* Orange fill */
+}
+
 /* Ensure all orange/saffron buttons have white text */
 button[style*="background-color: #ff7817"], 
 button[style*="background-color: #FF6F00"],
