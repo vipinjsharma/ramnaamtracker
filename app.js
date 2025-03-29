@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // App settings
     let appLanguage = 'en'; // Default language (en = English, hi = Hindi)
-    let currentTheme = 'light'; // Default theme (light, dark, system)
+    let currentTheme = 'light'; // Default theme
     let userName = 'Ram Bhakt'; // Default user name
     
     // Translations
@@ -2210,20 +2210,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <span class="theme-desc">Default light appearance</span>
                         </div>
                     </button>
-                    <button id="themeDark" class="theme-button ${currentTheme === 'dark' ? 'active' : ''}">
-                        <span class="theme-icon">🌙</span>
-                        <div class="theme-details">
-                            <span class="theme-name">Dark Theme</span>
-                            <span class="theme-desc">Easier on eyes in low light</span>
-                        </div>
-                    </button>
-                    <button id="themeSystem" class="theme-button ${currentTheme === 'system' ? 'active' : ''}">
-                        <span class="theme-icon">⚙️</span>
-                        <div class="theme-details">
-                            <span class="theme-name">System Theme</span>
-                            <span class="theme-desc">Follows your device settings</span>
-                        </div>
-                    </button>
+
                 </div>
             </div>
         `;
@@ -2256,27 +2243,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Theme selection functionality - Standard themes
         const lightBtn = modal.querySelector('#themeLight');
-        const darkBtn = modal.querySelector('#themeDark');
-        const systemBtn = modal.querySelector('#themeSystem');
         
         lightBtn.addEventListener('click', () => {
             setTheme('light');
-            modal.style.display = 'none';
-            setTimeout(() => {
-                document.body.removeChild(modal);
-            }, 300);
-        });
-        
-        darkBtn.addEventListener('click', () => {
-            setTheme('dark');
-            modal.style.display = 'none';
-            setTimeout(() => {
-                document.body.removeChild(modal);
-            }, 300);
-        });
-        
-        systemBtn.addEventListener('click', () => {
-            setTheme('system');
             modal.style.display = 'none';
             setTimeout(() => {
                 document.body.removeChild(modal);
@@ -2342,26 +2311,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // Store the selected theme
         currentTheme = theme;
         
-        if (theme === 'system') {
-            // Check system preference
-            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const effectiveTheme = prefersDark ? 'dark-theme' : 'theme-ram'; // Use dark theme or Ram theme as default light
-            applyTheme(effectiveTheme);
-            
-            // Setup media query listener for system theme changes
-            const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-            darkModeMediaQuery.addEventListener('change', (e) => {
-                if (currentTheme === 'system') {
-                    const newTheme = e.matches ? 'dark-theme' : 'theme-ram';
-                    applyTheme(newTheme);
-                }
-            });
-        } else {
-            // Make sure theme name is properly formatted
-            const effectiveTheme = theme.startsWith('theme-') ? theme : 
-                                   (theme === 'dark' ? 'dark-theme' : `theme-${theme}`);
-            applyTheme(effectiveTheme);
-        }
+        // Make sure theme name is properly formatted
+        const effectiveTheme = theme.startsWith('theme-') ? theme : 
+                               `theme-${theme}`;
+        applyTheme(effectiveTheme);
         
         // Save the preference
         saveData();
@@ -2371,10 +2324,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (theme === 'light') {
             themeName = 'Light';
-        } else if (theme === 'dark' || theme === 'dark-theme') {
-            themeName = 'Dark';
-        } else if (theme === 'system') {
-            themeName = 'System';
         } else if (theme === 'theme-ram' || theme === 'ram') {
             themeName = 'Ram (Saffron)';
         } else if (theme === 'theme-krishna' || theme === 'krishna') {
@@ -2401,9 +2350,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Helper function to update all UI elements that depend on theme
     function updateThemeUI(theme) {
         // Normalize theme name format
-        const normalizedTheme = theme.startsWith('theme-') ? theme : 
-                              (theme === 'dark' || theme === 'dark-theme') ? 'dark-theme' : 
-                              `theme-${theme}`;
+        const normalizedTheme = theme.startsWith('theme-') ? theme : `theme-${theme}`;
                               
         // Update document and body classes directly
         document.documentElement.className = normalizedTheme;
@@ -2442,11 +2389,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 primaryColor = '#7D3C98';
                 backgroundColor = '#F4ECF7';
                 textColor = '#4A235A';
-                break;
-            case 'dark-theme':
-                primaryColor = '#FF6F00';
-                backgroundColor = '#2c2c2c';
-                textColor = '#f0f0f0';
                 break;
             default:
                 // Default to Ram theme if none matches
@@ -2487,9 +2429,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Handle different button ID formats
             const btnTheme = btn.dataset?.theme || btn.id.toLowerCase().replace('theme', '');
-            const normalizedBtnTheme = btnTheme.startsWith('theme-') ? btnTheme : 
-                                     (btnTheme === 'dark') ? 'dark-theme' : 
-                                     `theme-${btnTheme}`;
+            const normalizedBtnTheme = btnTheme.startsWith('theme-') ? btnTheme : `theme-${btnTheme}`;
                                      
             if (normalizedBtnTheme === normalizedTheme) {
                 btn.classList.add('active');
@@ -2931,9 +2871,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Applying theme:', theme);
         
         // Normalize theme name for consistency
-        const normalizedTheme = theme.startsWith('theme-') ? theme : 
-                              (theme === 'dark' || theme === 'dark-theme') ? 'dark-theme' : 
-                              `theme-${theme}`;
+        const normalizedTheme = theme.startsWith('theme-') ? theme : `theme-${theme}`;
         
         // Theme color mapping with accent colors for headings
         const themeColors = {
@@ -2966,12 +2904,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 background: '#F4ECF7',
                 text: '#4A235A',
                 accent: '#7D3C98' // Purple for Shiva theme
-            },
-            'dark-theme': {
-                primary: '#FF6F00',
-                background: '#2c2c2c',
-                text: '#f0f0f0',
-                accent: '#FF6F00' // Keep orange accent in dark theme
             }
         };
         
@@ -2980,7 +2912,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // 1. Clean up all theme classes first
         const allThemeClasses = [
-            'dark-theme',
             'theme-ram',
             'theme-krishna',
             'theme-lakshmi', 
@@ -3096,9 +3027,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const btnTheme = btn.dataset?.theme || btn.id.toLowerCase().replace('theme', '');
             
             // Normalize button theme same as we did for selected theme
-            const normalizedBtnTheme = btnTheme.startsWith('theme-') ? btnTheme : 
-                                     (btnTheme === 'dark') ? 'dark-theme' : 
-                                     `theme-${btnTheme}`;
+            const normalizedBtnTheme = btnTheme.startsWith('theme-') ? btnTheme : `theme-${btnTheme}`;
             
             if (normalizedBtnTheme === normalizedTheme) {
                 btn.classList.add('active');
@@ -3115,9 +3044,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 const displayName = normalizedTheme.replace('theme-', '').charAt(0).toUpperCase() + 
                                  normalizedTheme.replace('theme-', '').slice(1);
                 themeNameElement.textContent = displayName;
-                themeDisplay.classList.remove('hidden');
-            } else if (normalizedTheme === 'dark-theme') {
-                themeNameElement.textContent = 'Dark';
                 themeDisplay.classList.remove('hidden');
             } else {
                 themeDisplay.classList.add('hidden');
