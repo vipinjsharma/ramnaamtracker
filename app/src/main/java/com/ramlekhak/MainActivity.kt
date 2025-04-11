@@ -80,10 +80,10 @@ class MainActivity : AppCompatActivity() {
                 mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
             }
             
-            // Enable modern features if available
+            // Explicitly disable dark mode for consistent light theme
             if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK) && 
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                WebViewCompat.setForceDark(webView, WebSettings.FORCE_DARK_AUTO)
+                WebViewCompat.setForceDark(webView, WebSettings.FORCE_DARK_OFF)
             }
         }
 

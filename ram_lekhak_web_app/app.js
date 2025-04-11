@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // App settings
     let appLanguage = 'en'; // Default language (en = English, hi = Hindi)
-    let currentTheme = 'light'; // Default theme (light, dark, system)
+    let currentTheme = 'light'; // Default theme
     let userName = 'Ram Bhakt'; // Default user name
     
     // Translations
@@ -142,7 +142,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // Name Editing
             'name_updated': 'Name updated!',
             'name_length_error': 'Name must be between 2 and 30 characters',
-            'edit_name': 'Edit Name'
+            'edit_name': 'Edit Name',
+            
+            // Tutorial and Walkthrough
+            'show_writing_tutorial': 'Show Writing Tutorial',
+            'tutorial_complete': 'Great job! Now practice writing राम on your own.',
+            'walkthrough_complete': 'App walkthrough complete! Explore and enjoy using Ram Lekhak.'
         },
         'hi': {
             // Home Page
@@ -196,7 +201,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // Name Editing
             'name_updated': 'नाम अपडेट हो गया!',
             'name_length_error': 'नाम 2 से 30 अक्षरों के बीच होना चाहिए',
-            'edit_name': 'नाम संपादित करें'
+            'edit_name': 'नाम संपादित करें',
+            
+            // Tutorial and Walkthrough
+            'show_writing_tutorial': 'लिखने का ट्यूटोरियल दिखाएं',
+            'tutorial_complete': 'बहुत अच्छा! अब खुद से राम लिखने का अभ्यास करें।',
+            'walkthrough_complete': 'ऐप वॉकथ्रू पूरा! राम लेखक का उपयोग करके आनंद लें।'
         }
     };
     let reminderEnabled = false; // Default reminder state
@@ -381,6 +391,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Update UI
         updateCountDisplay();
+        updateGreetingMessage(); // Update greeting with user name
         updateProfileStats();
         
         // Apply language settings
@@ -450,11 +461,17 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get drawing context
         drawingContext = canvas.getContext('2d');
         
-        // Set up context style
-        drawingContext.strokeStyle = '#ff7817'; // Orange color like in the mockup
+        // Get current theme accent color
+        let accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim() || "#ff7817";
+        
+        // Set up context style based on current theme
+        drawingContext.strokeStyle = accentColor;
         drawingContext.lineJoin = 'round';
         drawingContext.lineCap = 'round';
         drawingContext.lineWidth = 5;
+        
+        // Add event listener for the writing tutorial button
+        // App walkthrough tutorial will be added here
     }
     
     function loadData() {
@@ -505,6 +522,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (savedData.currentMonth === thisMonth) {
             // If same month, load saved monthly count
             currentMonthCount = savedData.currentMonthCount || 0;
+            
+            // Make sure currentMonthCount is at least as much as todayCount
+            // This fixes issues where the two counts might get out of sync
+            if (currentMonthCount < todayCount) {
+                currentMonthCount = todayCount;
+            }
         } else {
             // Reset monthly count for new month
             currentMonthCount = todayCount; // Start with today's count
@@ -620,6 +643,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    // Function to update the greeting message with the current user name
+    function updateGreetingMessage() {
+        const greetingMessage = document.querySelector('.greeting-message');
+        if (greetingMessage) {
+            greetingMessage.textContent = `Hi, ${userName}`;
+        }
+    }
+    
     function updateProfileStats() {
         // Update profile stats
         profileTotalCount.textContent = totalCount;
@@ -640,6 +671,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 avatarImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=FF7817&color=fff`;
             }
         }
+        
+        // Update the greeting message whenever profile stats are updated
+        updateGreetingMessage();
         
         // Update sidebar stats
         if (sidebarUsername) {
@@ -737,6 +771,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function navigateToHome() {
         navigateToPage(homePage);
+        // Ensure greeting message is updated when navigating to home
+        updateGreetingMessage();
     }
     
     function navigateToWriting() {
@@ -801,6 +837,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show name element and hide edit controls
         profileName.style.display = 'block';
         editNameControls.style.display = 'none';
+        
+        // Update greeting message with new name
+        updateGreetingMessage();
         
         // Save to local storage
         saveData();
@@ -1110,7 +1149,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleMenuHowToClick() {
         closeMenuOverlay();
         
-        // Create how-to guide HTML content
+        // Create how-to guide HTML content with Writing Tutorial button
         const howToGuide = `
             <h3>How to Use Ram Naam Writing App</h3>
             <div class="howto-guide">
@@ -1122,6 +1161,18 @@ document.addEventListener('DOMContentLoaded', function() {
                         <li><strong>Auto-Draw:</strong> Tap the "DRAW" button to automatically write राम.</li>
                     </ul>
                     <p>After writing, tap "Submit" to add to your count. The "Auto-Draw" option automatically submits after drawing.</p>
+                    
+                    <!-- App Walkthrough Button -->
+                    <button id="startAppWalkthrough" class="secondary-button tutorial-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                            <line x1="6" y1="1" x2="6" y2="4"></line>
+                            <line x1="10" y1="1" x2="10" y2="4"></line>
+                            <line x1="14" y1="1" x2="14" y2="4"></line>
+                        </svg>
+                        Start App Walkthrough
+                    </button>
                 </section>
                 
                 <section class="guide-section">
@@ -1207,6 +1258,471 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.body.removeChild(modal);
             }, 300);
         });
+        
+        // App Walkthrough button functionality
+        const walkthoughBtn = modal.querySelector('#startAppWalkthrough');
+        if (walkthoughBtn) {
+            walkthoughBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+                setTimeout(() => {
+                    document.body.removeChild(modal);
+                    showAppWalkthrough();
+                }, 300);
+            });
+        }
+    }
+    
+    // App walkthrough tutorial function
+    function showAppWalkthrough() {
+        // Create walkthrough data for all app features
+        const walkthroughSteps = [
+            {
+                title: "Welcome to Ram Lekhak",
+                description: "Thank you for using Ram Lekhak! This quick walkthrough will guide you through the main features of the app.",
+                targetPage: "home",
+                highlightSelector: ".app-logo",
+                position: "bottom"
+            },
+            {
+                title: "Home Page",
+                description: "This is your home page. Here you can see your daily progress and access all features of the app.",
+                targetPage: "home",
+                highlightSelector: ".home-page",
+                position: "center"
+            },
+            {
+                title: "Personal Greeting",
+                description: "Your name appears here. You can edit it from your profile settings.",
+                targetPage: "home",
+                highlightSelector: ".greeting-message",
+                position: "bottom"
+            },
+            {
+                title: "Daily Statistics",
+                description: "Track your daily progress here - today's count, malas completed, and total count.",
+                targetPage: "home",
+                highlightSelector: ".stats-container",
+                position: "top"
+            },
+            {
+                title: "Start Writing",
+                description: "Tap this button to start writing राम.",
+                targetPage: "home",
+                highlightSelector: ".start-writing-btn",
+                position: "bottom"
+            },
+            {
+                title: "Writing Page",
+                description: "This is where you write राम. The canvas captures your strokes.",
+                targetPage: "writing",
+                highlightSelector: ".writing-area",
+                position: "center"
+            },
+            {
+                title: "Writing Statistics",
+                description: "Track your current streak, today's malas, and today's count while writing.",
+                targetPage: "writing",
+                highlightSelector: ".stat-cards",
+                position: "top"
+            },
+            {
+                title: "Daily Goal Progress",
+                description: "Monitor your progress toward your daily writing goal.",
+                targetPage: "writing",
+                highlightSelector: ".progress-container",
+                position: "bottom"
+            },
+            {
+                title: "Writing Tools",
+                description: "Clear your canvas, auto-draw राम, or submit your completed राम.",
+                targetPage: "writing",
+                highlightSelector: ".writing-buttons",
+                position: "top"
+            },
+            {
+                title: "Main Menu",
+                description: "Access app settings, tutorials, and more from the menu.",
+                targetPage: "home",
+                highlightSelector: ".menu-toggle",
+                position: "left"
+            },
+            {
+                title: "Profile Settings",
+                description: "Access your profile, account settings, reminders, and theme preferences.",
+                targetPage: "home",
+                highlightSelector: ".profile-toggle",
+                position: "right"
+            },
+            {
+                title: "Profile Page",
+                description: "View and update your profile information and stats.",
+                targetPage: "profile",
+                highlightSelector: ".profile-page",
+                position: "center"
+            },
+            {
+                title: "Theme Selection",
+                description: "Personalize your app by choosing from different color themes.",
+                targetPage: "profile",
+                navigateTo: "handleProfileThemeClick", 
+                highlightSelector: ".theme-options",
+                position: "center"
+            },
+            {
+                title: "Language Settings",
+                description: "Switch between English and Hindi language interfaces.",
+                targetPage: "home",
+                navigateTo: "handleMenuLanguageClick",
+                highlightSelector: ".language-options",
+                position: "center"
+            },
+            {
+                title: "Walkthrough Complete!",
+                description: "You're all set to start your journey with Ram Lekhak. Happy writing!",
+                targetPage: "home",
+                highlightSelector: ".app-container",
+                position: "center"
+            }
+        ];
+
+        // Create walkthrough container
+        const walkthroughContainer = document.createElement('div');
+        walkthroughContainer.className = 'walkthrough-container';
+        document.body.appendChild(walkthroughContainer);
+        
+        // Create spotlight overlay
+        const spotlightOverlay = document.createElement('div');
+        spotlightOverlay.className = 'spotlight-overlay';
+        walkthroughContainer.appendChild(spotlightOverlay);
+        
+        // Create modal box
+        const walkthroughModal = document.createElement('div');
+        walkthroughModal.className = 'walkthrough-modal';
+        walkthroughContainer.appendChild(walkthroughModal);
+        
+        // Add CSS for the walkthrough
+        const walkthroughStyles = document.createElement('style');
+        walkthroughStyles.textContent = `
+            .walkthrough-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+                overflow: hidden;
+            }
+            
+            .spotlight-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.7);
+                transition: all 0.3s ease;
+            }
+            
+            .spotlight-highlight {
+                position: absolute;
+                box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.7);
+                border-radius: 12px;
+                z-index: 10000;
+                pointer-events: none;
+                transition: all 0.3s ease;
+            }
+            
+            .walkthrough-modal {
+                position: absolute;
+                width: 85%;
+                max-width: 350px;
+                background-color: var(--card-bg-color, #fff);
+                border-radius: 12px;
+                padding: 20px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                z-index: 10001;
+                transition: all 0.3s ease;
+            }
+            
+            .walkthrough-title {
+                color: var(--accent-color, #ff7817);
+                font-size: 1.2rem;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+            
+            .walkthrough-description {
+                color: var(--text-color, #333);
+                margin-bottom: 20px;
+                line-height: 1.5;
+            }
+            
+            .walkthrough-progress {
+                height: 4px;
+                background-color: #e0e0e0;
+                border-radius: 4px;
+                margin-bottom: 20px;
+                overflow: hidden;
+            }
+            
+            .walkthrough-progress-bar {
+                height: 100%;
+                background-color: var(--accent-color, #ff7817);
+                transition: width 0.3s ease;
+            }
+            
+            .walkthrough-buttons {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .walkthrough-counter {
+                color: var(--text-color-secondary, #777);
+                font-size: 0.9rem;
+            }
+            
+            .walkthrough-skip {
+                background: none;
+                border: none;
+                color: var(--text-color-secondary, #777);
+                font-size: 0.9rem;
+                cursor: pointer;
+                padding: 5px;
+            }
+            
+            .walkthrough-prev, .walkthrough-next {
+                padding: 8px 15px;
+                border: none;
+                border-radius: 6px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            
+            .walkthrough-prev {
+                background-color: var(--card-bg-color, #fff);
+                color: var(--accent-color, #ff7817);
+                border: 1px solid var(--accent-color, #ff7817);
+                margin-right: 10px;
+            }
+            
+            .walkthrough-next {
+                background-color: var(--accent-color, #ff7817);
+                color: white;
+            }
+            
+            .walkthrough-prev:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+        `;
+        document.head.appendChild(walkthroughStyles);
+        
+        // Populate modal with content
+        walkthroughModal.innerHTML = `
+            <h3 class="walkthrough-title">Welcome</h3>
+            <p class="walkthrough-description">Loading walkthrough...</p>
+            
+            <div class="walkthrough-progress">
+                <div class="walkthrough-progress-bar" style="width: 0%"></div>
+            </div>
+            
+            <div class="walkthrough-buttons">
+                <div>
+                    <button class="walkthrough-prev" disabled>Previous</button>
+                    <button class="walkthrough-next">Next</button>
+                </div>
+                <span class="walkthrough-counter">1/${walkthroughSteps.length}</span>
+                <button class="walkthrough-skip">Skip</button>
+            </div>
+        `;
+        
+        // Get UI elements
+        const spotlightHighlight = document.createElement('div');
+        spotlightHighlight.className = 'spotlight-highlight';
+        spotlightOverlay.appendChild(spotlightHighlight);
+        
+        const title = walkthroughModal.querySelector('.walkthrough-title');
+        const description = walkthroughModal.querySelector('.walkthrough-description');
+        const progressBar = walkthroughModal.querySelector('.walkthrough-progress-bar');
+        const counter = walkthroughModal.querySelector('.walkthrough-counter');
+        const prevButton = walkthroughModal.querySelector('.walkthrough-prev');
+        const nextButton = walkthroughModal.querySelector('.walkthrough-next');
+        const skipButton = walkthroughModal.querySelector('.walkthrough-skip');
+        
+        // Create spotlight effect for highlighting elements
+        function highlightElement(selector, position) {
+            const element = document.querySelector(selector);
+            
+            if (!element) {
+                // If element not found, show general view without spotlight
+                spotlightHighlight.style.width = '0';
+                spotlightHighlight.style.height = '0';
+                spotlightHighlight.style.top = '50%';
+                spotlightHighlight.style.left = '50%';
+                
+                // Center the modal
+                walkthroughModal.style.top = '50%';
+                walkthroughModal.style.left = '50%';
+                walkthroughModal.style.transform = 'translate(-50%, -50%)';
+                return;
+            }
+            
+            // Get element position and size
+            const rect = element.getBoundingClientRect();
+            const padding = 10; // Extra padding around the element
+            
+            // Update spotlight position and size
+            spotlightHighlight.style.width = `${rect.width + padding * 2}px`;
+            spotlightHighlight.style.height = `${rect.height + padding * 2}px`;
+            spotlightHighlight.style.top = `${rect.top - padding}px`;
+            spotlightHighlight.style.left = `${rect.left - padding}px`;
+            
+            // Position the modal based on target position
+            const modalHeight = walkthroughModal.offsetHeight;
+            const modalWidth = walkthroughModal.offsetWidth;
+            
+            let modalTop, modalLeft;
+            
+            switch (position) {
+                case 'top':
+                    modalTop = rect.top - modalHeight - 20;
+                    modalLeft = rect.left + rect.width / 2 - modalWidth / 2;
+                    break;
+                case 'bottom':
+                    modalTop = rect.bottom + 20;
+                    modalLeft = rect.left + rect.width / 2 - modalWidth / 2;
+                    break;
+                case 'left':
+                    modalTop = rect.top + rect.height / 2 - modalHeight / 2;
+                    modalLeft = rect.left - modalWidth - 20;
+                    break;
+                case 'right':
+                    modalTop = rect.top + rect.height / 2 - modalHeight / 2;
+                    modalLeft = rect.right + 20;
+                    break;
+                default: // center
+                    modalTop = rect.top + rect.height / 2 - modalHeight / 2;
+                    modalLeft = rect.left + rect.width / 2 - modalWidth / 2;
+            }
+            
+            // Ensure modal is visible within viewport
+            if (modalTop < 10) modalTop = 10;
+            if (modalTop > window.innerHeight - modalHeight - 10) {
+                modalTop = window.innerHeight - modalHeight - 10;
+            }
+            
+            if (modalLeft < 10) modalLeft = 10;
+            if (modalLeft > window.innerWidth - modalWidth - 10) {
+                modalLeft = window.innerWidth - modalWidth - 10;
+            }
+            
+            walkthroughModal.style.top = `${modalTop}px`;
+            walkthroughModal.style.left = `${modalLeft}px`;
+            walkthroughModal.style.transform = 'none';
+        }
+        
+        // Function to update step content
+        let currentStepIndex = 0;
+        
+        function updateStep(stepIndex) {
+            const step = walkthroughSteps[stepIndex];
+            
+            // Update content
+            title.textContent = step.title;
+            description.textContent = step.description;
+            progressBar.style.width = `${((stepIndex + 1) / walkthroughSteps.length) * 100}%`;
+            counter.textContent = `${stepIndex + 1}/${walkthroughSteps.length}`;
+            
+            // Update navigation buttons
+            prevButton.disabled = stepIndex === 0;
+            nextButton.textContent = stepIndex === walkthroughSteps.length - 1 ? 'Finish' : 'Next';
+            
+            // Navigate to the target page if needed
+            if (step.targetPage) {
+                const activePage = document.querySelector('.active-page');
+                // Safely check if we have an active page element
+                const currentPage = activePage ? activePage.id.replace('-page', '') : null;
+                
+                if (!currentPage || currentPage !== step.targetPage) {
+                    switch (step.targetPage) {
+                        case 'home':
+                            navigateToHome();
+                            break;
+                        case 'writing':
+                            navigateToWriting();
+                            break;
+                        case 'profile':
+                            navigateToProfile();
+                            break;
+                    }
+                }
+            }
+            
+            // Special navigation for specific features
+            if (step.navigateTo) {
+                // We'll skip the special navigation for now since it might cause issues
+                // This feature will be handled more carefully in a future update
+                
+                // Note: For now, we just highlight the elements without triggering modals
+                console.log("Special navigation skipped for:", step.navigateTo);
+                
+                /* Original code - commented out for stability
+                // Execute after a short delay to ensure page transition is complete
+                setTimeout(() => {
+                    switch (step.navigateTo) {
+                        case 'handleMenuLanguageClick':
+                            handleMenuLanguageClick();
+                            break;
+                        case 'handleProfileThemeClick':
+                            handleProfileThemeClick();
+                            break;
+                    }
+                }, 300);
+                */
+            }
+            
+            // Highlight the element after a short delay to allow for page transitions
+            setTimeout(() => {
+                highlightElement(step.highlightSelector, step.position);
+            }, 300);
+        }
+        
+        // Initialize first step
+        updateStep(currentStepIndex);
+        
+        // Event listeners
+        prevButton.addEventListener('click', () => {
+            if (currentStepIndex > 0) {
+                currentStepIndex--;
+                updateStep(currentStepIndex);
+            }
+        });
+        
+        nextButton.addEventListener('click', () => {
+            if (currentStepIndex < walkthroughSteps.length - 1) {
+                currentStepIndex++;
+                updateStep(currentStepIndex);
+            } else {
+                // Complete the walkthrough
+                endWalkthrough();
+            }
+        });
+        
+        skipButton.addEventListener('click', endWalkthrough);
+        
+        function endWalkthrough() {
+            // Remove the walkthrough elements
+            document.body.removeChild(walkthroughContainer);
+            document.head.removeChild(walkthroughStyles);
+            
+            // Navigate back to home if needed
+            navigateToHome();
+            
+            // Show completion toast
+            showToast(getTranslation('walkthrough_complete'), 3000, 'success');
+        }
     }
     
     function handleMenuLanguageClick() {
@@ -1363,6 +1879,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Writing button
             if (startWritingBtn) startWritingBtn.textContent = getTranslation('write_ram');
+            
+            // Tutorial button
+            const tutorialBtn = document.querySelector('#writingTutorialBtn .i18n[data-i18n="show_writing_tutorial"]');
+            if (tutorialBtn) tutorialBtn.textContent = getTranslation('show_writing_tutorial');
         } catch (e) {
             console.warn('Error applying language changes:', e);
             // Log more detailed error information for debugging
@@ -1690,20 +2210,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <span class="theme-desc">Default light appearance</span>
                         </div>
                     </button>
-                    <button id="themeDark" class="theme-button ${currentTheme === 'dark' ? 'active' : ''}">
-                        <span class="theme-icon">🌙</span>
-                        <div class="theme-details">
-                            <span class="theme-name">Dark Theme</span>
-                            <span class="theme-desc">Easier on eyes in low light</span>
-                        </div>
-                    </button>
-                    <button id="themeSystem" class="theme-button ${currentTheme === 'system' ? 'active' : ''}">
-                        <span class="theme-icon">⚙️</span>
-                        <div class="theme-details">
-                            <span class="theme-name">System Theme</span>
-                            <span class="theme-desc">Follows your device settings</span>
-                        </div>
-                    </button>
+
                 </div>
             </div>
         `;
@@ -1736,27 +2243,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Theme selection functionality - Standard themes
         const lightBtn = modal.querySelector('#themeLight');
-        const darkBtn = modal.querySelector('#themeDark');
-        const systemBtn = modal.querySelector('#themeSystem');
         
         lightBtn.addEventListener('click', () => {
             setTheme('light');
-            modal.style.display = 'none';
-            setTimeout(() => {
-                document.body.removeChild(modal);
-            }, 300);
-        });
-        
-        darkBtn.addEventListener('click', () => {
-            setTheme('dark');
-            modal.style.display = 'none';
-            setTimeout(() => {
-                document.body.removeChild(modal);
-            }, 300);
-        });
-        
-        systemBtn.addEventListener('click', () => {
-            setTheme('system');
             modal.style.display = 'none';
             setTimeout(() => {
                 document.body.removeChild(modal);
@@ -1817,15 +2306,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function setTheme(theme) {
+        console.log('Setting theme to:', theme);
+        
+        // Store the selected theme
         currentTheme = theme;
         
-        if (theme === 'system') {
-            // Check system preference
-            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            applyTheme(prefersDark ? 'dark' : 'light');
-        } else {
-            applyTheme(theme);
-        }
+        // Make sure theme name is properly formatted
+        const effectiveTheme = theme.startsWith('theme-') ? theme : 
+                               `theme-${theme}`;
+        applyTheme(effectiveTheme);
         
         // Save the preference
         saveData();
@@ -1835,22 +2324,87 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (theme === 'light') {
             themeName = 'Light';
-        } else if (theme === 'dark') {
-            themeName = 'Dark';
-        } else if (theme === 'system') {
-            themeName = 'System';
-        } else if (theme === 'theme-ram') {
+        } else if (theme === 'theme-ram' || theme === 'ram') {
             themeName = 'Ram (Saffron)';
-        } else if (theme === 'theme-krishna') {
+        } else if (theme === 'theme-krishna' || theme === 'krishna') {
             themeName = 'Krishna (Blue)';
-        } else if (theme === 'theme-lakshmi') {
+        } else if (theme === 'theme-lakshmi' || theme === 'lakshmi') {
             themeName = 'Lakshmi (Gold)';
-        } else if (theme === 'theme-ganesh') {
+        } else if (theme === 'theme-ganesh' || theme === 'ganesh') {
             themeName = 'Ganesh (Red)';
-        } else if (theme === 'theme-shiva') {
+        } else if (theme === 'theme-shiva' || theme === 'shiva') {
             themeName = 'Shiva (Purple)';
         } else {
-            themeName = theme.charAt(0).toUpperCase() + theme.slice(1);
+            themeName = theme.charAt(0).toUpperCase() + theme.slice(1).replace('-theme', '').replace('theme-', '');
+        }
+        
+        // Update all UI elements that depend on theme
+        updateThemeUI(theme);
+        
+        // Show a toast notification
+        showToast(`Theme changed to ${themeName}`);
+        
+        console.log('Theme set complete:', theme);
+    }
+    
+    // Helper function to update all UI elements that depend on theme
+    function updateThemeUI(theme) {
+        // Normalize theme name format
+        const normalizedTheme = theme.startsWith('theme-') ? theme : `theme-${theme}`;
+                              
+        // Update document and body classes directly
+        document.documentElement.className = normalizedTheme;
+        document.body.className = normalizedTheme;
+        
+        // Make sure Android app class is preserved if this is running in WebView
+        if (window.isRunningInWebView) {
+            document.body.classList.add('android-app');
+        }
+        
+        // Set primary colors explicitly
+        let primaryColor, backgroundColor, textColor;
+        
+        switch(normalizedTheme) {
+            case 'theme-ram':
+                primaryColor = '#ff7817';
+                backgroundColor = '#fff7e6';
+                textColor = '#333333';
+                break;
+            case 'theme-krishna':
+                primaryColor = '#2874A6';
+                backgroundColor = '#EBF5FB';
+                textColor = '#1A5276';
+                break;
+            case 'theme-lakshmi':
+                primaryColor = '#D4AC0D';
+                backgroundColor = '#FEF9E7';
+                textColor = '#7D6608';
+                break;
+            case 'theme-ganesh':
+                primaryColor = '#C0392B';
+                backgroundColor = '#FDEDEC';
+                textColor = '#641E16';
+                break;
+            case 'theme-shiva':
+                primaryColor = '#7D3C98';
+                backgroundColor = '#F4ECF7';
+                textColor = '#4A235A';
+                break;
+            default:
+                // Default to Ram theme if none matches
+                primaryColor = '#ff7817';
+                backgroundColor = '#fff7e6';
+                textColor = '#333333';
+        }
+        
+        // Apply direct styling to important elements
+        document.body.style.backgroundColor = backgroundColor;
+        document.body.style.color = textColor;
+        
+        const header = document.querySelector('header');
+        if (header) {
+            header.style.backgroundColor = primaryColor;
+            header.style.color = 'white';
         }
         
         // Update theme display if open
@@ -1858,27 +2412,34 @@ document.addEventListener('DOMContentLoaded', function() {
         const themeNameElement = document.getElementById('currentThemeName');
         
         if (themeDisplay && themeNameElement) {
-            if (theme.startsWith('theme-')) {
-                const displayName = theme.replace('theme-', '').charAt(0).toUpperCase() + theme.replace('theme-', '').slice(1);
+            if (normalizedTheme.startsWith('theme-')) {
+                const displayName = normalizedTheme.replace('theme-', '').charAt(0).toUpperCase() + 
+                                  normalizedTheme.replace('theme-', '').slice(1);
                 themeNameElement.textContent = displayName;
                 themeDisplay.classList.remove('hidden');
             } else {
                 themeDisplay.classList.add('hidden');
             }
-            
-            // Update active buttons
-            const buttons = document.querySelectorAll('.theme-palette-btn, .theme-button');
-            buttons.forEach(btn => {
-                btn.classList.remove('active');
-                
-                if (btn.id === `theme${theme.replace('theme-', '').charAt(0).toUpperCase() + theme.replace('theme-', '').slice(1)}` || 
-                    btn.id === `theme${theme.charAt(0).toUpperCase() + theme.slice(1)}`) {
-                    btn.classList.add('active');
-                }
-            });
         }
         
-        showToast(`Theme changed to ${themeName}`);
+        // Update active buttons
+        const buttons = document.querySelectorAll('.theme-palette-btn, .theme-button');
+        buttons.forEach(btn => {
+            btn.classList.remove('active');
+            
+            // Handle different button ID formats
+            const btnTheme = btn.dataset?.theme || btn.id.toLowerCase().replace('theme', '');
+            const normalizedBtnTheme = btnTheme.startsWith('theme-') ? btnTheme : `theme-${btnTheme}`;
+                                     
+            if (normalizedBtnTheme === normalizedTheme) {
+                btn.classList.add('active');
+            }
+        });
+        
+        // Force a refresh on the UI
+        document.documentElement.style.display = 'none';
+        document.documentElement.offsetHeight; // Trigger reflow
+        document.documentElement.style.display = '';
     }
     
     function handleProfileReminderClick() {
@@ -2307,56 +2868,198 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function applyTheme(theme) {
-        // Remove all theme classes first
-        document.documentElement.classList.remove(
-            'dark-theme',
+        console.log('Applying theme:', theme);
+        
+        // Normalize theme name for consistency
+        const normalizedTheme = theme.startsWith('theme-') ? theme : `theme-${theme}`;
+        
+        // Theme color mapping with accent colors for headings
+        const themeColors = {
+            'theme-ram': {
+                primary: '#ff7817',
+                background: '#fff7e6', 
+                text: '#333333',
+                accent: '#ff7817' // Accent color for headings and stats
+            },
+            'theme-krishna': {
+                primary: '#2874A6',
+                background: '#EBF5FB',
+                text: '#1A5276',
+                accent: '#2874A6' // Blue for Krishna theme
+            },
+            'theme-lakshmi': {
+                primary: '#D4AC0D',
+                background: '#FEF9E7',
+                text: '#7D6608',
+                accent: '#D4AC0D' // Gold for Lakshmi theme
+            },
+            'theme-ganesh': {
+                primary: '#C0392B',
+                background: '#FDEDEC',
+                text: '#641E16',
+                accent: '#C0392B' // Red for Ganesh theme
+            },
+            'theme-shiva': {
+                primary: '#7D3C98',
+                background: '#F4ECF7',
+                text: '#4A235A',
+                accent: '#7D3C98' // Purple for Shiva theme
+            }
+        };
+        
+        // Make sure we have colors for this theme
+        const colors = themeColors[normalizedTheme] || themeColors['theme-ram'];
+        
+        // 1. Clean up all theme classes first
+        const allThemeClasses = [
             'theme-ram',
             'theme-krishna',
             'theme-lakshmi', 
             'theme-ganesh',
             'theme-shiva'
-        );
+        ];
         
-        // Apply the selected theme
-        if (theme === 'dark') {
-            document.documentElement.classList.add('dark-theme');
-        } else if (theme.startsWith('theme-')) {
-            // For cultural themes like 'theme-ram', 'theme-krishna', etc.
-            document.documentElement.classList.add(theme);
+        // Remove all theme classes from both documentElement and body
+        document.documentElement.classList.remove(...allThemeClasses);
+        document.body.classList.remove(...allThemeClasses);
+        
+        // 2. Set the new theme class
+        document.documentElement.className = normalizedTheme;
+        document.body.className = normalizedTheme;
+        
+        // 3. Apply direct styling for immediate visual feedback
+        document.documentElement.style.setProperty('--primary-color', colors.primary);
+        document.documentElement.style.setProperty('--background-color', colors.background);
+        document.documentElement.style.setProperty('--text-color', colors.text);
+        document.documentElement.style.setProperty('--accent-color', colors.accent);
+        
+        // Apply to body directly as well
+        document.body.style.backgroundColor = colors.background;
+        document.body.style.color = colors.text;
+        
+        // Apply accent color to headings and stats
+        const headings = document.querySelectorAll('.card-title, .section-title, .stat-label, h2, h3, .stat-title, .card-header');
+        headings.forEach(heading => {
+            heading.style.color = colors.accent;
+        });
+        
+        // Apply to stat values and other important numbers
+        const statValues = document.querySelectorAll('.stat-value, .profile-stat-value, .count-value, .mala-count, .streak-value');
+        statValues.forEach(value => {
+            value.style.color = colors.accent;
+        });
+        
+        // Apply accent colors to specific text elements but exclude elements in the header
+        const accentTextElements = document.querySelectorAll('.profile-section-title, .total-count, .current-streak, .main-content h1, .main-content h2, .main-content h3, .main-content h4, .profile-section h3');
+        accentTextElements.forEach(element => {
+            element.style.color = colors.accent;
+        });
+        
+        // Update progress bars - make them more visible
+        const progressBars = document.querySelectorAll('.progress-bar');
+        progressBars.forEach(bar => {
+            bar.style.backgroundColor = "#e0e0e0";
+        });
+        
+        // Make progress fill more visible
+        const progressFills = document.querySelectorAll('.progress-fill');
+        progressFills.forEach(fill => {
+            fill.style.backgroundColor = colors.accent;
+        });
+        
+        // Update buttons with accent color and white text (orange buttons with white text)
+        const accentButtons = document.querySelectorAll('.primary-button, .action-button, .secondary-button');
+        accentButtons.forEach(button => {
+            button.style.backgroundColor = colors.accent;
+            button.style.borderColor = colors.accent;
+            button.style.color = 'white';
             
-            // Also remove dark mode if it was applied
-            document.documentElement.classList.remove('dark-theme');
+            // Add hover effect
+            button.onmouseover = () => {
+                button.style.backgroundColor = colors.accent;
+                button.style.opacity = '0.9';
+                button.style.color = 'white';
+            };
+            
+            button.onmouseout = () => {
+                button.style.backgroundColor = colors.accent;
+                button.style.opacity = '1';
+                button.style.color = 'white';
+            };
+        });
+        
+        // Apply to header for immediate visibility
+        const header = document.querySelector('header');
+        if (header) {
+            header.style.backgroundColor = colors.primary;
+            header.style.color = 'white'; // Consistent header text color
+            
+            // Explicitly set all header text elements to white
+            const headerTextElements = header.querySelectorAll('h1, h2, h3, h4, p, span, div, a');
+            headerTextElements.forEach(el => {
+                el.style.color = 'white';
+            });
+        }
+        
+        // Also explicitly handle texts that are directly in header background areas
+        const headerTexts = document.querySelectorAll('.header-text, .app-title, .greeting-text, .welcome-text, .main-header-text, .header-area h1, .header-area h2, .header-area h3');
+        headerTexts.forEach(text => {
+            text.style.color = 'white';
+        });
+        
+        // Specifically target the welcome greeting text that appears on blue background
+        const greetingTexts = document.querySelectorAll('.greeting-message, .benefits-title');
+        greetingTexts.forEach(greeting => {
+            greeting.style.color = 'white';
+        });
+        
+        // Make sure Android app class is preserved if running in WebView
+        if (window.isRunningInWebView || window.AndroidInterface) {
+            document.body.classList.add('android-app');
         }
         
         // Update theme selection indicators
-        const themeButtons = document.querySelectorAll('.theme-palette-btn');
-        themeButtons.forEach(btn => {
+        const allButtons = document.querySelectorAll('.theme-palette-btn, .theme-button');
+        allButtons.forEach(btn => {
             btn.classList.remove('active');
-            if (btn.dataset.theme === theme) {
+            
+            // Get theme value from either dataset or ID
+            const btnTheme = btn.dataset?.theme || btn.id.toLowerCase().replace('theme', '');
+            
+            // Normalize button theme same as we did for selected theme
+            const normalizedBtnTheme = btnTheme.startsWith('theme-') ? btnTheme : `theme-${btnTheme}`;
+            
+            if (normalizedBtnTheme === normalizedTheme) {
                 btn.classList.add('active');
             }
         });
         
-        // Update theme display if available
+        // Update theme display name
         const themeDisplay = document.getElementById('selectedThemeDisplay');
         const themeNameElement = document.getElementById('currentThemeName');
         
-        if (themeDisplay && themeNameElement && theme.startsWith('theme-')) {
-            const displayName = theme.replace('theme-', '').charAt(0).toUpperCase() + theme.replace('theme-', '').slice(1);
-            themeNameElement.textContent = displayName;
-            themeDisplay.classList.remove('hidden');
+        if (themeDisplay && themeNameElement) {
+            if (normalizedTheme.startsWith('theme-')) {
+                // Format display name: theme-krishna -> Krishna
+                const displayName = normalizedTheme.replace('theme-', '').charAt(0).toUpperCase() + 
+                                 normalizedTheme.replace('theme-', '').slice(1);
+                themeNameElement.textContent = displayName;
+                themeDisplay.classList.remove('hidden');
+            } else {
+                themeDisplay.classList.add('hidden');
+            }
         }
         
-        // Update app header color for Android status bar if using WebView
+        // Update Android status bar color if available
         if (window.AndroidInterface) {
             try {
-                // Get the computed primary color from CSS
-                const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim();
-                window.AndroidInterface.updateStatusBarColor(primaryColor);
+                window.AndroidInterface.updateStatusBarColor(colors.primary);
             } catch (e) {
                 console.error('Error updating Android status bar color:', e);
             }
         }
+        
+        console.log('Theme application complete:', normalizedTheme);
     }
     
     function saveAppSettings() {
@@ -2517,10 +3220,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Clear the canvas first
         clearCanvas();
         
+        // Get current theme accent color
+        let accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim() || "#ff7817";
+        let strokeColor = accentColor;
+        
         // Set drawing properties for the RAM text
         drawingContext.font = "bold 48px Devanagari, Arial, sans-serif";
-        drawingContext.fillStyle = "orange";
-        drawingContext.strokeStyle = "#ff8c00";
+        drawingContext.fillStyle = accentColor;
+        drawingContext.strokeStyle = strokeColor;
         drawingContext.lineWidth = 1;
         
         // Center position for the text

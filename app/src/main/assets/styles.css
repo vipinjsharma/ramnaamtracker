@@ -274,6 +274,23 @@ header h1 {
 }
 
 /* Home Page */
+.greeting-message {
+    color: var(--md-primary) !important; /* Using primary theme color for better branding */
+    font-weight: 700; /* Bold for better visibility */
+    font-size: 1.2rem; /* Slightly larger */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Enhanced shadow for readability */
+    margin-bottom: 16px; /* Add some spacing below */
+    letter-spacing: 0.02em; /* Slight letter spacing for better readability */
+    padding: 6px 12px; /* Add some padding */
+    border-radius: 8px; /* Rounded corners */
+    background-color: rgba(255, 255, 255, 0.8); /* Subtle background for better contrast */
+    display: inline-block; /* To make background only as wide as the text */
+}
+
+.benefits-title {
+    color: white !important; /* Keep benefits title white */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Subtle shadow for readability */
+}
 .page {
     padding-top: 24px;
 }
@@ -597,11 +614,12 @@ header h1 {
 }
 
 .progress-bar {
-    height: 10px;
+    height: 16px; /* Increased height for better visibility */
     background: rgba(0, 0, 0, 0.05);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2); /* Increased shadow */
+    border: 1px solid rgba(var(--accent-color-rgb), 0.2); /* Added subtle border */
 }
 
 .progress-fill {
@@ -614,6 +632,7 @@ header h1 {
     position: relative;
     overflow: hidden;
     animation: gradientShift 3s ease infinite;
+    box-shadow: 0 0 10px rgba(var(--accent-color-rgb), 0.4); /* Added glow effect */
 }
 
 .progress-fill::after {
@@ -902,13 +921,14 @@ header h1 {
 
 .progress-bar {
     width: 100%;
-    height: 12px;
+    height: 16px; /* Increased height for better visibility */
     background-color: var(--md-surface-variant);
-    border-radius: 6px;
+    border-radius: 8px;
     margin: 8px 0 16px;
     overflow: hidden;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); /* Increased shadow */
     position: relative;
+    border: 1px solid rgba(var(--accent-color-rgb), 0.2); /* Added subtle border */
 }
 
 .progress-fill {
@@ -920,6 +940,7 @@ header h1 {
     overflow: hidden;
     transition: width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     animation: gradientShift 3s ease infinite;
+    box-shadow: 0 0 10px rgba(var(--accent-color-rgb), 0.4); /* Added glow effect */
 }
 
 /* Add sparkle effect to progress bar */
@@ -1701,10 +1722,39 @@ input:checked + .toggle-slider-large:before {
 
 /* Dark theme */
 .dark-theme {
+    --md-primary: #FF6F00; /* Keep primary color for consistency */
+    --primary-color: #FF6F00;
+    --secondary-color: #e67e22;
+    --accent-color: #ff7817;
+    --accent-color-rgb: 255, 120, 23;
+    --button-color: #ff7817;
+    --button-hover: #d35400;
     --background-color: #2c2c2c;
     --text-color: #f0f0f0;
     --card-bg-color: #3c3c3c;
     --border-color: #555;
+    --md-on-surface: #f0f0f0; /* Override surface text color in dark mode */
+    --md-on-surface-variant: #d0d0d0; /* Lighter variant for better readability */
+    --md-on-background: #f0f0f0; /* Text color on background */
+    
+    /* Add direct header styles to ensure theme applies immediately */
+    & header {
+        background-color: #FF6F00;
+        color: white;
+    }
+    
+    & body {
+        background-color: #2c2c2c;
+        color: #f0f0f0;
+    }
+
+    & p {
+        color: #f0f0f0; /* Ensure all paragraph text is light colored */
+    }
+
+    & span {
+        color: #ffffff; /* Make spans (often used for values) brighter */
+    }
 }
 
 .dark-theme .canvas-container {
@@ -1713,6 +1763,148 @@ input:checked + .toggle-slider-large:before {
 
 .dark-theme .menu-item:hover {
     background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Ensure theme labels are visible in dark theme */
+.dark-theme .theme-label {
+    color: #ffffff;
+}
+
+.dark-theme .theme-description,
+.dark-theme .theme-option-text,
+.dark-theme .selected-theme-name,
+.dark-theme .theme-name {
+    color: #f0f0f0;
+}
+
+/* Ensure profile section headers remain blue in dark theme */
+.dark-theme .profile-section h3 {
+    color: #3498DB; /* Krishna theme blue */
+}
+
+/* Fix statistics text visibility in dark theme */
+.dark-theme .statistics-card {
+    background-color: #3c3c3c;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.dark-theme .statistics-card h2 {
+    color: #FF9800; /* Use brighter orange for headers */
+}
+
+.dark-theme .stat-row {
+    color: #f0f0f0; /* Bright text for stats */
+}
+
+.dark-theme .stat-value {
+    color: #FFFFFF; /* White for stat values */
+    font-weight: 600;
+}
+
+/* Improve progress bar visibility in dark theme */
+.dark-theme .progress-bar {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark-theme .progress-fill {
+    box-shadow: 0 0 15px rgba(255, 120, 23, 0.6); /* Stronger glow effect in dark theme */
+}
+
+/* Improve home page stats visibility in dark theme */
+.dark-theme [id^="home"] {
+    color: #FFFFFF; /* Bright white for all counter values */
+    font-weight: 600;
+}
+
+.dark-theme #homePage p {
+    color: #f0f0f0; /* Light gray for text labels */
+}
+
+/* Fix benefits list text in dark mode */
+.dark-theme .benefits-list li {
+    background-color: #3c3c3c; /* Darker cards in dark mode */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.dark-theme .benefits-list li p {
+    color: #f0f0f0 !important; /* Ensure all benefit text is visible on dark theme */
+}
+
+.dark-theme .benefits-list h4 {
+    color: #FF9800 !important; /* Make benefit headlines stand out with primary color */
+}
+
+/* Improve stats visibility in dark mode */
+.dark-theme .stats-card span,
+.dark-theme #statsSection span,
+.dark-theme .stat-box span,
+.dark-theme .count-value,
+.dark-theme .goal-stats-value,
+.dark-theme .ram-stats-value, 
+.dark-theme #todaysCount,
+.dark-theme #todaysMala,
+.dark-theme #totalCount {
+    color: #FFFFFF !important; /* Brighter stats values */
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.dark-theme .stats-card h3 {
+    color: #f0f0f0 !important; /* Clearer titles */
+}
+
+/* Enhance menu items in dark mode */
+.dark-theme .menu-overlay {
+    background-color: rgba(0, 0, 0, 0.9); /* Darker background */
+}
+
+.dark-theme .menu-item, 
+.dark-theme .profile-item {
+    color: #FFFFFF !important; /* White text for menu items */
+}
+
+.dark-theme .menu-section-title {
+    color: #FF9800 !important; /* Orange section titles for visibility */
+}
+
+/* Better profile card in dark mode */
+.dark-theme .profile-card,
+.dark-theme .stat-box,
+.dark-theme #statsSection,
+.dark-theme .stats-card {
+    background-color: #3c3c3c; /* Darker background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.dark-theme .profile-card p, 
+.dark-theme .profile-card span,
+.dark-theme .stat-box p,
+.dark-theme #statsSection p,
+.dark-theme .stats-card p {
+    color: #FFFFFF !important; /* White text */
+}
+
+/* Fix progress bars in dark mode */
+.dark-theme .progress-bar {
+    background-color: #555555; /* Darker background for progress bars */
+}
+
+.dark-theme .progress-fill {
+    background-color: #FF9800 !important; /* Orange fill */
+}
+
+/* Ensure all orange/saffron buttons have white text */
+button[style*="background-color: #ff7817"], 
+button[style*="background-color: #FF6F00"],
+button[style*="background-color: #e67e22"],
+button[style*="background-color: var(--primary-color)"],
+button[style*="background-color: var(--button-color)"],
+button[style*="background-color: var(--accent-color)"],
+.button[style*="background-color: #ff7817"],
+.button[style*="background-color: #FF6F00"], 
+.button[style*="background-color: #e67e22"] {
+    color: white !important;
 }
 
 /* Cultural Theme: Ram (Saffron) - Default */
@@ -1730,6 +1922,17 @@ input:checked + .toggle-slider-large:before {
     --clear-button-color: #e74c3c;
     --table-header-bg: #f5b642;
     --table-stripe-bg: #fff7e6;
+    
+    /* Add direct header styles to ensure theme applies immediately */
+    & header {
+        background-color: #ff7817;
+        color: white;
+    }
+    
+    & body {
+        background-color: #fff7e6;
+        color: #333333;
+    }
 }
 
 /* Cultural Theme: Krishna (Blue) */
@@ -1747,6 +1950,17 @@ input:checked + .toggle-slider-large:before {
     --clear-button-color: #E74C3C;
     --table-header-bg: #3498DB;
     --table-stripe-bg: #EBF5FB;
+    
+    /* Add direct header styles to ensure theme applies immediately */
+    & header {
+        background-color: #2874A6;
+        color: white;
+    }
+    
+    & body {
+        background-color: #EBF5FB;
+        color: #1A5276;
+    }
 }
 
 /* Cultural Theme: Lakshmi (Gold) */
@@ -1764,6 +1978,17 @@ input:checked + .toggle-slider-large:before {
     --clear-button-color: #8E44AD;
     --table-header-bg: #F1C40F;
     --table-stripe-bg: #FEF9E7;
+    
+    /* Add direct header styles to ensure theme applies immediately */
+    & header {
+        background-color: #D4AC0D;
+        color: white;
+    }
+    
+    & body {
+        background-color: #FEF9E7;
+        color: #7D6608;
+    }
 }
 
 /* Cultural Theme: Ganesh (Red) */
@@ -1781,6 +2006,17 @@ input:checked + .toggle-slider-large:before {
     --clear-button-color: #16A085;
     --table-header-bg: #E74C3C;
     --table-stripe-bg: #FDEDEC;
+    
+    /* Add direct header styles to ensure theme applies immediately */
+    & header {
+        background-color: #C0392B;
+        color: white;
+    }
+    
+    & body {
+        background-color: #FDEDEC;
+        color: #641E16;
+    }
 }
 
 /* Cultural Theme: Shiva (Purple) */
@@ -1798,6 +2034,17 @@ input:checked + .toggle-slider-large:before {
     --clear-button-color: #2ECC71;
     --table-header-bg: #8E44AD;
     --table-stripe-bg: #F4ECF7;
+    
+    /* Add direct header styles to ensure theme applies immediately */
+    & header {
+        background-color: #7D3C98;
+        color: white;
+    }
+    
+    & body {
+        background-color: #F4ECF7;
+        color: #4A235A;
+    }
 }
 
 /* Special styling for Android WebView */
@@ -2399,6 +2646,17 @@ body.android-app .header {
     font-weight: 500;
 }
 
+/* Make the theme palette labels visible in all themes */
+body.theme-dark .theme-selector-dialog .theme-label {
+    color: rgba(255, 255, 255, 0.85) !important; /* Bright color for dark theme */
+}
+
+/* Force light theme text color for all cultural theme options */
+.cultural-theme-palette .theme-label {
+    color: rgba(255, 255, 255, 0.9) !important; /* Bright white for better contrast */
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4); /* Text shadow for better readability */
+}
+
 .selected-theme-display {
     margin: 0 0 20px 0;
     text-align: center;
@@ -2473,8 +2731,12 @@ body.android-app .header {
 }
 
 .theme-name {
-    font-weight: bold;
+    font-weight: 700;
     margin-bottom: 5px;
+    color: #333333; /* Darker text color for better visibility */
+    text-shadow: none; /* Remove any text shadow that might blur the text */
+    font-size: 14px; /* Slightly larger font size */
+    text-align: center; /* Center the text */
 }
 
 .theme-desc {
@@ -2628,4 +2890,146 @@ body.android-app .header {
     background-color: var(--accent-color);
     border-color: var(--accent-color);
     color: white;
+}
+
+/* Fix for monthly goal text overflow */
+#monthly-goal-display {
+    font-size: 0.9em;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    display: inline-block;
+}
+
+/* Tutorial styles */
+@keyframes draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.tutorial-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: modalFadeIn 0.3s forwards;
+}
+
+.tutorial-modal {
+    background-color: var(--md-surface);
+    border-radius: var(--md-shape-large);
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--md-shadow-4);
+    overflow: hidden;
+}
+
+.tutorial-svg-container {
+    flex: 1;
+    background-color: var(--md-primary-container);
+    padding: 20px;
+    min-height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tutorial-svg {
+    width: 100%;
+    height: 100%;
+    max-height: 250px;
+}
+
+.tutorial-guide-text {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.tutorial-instruction-area {
+    padding: 20px;
+}
+
+.tutorial-instruction-area h3 {
+    font-size: var(--md-title-large-size);
+    color: var(--md-primary);
+    margin-bottom: 10px;
+}
+
+.tutorial-instruction-area p {
+    font-size: var(--md-body-medium-size);
+    color: var(--md-on-surface-variant);
+    margin-bottom: 20px;
+}
+
+.tutorial-progress {
+    height: 6px;
+    background-color: var(--md-surface-variant);
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+
+.tutorial-progress-bar {
+    height: 100%;
+    background-color: var(--md-primary);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.tutorial-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.tutorial-navigation button {
+    padding: 8px 16px;
+}
+
+.tutorial-navigation button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#tutorial-step-counter {
+    font-size: var(--md-body-small-size);
+    color: var(--md-on-surface-variant);
+}
+
+#tutorial-close-btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.tutorial-button {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    background-color: var(--md-secondary-container);
+    color: var(--md-on-secondary-container);
+    border: none;
+    border-radius: var(--md-shape-small);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.tutorial-button:hover {
+    background-color: var(--md-secondary);
+    color: var(--md-on-secondary);
+}
+
+.tutorial-path {
+    transition: stroke-dashoffset 1.5s ease;
 }
