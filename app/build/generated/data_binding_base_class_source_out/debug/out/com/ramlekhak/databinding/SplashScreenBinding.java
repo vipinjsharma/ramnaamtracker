@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
@@ -25,15 +26,20 @@ public final class SplashScreenBinding implements ViewBinding {
   public final TextView appName;
 
   @NonNull
+  public final CardView appNameCard;
+
+  @NonNull
   public final ProgressBar loadingSpinner;
 
   @NonNull
   public final ImageView splashLogo;
 
   private SplashScreenBinding(@NonNull ConstraintLayout rootView, @NonNull TextView appName,
-      @NonNull ProgressBar loadingSpinner, @NonNull ImageView splashLogo) {
+      @NonNull CardView appNameCard, @NonNull ProgressBar loadingSpinner,
+      @NonNull ImageView splashLogo) {
     this.rootView = rootView;
     this.appName = appName;
+    this.appNameCard = appNameCard;
     this.loadingSpinner = loadingSpinner;
     this.splashLogo = splashLogo;
   }
@@ -71,6 +77,12 @@ public final class SplashScreenBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.app_name_card;
+      CardView appNameCard = ViewBindings.findChildViewById(rootView, id);
+      if (appNameCard == null) {
+        break missingId;
+      }
+
       id = R.id.loading_spinner;
       ProgressBar loadingSpinner = ViewBindings.findChildViewById(rootView, id);
       if (loadingSpinner == null) {
@@ -83,8 +95,8 @@ public final class SplashScreenBinding implements ViewBinding {
         break missingId;
       }
 
-      return new SplashScreenBinding((ConstraintLayout) rootView, appName, loadingSpinner,
-          splashLogo);
+      return new SplashScreenBinding((ConstraintLayout) rootView, appName, appNameCard,
+          loadingSpinner, splashLogo);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

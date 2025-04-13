@@ -71,6 +71,7 @@ drawable ic_edit
 drawable ic_home
 drawable ic_launcher
 drawable ic_launcher_foreground
+drawable ic_lord_rama_face
 drawable ic_mala
 drawable ic_menu
 drawable ic_menu_rate
@@ -80,13 +81,16 @@ drawable ic_star_filled
 drawable ic_star_half
 drawable ic_star_outline
 drawable ic_streak
+drawable lord_rama_silhouette
 drawable new_ram_icon
 drawable note_background
 drawable preset_button_background
+drawable ram_face_logo
 drawable ram_lekhak_logo
 drawable ram_logo_bitmap
 drawable rounded_background
 drawable selectable_button_background
+drawable splash_background
 drawable switch_background
 drawable time_selector_background
 font poppins
@@ -97,6 +101,7 @@ font poppins_semibold
 id action_homeFragment_to_writingFragment
 id actions_container
 id app_name
+id app_name_card
 id auto_draw_button
 id avatarCircle
 id benefit_card_1
@@ -507,6 +512,7 @@ style AppTheme
 style OrangeSwitchTheme
 style RamButton
 style RamDrawButton
+style SplashTheme
 style TextAppearance.App.BenefitTitle
 style TextAppearance.App.Body
 style TextAppearance.App.Body1

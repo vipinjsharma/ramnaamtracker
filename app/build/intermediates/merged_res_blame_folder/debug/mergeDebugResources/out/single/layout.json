@@ -1,5 +1,9 @@
 [
     {
+        "merged": "com.ramlekhak.app-mergeDebugResources-73:/layout/fragment_writing.xml",
+        "source": "com.ramlekhak.app-main-76:/layout/fragment_writing.xml"
+    },
+    {
         "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-mergeDebugResources-73:/layout/fragment_home.xml",
         "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/layout/fragment_home.xml"
     },
@@ -8,16 +12,12 @@
         "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/layout/fragment_profile.xml"
     },
     {
-        "merged": "com.ramlekhak.app-mergeDebugResources-73:/layout/splash_screen.xml",
-        "source": "com.ramlekhak.app-main-76:/layout/splash_screen.xml"
+        "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-mergeDebugResources-73:/layout/dialog_set_reminder.xml",
+        "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/layout/dialog_set_reminder.xml"
     },
     {
         "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-mergeDebugResources-73:/layout/dialog_set_goals.xml",
         "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/layout/dialog_set_goals.xml"
-    },
-    {
-        "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-mergeDebugResources-73:/layout/dialog_set_reminder.xml",
-        "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/layout/dialog_set_reminder.xml"
     },
     {
         "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-mergeDebugResources-73:/layout/activity_reminder.xml",
@@ -28,12 +28,12 @@
         "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/layout/dialog_daily_reminder.xml"
     },
     {
-        "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-mergeDebugResources-73:/layout/dialog_how_to_use.xml",
-        "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/layout/dialog_how_to_use.xml"
-    },
-    {
         "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-mergeDebugResources-73:/layout/fragment_writing.xml",
         "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/layout/fragment_writing.xml"
+    },
+    {
+        "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-mergeDebugResources-73:/layout/dialog_how_to_use.xml",
+        "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/layout/dialog_how_to_use.xml"
     },
     {
         "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-mergeDebugResources-73:/layout/dialog_privacy_policy.xml",

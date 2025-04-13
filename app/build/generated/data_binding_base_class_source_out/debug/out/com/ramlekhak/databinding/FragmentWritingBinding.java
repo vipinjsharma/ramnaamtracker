@@ -7,11 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.google.android.material.button.MaterialButton;
@@ -23,7 +23,7 @@ import java.lang.String;
 
 public final class FragmentWritingBinding implements ViewBinding {
   @NonNull
-  private final ConstraintLayout rootView;
+  private final ScrollView rootView;
 
   @NonNull
   public final LinearLayout actionsContainer;
@@ -73,7 +73,7 @@ public final class FragmentWritingBinding implements ViewBinding {
   @NonNull
   public final TextView todayMalasValue;
 
-  private FragmentWritingBinding(@NonNull ConstraintLayout rootView,
+  private FragmentWritingBinding(@NonNull ScrollView rootView,
       @NonNull LinearLayout actionsContainer, @NonNull MaterialButton autoDrawButton,
       @NonNull MaterialButton clearButton, @NonNull TextView dailyGoalValue,
       @NonNull ProgressBar dailyProgressBar, @NonNull CardView drawingCard,
@@ -103,7 +103,7 @@ public final class FragmentWritingBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public ConstraintLayout getRoot() {
+  public ScrollView getRoot() {
     return rootView;
   }
 
@@ -224,10 +224,10 @@ public final class FragmentWritingBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentWritingBinding((ConstraintLayout) rootView, actionsContainer,
-          autoDrawButton, clearButton, dailyGoalValue, dailyProgressBar, drawingCard, drawingView,
-          goalPercentage, instructionCard, setGoalButton, shareProgressButton, statsCard,
-          streakCountValue, submitButton, todayCountValue, todayMalasValue);
+      return new FragmentWritingBinding((ScrollView) rootView, actionsContainer, autoDrawButton,
+          clearButton, dailyGoalValue, dailyProgressBar, drawingCard, drawingView, goalPercentage,
+          instructionCard, setGoalButton, shareProgressButton, statsCard, streakCountValue,
+          submitButton, todayCountValue, todayMalasValue);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

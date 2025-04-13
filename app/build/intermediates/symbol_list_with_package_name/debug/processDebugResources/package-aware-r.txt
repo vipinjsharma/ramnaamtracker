@@ -3177,6 +3177,7 @@ drawable ic_home
 drawable ic_keyboard_black_24dp
 drawable ic_launcher
 drawable ic_launcher_foreground
+drawable ic_lord_rama_face
 drawable ic_m3_chip_check
 drawable ic_m3_chip_checked_circle
 drawable ic_m3_chip_close
@@ -3194,6 +3195,7 @@ drawable ic_star_filled
 drawable ic_star_half
 drawable ic_star_outline
 drawable ic_streak
+drawable lord_rama_silhouette
 drawable m3_avd_hide_password
 drawable m3_avd_show_password
 drawable m3_bottom_sheet_drag_handle
@@ -3270,10 +3272,12 @@ drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable preference_list_divider_material
 drawable preset_button_background
+drawable ram_face_logo
 drawable ram_lekhak_logo
 drawable ram_logo_bitmap
 drawable rounded_background
 drawable selectable_button_background
+drawable splash_background
 drawable switch_background
 drawable test_level_drawable
 drawable time_selector_background
@@ -3369,6 +3373,7 @@ id animateToStart
 id antiClockwise
 id anticipate
 id app_name
+id app_name_card
 id arc
 id asConfigured
 id async
@@ -5062,6 +5067,7 @@ style ShapeAppearanceOverlay_MaterialComponents_MaterialCalendar_Day
 style ShapeAppearanceOverlay_MaterialComponents_MaterialCalendar_Window_Fullscreen
 style ShapeAppearanceOverlay_MaterialComponents_MaterialCalendar_Year
 style ShapeAppearanceOverlay_MaterialComponents_TextInputLayout_FilledBox
+style SplashTheme
 style TextAppearance_App_BenefitTitle
 style TextAppearance_App_Body
 style TextAppearance_App_Body1

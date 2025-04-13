@@ -15,7 +15,7 @@
                 <item
                     android:id="@+id/languageSettingItem"
                     android:icon="@android:drawable/ic_menu_sort_alphabetically"
-                    android:title="Language" />
+                    android:title="Experience" />
             </menu>
         </item>
     </group>

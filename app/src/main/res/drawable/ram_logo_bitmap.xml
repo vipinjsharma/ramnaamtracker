@@ -5,53 +5,53 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Orange circular background -->
+    <!-- Black circular background -->
     <path
-        android:fillColor="#FF8C00"
+        android:fillColor="#000000"
         android:pathData="M54,29C39.64,29 28,40.64 28,55C28,69.36 39.64,81 54,81C68.36,81 80,69.36 80,55C80,40.64 68.36,29 54,29Z" />
 
     <!-- Sun rays (spikes) around the circle -->
     <path
-        android:fillColor="#FF8C00"
+        android:fillColor="#000000"
         android:pathData="M54,15L56,10L58,15L57,17L54,18L51,17L50,15L52,10Z" />
     <path
-        android:fillColor="#FF8C00"
+        android:fillColor="#000000"
         android:pathData="M54,95L56,100L58,95L57,93L54,92L51,93L50,95L52,100Z" />
     
     <!-- Left and right spikes -->
     <path
-        android:fillColor="#FF8C00"
+        android:fillColor="#000000"
         android:pathData="M15,55L10,53L15,51L17,52L18,55L17,58L15,59L10,57Z" />
     <path
-        android:fillColor="#FF8C00"
+        android:fillColor="#000000"
         android:pathData="M93,55L98,53L93,51L91,52L90,55L91,58L93,59L98,57Z" />
     
     <!-- Diagonal spikes - top left, top right, bottom left, bottom right -->
     <path
-        android:fillColor="#FF8C00"
+        android:fillColor="#000000"
         android:pathData="M32,33L27,28L29,26L31,27L33,29L34,31L35,33L30,38Z" />
     <path
-        android:fillColor="#FF8C00"
+        android:fillColor="#000000"
         android:pathData="M76,33L81,28L79,26L77,27L75,29L74,31L73,33L78,38Z" />
     <path
-        android:fillColor="#FF8C00"
+        android:fillColor="#000000"
         android:pathData="M32,77L27,82L29,84L31,83L33,81L34,79L35,77L30,72Z" />
     <path
-        android:fillColor="#FF8C00"
+        android:fillColor="#000000"
         android:pathData="M76,77L81,82L79,84L77,83L75,81L74,79L73,77L78,72Z" />
     
     <!-- Many small sun rays all around - represented as a few more -->
     <path
-        android:fillColor="#FF8C00"
+        android:fillColor="#000000"
         android:pathData="M54,24L55,20L56,24Z" />
     <path
-        android:fillColor="#FF8C00"
+        android:fillColor="#000000"
         android:pathData="M54,86L55,90L56,86Z" />
     <path
-        android:fillColor="#FF8C00"
+        android:fillColor="#000000"
         android:pathData="M24,55L20,56L24,57Z" />
     <path
-        android:fillColor="#FF8C00"
+        android:fillColor="#000000"
         android:pathData="M84,55L88,56L84,57Z" />
     
     <!-- Inner content - simple suggestion of the Devanagari text -->
@@ -70,4 +70,11 @@
     <path
         android:fillColor="#FFFFFF"
         android:pathData="M59,40L61,35L63,40L59,40Z" />
+
+    <!-- Inner circle with border -->
+    <path
+        android:fillColor="#000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"
+        android:pathData="M54,34C43.5,34 35,42.5 35,53C35,63.5 43.5,72 54,72C64.5,72 73,63.5 73,53C73,42.5 64.5,34 54,34Z" />
 </vector> 

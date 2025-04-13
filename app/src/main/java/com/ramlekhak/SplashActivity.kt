@@ -5,10 +5,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 
 class SplashActivity : AppCompatActivity() {
 
-    private val SPLASH_DISPLAY_TIME: Long = 1500 // 1.5 seconds
+    private val SPLASH_DISPLAY_TIME: Long = 2000 // 2 seconds
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,9 +17,14 @@ class SplashActivity : AppCompatActivity() {
         
         // Use a handler to delay loading the main activity
         Handler(Looper.getMainLooper()).postDelayed({
-            // Start main activity
+            // Start main activity with a fade transition
             val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            val options = ActivityOptionsCompat.makeCustomAnimation(
+                this,
+                android.R.anim.fade_in,
+                android.R.anim.fade_out
+            )
+            startActivity(intent, options.toBundle())
             
             // Close splash activity
             finish()

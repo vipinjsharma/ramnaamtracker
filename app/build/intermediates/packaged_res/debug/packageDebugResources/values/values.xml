@@ -18,7 +18,7 @@
     <color name="card_background">#FFFFFF</color>
     <color name="divider">#EBEBEB</color>
     <color name="drawing_line_color">#FF7817</color>
-    <color name="ic_launcher_background">#E68656</color>
+    <color name="ic_launcher_background">#000000</color>
     <color name="icon_accent">#FF7817</color>
     <color name="icon_count">#8BC34A</color>
     <color name="icon_malas">#6495ED</color>
@@ -200,6 +200,12 @@
         <item name="cornerRadius">8dp</item>
         <item name="android:padding">12dp</item>
         <item name="android:textSize">16sp</item>
+    </style>
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:statusBarColor">@color/primary_dark</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
     <style name="TextAppearance.App.BenefitTitle" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:textSize">16sp</item>
