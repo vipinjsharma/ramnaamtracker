@@ -69,9 +69,15 @@ class WritingViewModel @Inject constructor(
 
     private fun loadTodayCount() {
         viewModelScope.launch {
-            val count = repository.getCountForDate(getTodayDate())?.count ?: 0
-            _todayCount.value = count
-            updateMalasAndProgress(count)
+            val today = getTodayDate()
+            val startOfDay = DateUtils.getStartOfDay(today)
+            val endOfDay = DateUtils.getEndOfDay(today)
+            
+            repository.getTodayCount().collect { counts ->
+                val totalCount = counts.sumOf { it.count }
+                _todayCount.value = totalCount
+                updateMalasAndProgress(totalCount)
+            }
         }
     }
     
