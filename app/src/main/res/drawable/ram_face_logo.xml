@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Main face shape -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M54,28C44,40 40,52 40,68C40,76 48,84 54,88C60,84 68,76 68,68C68,52 64,40 54,28Z" />
+
+    <!-- Crown top -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M54,28C54,28 49,20 54,15C59,20 54,28 54,28Z" />
+
+    <!-- Crown side elements -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M54,28C54,28 47,24 42,26C42,30 47,32 54,28Z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M54,28C54,28 61,24 66,26C66,30 61,32 54,28Z" />
+
+    <!-- Middle crown section -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M45,28C45,28 48,24 54,26C60,24 63,28 63,28L61,32L47,32L45,28Z" />
+
+    <!-- Hair/crown sides -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M40,68C40,68 35,58 35,48C30,48 28,45 30,40C35,38 40,45 40,48C40,53 40,58 40,68Z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M68,68C68,68 73,58 73,48C78,48 80,45 78,40C73,38 68,45 68,48C68,53 68,58 68,68Z" />
+
+    <!-- Face features - white space -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,40C50,40 47,44 47,48C47,52 50,56 54,56C58,56 61,52 61,48C61,44 58,40 54,40Z" />
+
+    <!-- Tilak/third eye -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M54,43C54.5,42 55,42 55.5,43L54.5,47L53.5,47L54,43Z" />
+
+    <!-- Eyebrows -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M48,46C49,44 53,45 54,46L54,47C51,47 49,47 48,46Z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M60,46C59,44 55,45 54,46L54,47C57,47 59,47 60,46Z" />
+
+    <!-- Eyes -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M50,48C49,48 48,49 48,50C48,51 49,51 50,50C51,51 52,51 52,50C52,49 51,48 50,48Z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M58,48C57,48 56,49 56,50C56,51 57,51 58,50C59,51 60,51 60,50C60,49 59,48 58,48Z" />
+
+    <!-- Nose -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M54,48C53,50 53,52 54,53C55,52 55,50 54,48Z" />
+
+    <!-- Mouth -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M52,56C52,57 56,57 56,56C55,56 53,56 52,56Z" />
+
+    <!-- Rudraksha mala/necklace -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M45,70C46,69 48,69 49,70C50,71 51,72 52,73C53,73 55,73 56,73C57,72 58,71 59,70C60,69 62,69 63,70L64,72L59,76L54,78L49,76L44,72L45,70Z" />
+
+    <!-- Necklace beads -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M46,70C45.5,70.5 45.5,71.5 46,72C46.5,72.5 47.5,72.5 48,72C48.5,71.5 48.5,70.5 48,70C47.5,69.5 46.5,69.5 46,70Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M49,72C48.5,72.5 48.5,73.5 49,74C49.5,74.5 50.5,74.5 51,74C51.5,73.5 51.5,72.5 51,72C50.5,71.5 49.5,71.5 49,72Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,74C53.5,74.5 53.5,75.5 54,76C54.5,76.5 55.5,76.5 56,76C56.5,75.5 56.5,74.5 56,74C55.5,73.5 54.5,73.5 54,74Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M57,72C56.5,72.5 56.5,73.5 57,74C57.5,74.5 58.5,74.5 59,74C59.5,73.5 59.5,72.5 59,72C58.5,71.5 57.5,71.5 57,72Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M60,70C59.5,70.5 59.5,71.5 60,72C60.5,72.5 61.5,72.5 62,72C62.5,71.5 62.5,70.5 62,70C61.5,69.5 60.5,69.5 60,70Z" />
+</vector> 
