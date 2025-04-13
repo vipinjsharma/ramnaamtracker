@@ -48,6 +48,9 @@ class DrawingView @JvmOverloads constructor(
                 currentPath.moveTo(x, y)
                 startX = x
                 startY = y
+                // Request parent to not intercept touch events
+                parent?.requestDisallowInterceptTouchEvent(true)
+                invalidate()
                 return true
             }
             MotionEvent.ACTION_MOVE -> {
@@ -55,16 +58,20 @@ class DrawingView @JvmOverloads constructor(
                 startX = x
                 startY = y
                 invalidate()
+                return true
             }
-            MotionEvent.ACTION_UP -> {
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 currentPath.lineTo(x, y)
                 // Save the path
                 paths.add(Pair(Path(currentPath), Paint(currentPaint)))
                 currentPath.reset()
+                // Allow parent to intercept touch events again
+                parent?.requestDisallowInterceptTouchEvent(false)
                 invalidate()
+                return true
             }
         }
-        return false
+        return true
     }
 
     override fun onDraw(canvas: Canvas) {

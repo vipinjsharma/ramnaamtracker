@@ -54,7 +54,7 @@
     
     <!-- Pre-existing additional colors -->
     <color name="switch_track_color">#F7A775</color>
-    <color name="ic_launcher_background">#000000</color>
+    <color name="ic_launcher_background">#E68656</color>
     <color name="ram_text_color">#FF7817</color>
     <color name="drawing_line_color">#FF7817</color>
     <color name="bullet_point_color">#FF7817</color>

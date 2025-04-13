@@ -3156,6 +3156,7 @@ drawable goal_button_active
 drawable goal_button_inactive
 drawable goal_button_selector
 drawable goal_preset_button_background
+drawable golden_gradient_background
 drawable ic_arrow_back_black_24
 drawable ic_arrow_down_24dp
 drawable ic_bullet_point
@@ -3196,6 +3197,7 @@ drawable ic_star_half
 drawable ic_star_outline
 drawable ic_streak
 drawable lord_rama_silhouette
+drawable lotus_icon
 drawable m3_avd_hide_password
 drawable m3_avd_show_password
 drawable m3_bottom_sheet_drag_handle
@@ -3272,6 +3274,7 @@ drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable preference_list_divider_material
 drawable preset_button_background
+drawable ram_calligraphy
 drawable ram_face_logo
 drawable ram_lekhak_logo
 drawable ram_logo_bitmap
@@ -3372,8 +3375,6 @@ id animateToEnd
 id animateToStart
 id antiClockwise
 id anticipate
-id app_name
-id app_name_card
 id arc
 id asConfigured
 id async
@@ -3912,6 +3913,8 @@ id spacer
 id special_effects_controller_view_tag
 id spinner
 id splash_logo
+id splash_tagline
+id splash_title
 id spline
 id split_action_bar
 id spread
@@ -4056,6 +4059,7 @@ id wrap_content
 id wrap_content_constrained
 id wrapped_composition_tag
 id writingFragment
+id writing_scrollview
 id x_left
 id x_right
 integer abc_config_activityDefaultDur

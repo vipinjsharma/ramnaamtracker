@@ -24,12 +24,12 @@
         "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/layout/nav_header.xml"
     },
     {
-        "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-debug-74:/drawable_ic_star_outline.xml.flat",
-        "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/drawable/ic_star_outline.xml"
-    },
-    {
         "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-debug-74:/drawable_splash_background.xml.flat",
         "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/drawable/splash_background.xml"
+    },
+    {
+        "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-debug-74:/drawable_ic_star_outline.xml.flat",
+        "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/drawable/ic_star_outline.xml"
     },
     {
         "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-debug-74:/drawable_ic_clock.xml.flat",
@@ -50,6 +50,10 @@
     {
         "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-debug-74:/drawable_goal_preset_button_background.xml.flat",
         "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/drawable/goal_preset_button_background.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-debug-74:/layout_splash_screen.xml.flat",
+        "source": "com.ramlekhak.app-main-76:/layout/splash_screen.xml"
     },
     {
         "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-debug-74:/layout_activity_profile.xml.flat",
@@ -90,6 +94,10 @@
     {
         "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-debug-74:/layout_fragment_home.xml.flat",
         "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/layout/fragment_home.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-debug-74:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.ramlekhak.app-main-76:/drawable/ic_launcher_foreground.xml"
     },
     {
         "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-debug-74:/layout_splash_screen.xml.flat",
@@ -180,6 +188,10 @@
         "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/font/poppins_italic.ttf"
     },
     {
+        "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-debug-74:/drawable_golden_gradient_background.xml.flat",
+        "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/drawable/golden_gradient_background.xml"
+    },
+    {
         "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-debug-74:/font_poppins_semibold.ttf.flat",
         "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/font/poppins_semibold.ttf"
     },
@@ -228,6 +240,10 @@
         "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/layout/dialog_terms_conditions.xml"
     },
     {
+        "merged": "com.ramlekhak.app-debug-74:/drawable_splash_background.xml.flat",
+        "source": "com.ramlekhak.app-main-76:/drawable/splash_background.xml"
+    },
+    {
         "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-debug-74:/drawable_ic_profile.xml.flat",
         "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/drawable/ic_profile.xml"
     },
@@ -274,6 +290,10 @@
     {
         "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-debug-74:/drawable_circle_background_green.xml.flat",
         "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/drawable/circle_background_green.xml"
+    },
+    {
+        "merged": "com.ramlekhak.app-debug-74:/drawable_lotus_icon.xml.flat",
+        "source": "com.ramlekhak.app-main-76:/drawable/lotus_icon.xml"
     },
     {
         "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-debug-74:/mipmap-anydpi-v26_ic_launcher.xml.flat",
@@ -332,6 +352,10 @@
         "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/menu/activity_main_drawer.xml"
     },
     {
+        "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-debug-74:/drawable_ram_calligraphy.xml.flat",
+        "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/drawable/ram_calligraphy.xml"
+    },
+    {
         "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-debug-74:/font_poppins_medium.ttf.flat",
         "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/font/poppins_medium.ttf"
     },
@@ -350,9 +374,5 @@
     {
         "merged": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-debug-74:/layout_dialog_set_goals.xml.flat",
         "source": "/Users/vipinsharma/.gradle/daemon/8.11.1/com.ramlekhak.app-main-76:/layout/dialog_set_goals.xml"
-    },
-    {
-        "merged": "com.ramlekhak.app-debug-74:/layout_fragment_writing.xml.flat",
-        "source": "com.ramlekhak.app-main-76:/layout/fragment_writing.xml"
     }
 ]

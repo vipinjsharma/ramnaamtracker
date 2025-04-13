@@ -61,6 +61,7 @@ drawable goal_button_active
 drawable goal_button_inactive
 drawable goal_button_selector
 drawable goal_preset_button_background
+drawable golden_gradient_background
 drawable ic_bullet_point
 drawable ic_check
 drawable ic_clock
@@ -82,9 +83,11 @@ drawable ic_star_half
 drawable ic_star_outline
 drawable ic_streak
 drawable lord_rama_silhouette
+drawable lotus_icon
 drawable new_ram_icon
 drawable note_background
 drawable preset_button_background
+drawable ram_calligraphy
 drawable ram_face_logo
 drawable ram_lekhak_logo
 drawable ram_logo_bitmap
@@ -100,8 +103,6 @@ font poppins_regular
 font poppins_semibold
 id action_homeFragment_to_writingFragment
 id actions_container
-id app_name
-id app_name_card
 id auto_draw_button
 id avatarCircle
 id benefit_card_1
@@ -295,6 +296,8 @@ id settingsFragment
 id share_progress_button
 id showDialogButton
 id splash_logo
+id splash_tagline
+id splash_title
 id star1
 id star2
 id star3
@@ -349,6 +352,7 @@ id weekdaySelectorContainer
 id weekdaysButton
 id weekendsButton
 id writingFragment
+id writing_scrollview
 layout activity_main
 layout activity_profile
 layout activity_rating

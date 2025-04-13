@@ -1,3 +1,0 @@
-com.ramlekhak.test
-style WhiteBackgroundDialogTheme
-style WhiteBackgroundTheme

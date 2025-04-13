@@ -1,6 +1,0 @@
-com.ramlekhak.test.app-jetified-annotation-experimental-1.3.0-0 /Users/vipinsharma/.gradle/caches/8.11.1/transforms/086a441d40defdf4635ecc865e7a6635/transformed/jetified-annotation-experimental-1.3.0/res
-com.ramlekhak.test.app-jetified-core-1.5.0-1 /Users/vipinsharma/.gradle/caches/8.11.1/transforms/5974feb0ffd985745d9f5ebb1b1d1b56/transformed/jetified-core-1.5.0/res
-com.ramlekhak.test.app-androidTest-2 /Users/vipinsharma/Downloads/RamNaamTracker/app/build/generated/res/resValues/androidTest/debug
-com.ramlekhak.test.app-mergeDebugAndroidTestResources-3 /Users/vipinsharma/Downloads/RamNaamTracker/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/merged.dir
-com.ramlekhak.test.app-mergeDebugAndroidTestResources-4 /Users/vipinsharma/Downloads/RamNaamTracker/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/stripped.dir
-com.ramlekhak.test.app-debugAndroidTest-5 /Users/vipinsharma/Downloads/RamNaamTracker/app/build/intermediates/merged_res/debugAndroidTest/mergeDebugAndroidTestResources

@@ -73,6 +73,9 @@ public final class FragmentWritingBinding implements ViewBinding {
   @NonNull
   public final TextView todayMalasValue;
 
+  @NonNull
+  public final ScrollView writingScrollview;
+
   private FragmentWritingBinding(@NonNull ScrollView rootView,
       @NonNull LinearLayout actionsContainer, @NonNull MaterialButton autoDrawButton,
       @NonNull MaterialButton clearButton, @NonNull TextView dailyGoalValue,
@@ -81,7 +84,8 @@ public final class FragmentWritingBinding implements ViewBinding {
       @NonNull CardView instructionCard, @NonNull ImageView setGoalButton,
       @NonNull MaterialButton shareProgressButton, @NonNull CardView statsCard,
       @NonNull TextView streakCountValue, @NonNull MaterialButton submitButton,
-      @NonNull TextView todayCountValue, @NonNull TextView todayMalasValue) {
+      @NonNull TextView todayCountValue, @NonNull TextView todayMalasValue,
+      @NonNull ScrollView writingScrollview) {
     this.rootView = rootView;
     this.actionsContainer = actionsContainer;
     this.autoDrawButton = autoDrawButton;
@@ -99,6 +103,7 @@ public final class FragmentWritingBinding implements ViewBinding {
     this.submitButton = submitButton;
     this.todayCountValue = todayCountValue;
     this.todayMalasValue = todayMalasValue;
+    this.writingScrollview = writingScrollview;
   }
 
   @Override
@@ -224,10 +229,12 @@ public final class FragmentWritingBinding implements ViewBinding {
         break missingId;
       }
 
+      ScrollView writingScrollview = (ScrollView) rootView;
+
       return new FragmentWritingBinding((ScrollView) rootView, actionsContainer, autoDrawButton,
           clearButton, dailyGoalValue, dailyProgressBar, drawingCard, drawingView, goalPercentage,
           instructionCard, setGoalButton, shareProgressButton, statsCard, streakCountValue,
-          submitButton, todayCountValue, todayMalasValue);
+          submitButton, todayCountValue, todayMalasValue, writingScrollview);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

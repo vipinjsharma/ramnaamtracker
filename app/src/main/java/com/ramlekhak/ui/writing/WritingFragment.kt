@@ -3,6 +3,7 @@ package com.ramlekhak.ui.writing
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -33,6 +34,7 @@ class WritingFragment : Fragment() {
         
         setupObservers()
         setupClickListeners()
+        setupDrawingTouchHandling()
     }
 
     private fun setupObservers() {
@@ -97,6 +99,25 @@ class WritingFragment : Fragment() {
         }
         
         startActivity(Intent.createChooser(shareIntent, "Share your progress"))
+    }
+
+    private fun setupDrawingTouchHandling() {
+        // Prevent scroll view from intercepting touch events when drawing
+        binding.drawingView.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // Disable scrolling when drawing starts
+                    binding.writingScrollview.requestDisallowInterceptTouchEvent(true)
+                    false
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    // Re-enable scrolling when drawing ends
+                    binding.writingScrollview.requestDisallowInterceptTouchEvent(false)
+                    false
+                }
+                else -> false
+            }
+        }
     }
 
     override fun onDestroyView() {
