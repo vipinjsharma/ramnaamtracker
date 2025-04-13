@@ -25,8 +25,8 @@ class DrawingView @JvmOverloads constructor(
     
     // Canvas paint
     private val drawPaint = Paint().apply {
-        color = ContextCompat.getColor(context, R.color.drawing_color)
-        strokeWidth = 10f
+        color = ContextCompat.getColor(context, R.color.drawing_line_color)
+        strokeWidth = 8f
         style = Paint.Style.STROKE
         strokeJoin = Paint.Join.ROUND
         strokeCap = Paint.Cap.ROUND
@@ -43,10 +43,13 @@ class DrawingView @JvmOverloads constructor(
     // For touch events
     private var startX = 0f
     private var startY = 0f
+    private var lastX = 0f
+    private var lastY = 0f
     
     // For storing path points for animation
     private val pathPoints = mutableListOf<Pair<Float, Float>>()
     private var isAutoDrawing = false
+    private var onDrawingCompleteListener: (() -> Unit)? = null
     
     // For path animation
     private var pathAnimator: ValueAnimator? = null
@@ -55,12 +58,16 @@ class DrawingView @JvmOverloads constructor(
     init {
         // Create the "राम" path for auto-drawing
         createRamPath()
+        
+        // Enable hardware acceleration
+        setLayerType(LAYER_TYPE_HARDWARE, null)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         
         // Create new bitmap and canvas when size changes
+        canvasBitmap?.recycle()
         canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
         drawCanvas = Canvas(canvasBitmap!!)
     }
@@ -87,21 +94,34 @@ class DrawingView @JvmOverloads constructor(
         // Ignore touch events during auto-drawing
         if (isAutoDrawing) return false
         
-        val touchX = event.x
-        val touchY = event.y
+        val touchX = event.x.coerceIn(0f, width.toFloat())
+        val touchY = event.y.coerceIn(0f, height.toFloat())
         
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 drawPath.moveTo(touchX, touchY)
                 startX = touchX
                 startY = touchY
+                lastX = touchX
+                lastY = touchY
+                parent.requestDisallowInterceptTouchEvent(true)
             }
             MotionEvent.ACTION_MOVE -> {
-                drawPath.lineTo(touchX, touchY)
+                // Use quadratic bezier to smooth the line
+                drawPath.quadTo(
+                    lastX,
+                    lastY,
+                    (touchX + lastX) / 2,
+                    (touchY + lastY) / 2
+                )
+                lastX = touchX
+                lastY = touchY
             }
             MotionEvent.ACTION_UP -> {
+                drawPath.lineTo(touchX, touchY)
                 drawCanvas?.drawPath(drawPath, drawPaint)
                 drawPath.reset()
+                parent.requestDisallowInterceptTouchEvent(false)
             }
             else -> return false
         }
@@ -171,6 +191,7 @@ class DrawingView @JvmOverloads constructor(
                     // When animation completes, draw the final path to the canvas
                     drawCanvas?.drawPath(path, drawPaint)
                     isAutoDrawing = false
+                    notifyDrawingComplete()
                 }
             }
             
@@ -221,5 +242,13 @@ class DrawingView @JvmOverloads constructor(
             moveTo(10f, 100f)
             lineTo(100f, 100f)
         }
+    }
+
+    fun setOnDrawingCompleteListener(listener: () -> Unit) {
+        onDrawingCompleteListener = listener
+    }
+    
+    private fun notifyDrawingComplete() {
+        onDrawingCompleteListener?.invoke()
     }
 }

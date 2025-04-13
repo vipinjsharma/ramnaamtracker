@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "625960621158",
+    "project_id": "ramnaamtracker",
+    "storage_bucket": "ramnaamtracker.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:625960621158:android:9654ec165444de52ef09a7",
+        "android_client_info": {
+          "package_name": "com.ramlekhak"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVXw8R46-aRKsmHmbHNjt65LzeHeIzHW0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

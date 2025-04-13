@@ -5,16 +5,22 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.ramlekhak.utils.DateConverter
+import java.util.Date
+import com.ramlekhak.data.converter.DateConverter
+import com.ramlekhak.data.dao.CountDao
 
 /**
  * The Room database for the app.
  */
-@Database(entities = [Entry::class], version = 1, exportSchema = false)
+@Database(
+    entities = [Count::class],
+    version = 2,
+    exportSchema = false
+)
 @TypeConverters(DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun entryDao(): EntryDao
+    abstract fun countDao(): CountDao
 
     companion object {
         @Volatile
@@ -25,11 +31,10 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "ram_lekhak_database"
+                    "ram_naam_database"
                 )
-                .fallbackToDestructiveMigration()
-                .build()
-                
+                    .fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 instance
             }

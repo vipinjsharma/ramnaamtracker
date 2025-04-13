@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Orange circular background -->
+    <path
+        android:fillColor="#FF8C00"
+        android:pathData="M54,24C37.43,24 24,37.43 24,54C24,70.57 37.43,84 54,84C70.57,84 84,70.57 84,54C84,37.43 70.57,24 54,24Z" />
+    
+    <!-- Sun rays -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,18L56,12L54,6L52,12L54,18Z" /> <!-- Top -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,90L56,96L54,102L52,96L54,90Z" /> <!-- Bottom -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M18,54L12,52L6,54L12,56L18,54Z" /> <!-- Left -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M90,54L96,52L102,54L96,56L90,54Z" /> <!-- Right -->
+    
+    <!-- Diagonal rays -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M29,29L24,24L19,19L24,24L29,29Z" /> <!-- Top-left -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M79,29L84,24L89,19L84,24L79,29Z" /> <!-- Top-right -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M29,79L24,84L19,89L24,84L29,79Z" /> <!-- Bottom-left -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M79,79L84,84L89,89L84,84L79,79Z" /> <!-- Bottom-right -->
+    
+    <!-- Inner circle with border -->
+    <path
+        android:fillColor="#FF8C00"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"
+        android:pathData="M54,34C43.5,34 35,42.5 35,53C35,63.5 43.5,72 54,72C64.5,72 73,63.5 73,53C73,42.5 64.5,34 54,34Z" />
+    
+    <!-- Flags at top -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M44,36L46,28L48,36L44,36Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M60,36L62,28L64,36L60,36Z" />
+    
+    <!-- राम text -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M45,50L45,56L48,56L48,53L51,53L51,56L54,56L54,50L45,50Z" /> <!-- र -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M55,50L55,53C55,54.66 56.34,56 58,56L58,50L55,50Z" /> <!-- ा -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M59,50L59,56L62,56L62,53L65,53L65,56L68,56L68,50L59,50Z" /> <!-- म -->
+</vector> 

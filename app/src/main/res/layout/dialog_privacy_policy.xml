@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Privacy Policy"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/primary_orange"/>
+
+            <ImageButton
+                android:id="@+id/btn_close"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:tint="@android:color/darker_gray"
+                android:contentDescription="Close"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E0E0E0"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Section 1 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Information We Collect"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_orange"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The Ram Naam Writing app collects minimal personal information. We only store the information necessary for the functionality of the app, such as your writing statistics and app preferences. All data is stored locally on your device unless you choose to sync it with our servers."
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Section 2 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. Use of Information"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_orange"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The information we collect is used to provide and improve the service. We use your data to:"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Keep track of your writing progress"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Maintain your user preferences"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Generate statistics about your usage"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Improve the app based on anonymous usage data"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Section 3 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Data Storage"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_orange"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="By default, all data is stored locally on your device. If you opt to create an account, your data will be securely backed up to our servers to enable cross-device synchronization. We employ industry-standard encryption to protect your data during transmission and storage."
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Section 4 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4. Data Sharing"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_orange"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="We do not sell, trade, or otherwise transfer your personally identifiable information to outside parties. This does not include trusted third parties who assist us in operating our service, so long as those parties agree to keep this information confidential."
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Section 5 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="5. Analytics"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_orange"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="We may use anonymous usage data for analytical purposes to improve the application. This data does not contain personally identifiable information."
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Section 6 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="6. Your Rights"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_orange"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="You have the right to access, update, or delete your personal information. You can do this directly through the app in your profile settings or by contacting us if you encounter any issues."
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"/>
+    </LinearLayout>
+</ScrollView> 

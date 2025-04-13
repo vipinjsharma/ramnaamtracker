@@ -1,58 +1,55 @@
 package com.ramlekhak.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ramlekhak.data.AppDatabase
-import com.ramlekhak.data.DailyCount
-import com.ramlekhak.data.EntryRepository
-import com.ramlekhak.data.MonthlyCount
+import com.ramlekhak.data.CountRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * ViewModel for the Statistics screen.
  */
-class StatisticsViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class StatisticsViewModel @Inject constructor(
+    private val repository: CountRepository
+) : ViewModel() {
 
-    private val repository: EntryRepository
-    
-    val dailyStats: LiveData<List<DailyCount>>
-    val monthlyStats: LiveData<List<MonthlyCount>>
-    val totalCount: LiveData<Int?>
-    
-    private val _resetEvent = MutableLiveData<ResetEvent>()
-    val resetEvent: LiveData<ResetEvent> = _resetEvent
+    private val _totalMalas = MutableLiveData<Int>()
+    val totalMalas: LiveData<Int> = _totalMalas
+
+    private val _currentStreak = MutableLiveData<Int>()
+    val currentStreak: LiveData<Int> = _currentStreak
+
+    private val _longestStreak = MutableLiveData<Int>()
+    val longestStreak: LiveData<Int> = _longestStreak
+
+    private val _monthlyProgress = MutableLiveData<Int>()
+    val monthlyProgress: LiveData<Int> = _monthlyProgress
+
+    private val _yearlyProgress = MutableLiveData<Int>()
+    val yearlyProgress: LiveData<Int> = _yearlyProgress
 
     init {
-        val entryDao = AppDatabase.getDatabase(application).entryDao()
-        repository = EntryRepository(entryDao)
-        
-        dailyStats = repository.getLastWeekDailyCounts()
-        monthlyStats = repository.getMonthlyCounts()
-        totalCount = repository.totalCount
+        loadStatistics()
     }
 
-    /**
-     * Reset all statistics
-     */
-    fun resetStatistics() {
+    private fun loadStatistics() {
         viewModelScope.launch {
-            try {
-                repository.resetAllStatistics()
-                _resetEvent.postValue(ResetEvent.Success)
-            } catch (e: Exception) {
-                _resetEvent.postValue(ResetEvent.Error(e.message ?: "Unknown error occurred"))
-            }
+            _totalMalas.value = repository.getTotalMalas()
+            _currentStreak.value = repository.getCurrentStreak()
+            _longestStreak.value = repository.getLongestStreak()
+            _monthlyProgress.value = repository.getMonthlyProgress()
+            _yearlyProgress.value = repository.getYearlyProgress()
         }
     }
 
-    /**
-     * Reset event sealed class
-     */
-    sealed class ResetEvent {
-        object Success : ResetEvent()
-        data class Error(val message: String) : ResetEvent()
+    fun resetStatistics() {
+        viewModelScope.launch {
+            repository.resetStatistics()
+            loadStatistics()
+        }
     }
 }

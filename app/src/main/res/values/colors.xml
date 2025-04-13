@@ -1,28 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Light Theme Colors -->
-    <color name="primary">#FF9800</color>
-    <color name="primary_dark">#F57C00</color>
-    <color name="primary_light">#FFE0B2</color>
-    <color name="accent">#FFC107</color>
-    <color name="paper_background">#F5E9D1</color>
-    <color name="text_primary">#5D4037</color>
-    <color name="text_secondary">#8D6E63</color>
-    <color name="divider">#BDBDBD</color>
+    <!-- App Theme Colors -->
+    <color name="primary">#FF7817</color>
+    <color name="primary_dark">#E65A00</color>
+    <color name="primary_light">#FFB07D</color>
+    <color name="accent">#FFB07D</color>
+    <color name="accent_light">#FFD3B6</color>
     
-    <!-- Dark Theme Colors -->
-    <color name="primary_dark_theme">#FF9800</color>
-    <color name="primary_dark_dark_theme">#E65100</color>
-    <color name="primary_light_dark_theme">#FFB74D</color>
-    <color name="accent_dark_theme">#FFC107</color>
-    <color name="paper_background_dark_theme">#302621</color>
-    <color name="text_primary_dark_theme">#F5E9D1</color>
-    <color name="text_secondary_dark_theme">#D7CFC5</color>
-    <color name="divider_dark_theme">#616161</color>
-    
-    <!-- Common colors -->
+    <!-- Common Colors -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="ram_text_color">#FC7A05</color>
-    <color name="drawing_line_color">#CC5500</color>
+    <color name="background_beige">#FFF8F4</color>
+    <color name="card_background">#FFFFFF</color>
+    <color name="divider">#EBEBEB</color>
+    <color name="background_dark">#121212</color>
+    <color name="paper_background">#F5E9D1</color>
+    <color name="primary_orange">#FF7817</color>
+    
+    <!-- Typography Colors -->
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="text_tertiary">#9E9E9E</color>
+    <color name="text_hint">#BDBDBD</color>
+    <color name="text_on_primary">#FFFFFF</color>
+    
+    <!-- Canvas Colors -->
+    <color name="canvas_background_dark">#282828</color>
+    <color name="canvas_background_light">#EFEFEF</color>
+    <color name="canvas_stroke">#E68656</color>
+    
+    <!-- Stats Card Colors -->
+    <color name="stats_background">#FFFFFF</color>
+    <color name="stats_text">#4A4A4A</color>
+    <color name="stats_accent">#E68656</color>
+    <color name="progress_background">#EFEFEF</color>
+    <color name="progress_fill">#E68656</color>
+    
+    <!-- Button Colors -->
+    <color name="button_primary">#FF7817</color>
+    <color name="button_secondary_outline">#FF7817</color>
+    <color name="button_text_primary">#FFFFFF</color>
+    <color name="button_text_secondary">#FF7817</color>
+    <color name="button_disabled">#BDBDBD</color>
+    
+    <!-- Icon Colors -->
+    <color name="icon_primary">#212121</color>
+    <color name="icon_secondary">#757575</color>
+    <color name="icon_accent">#FF7817</color>
+    <color name="icon_streak">#E68656</color>
+    <color name="icon_malas">#6495ED</color>
+    <color name="icon_count">#8BC34A</color>
+    <color name="button_green">#8BC34A</color>
+    
+    <!-- Pre-existing additional colors -->
+    <color name="switch_track_color">#F7A775</color>
+    <color name="ic_launcher_background">#E68656</color>
+    <color name="ram_text_color">#FF7817</color>
+    <color name="drawing_line_color">#FF7817</color>
+    <color name="bullet_point_color">#FF7817</color>
 </resources>

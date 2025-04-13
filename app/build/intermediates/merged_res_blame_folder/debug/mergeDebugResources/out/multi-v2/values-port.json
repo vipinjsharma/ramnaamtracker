@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.ramlekhak.app-mergeDebugResources-72:/values-port/values-port.xml",
+            "map": [
+                {
+                    "source": "/Users/vipinsharma/.gradle/caches/8.11.1/transforms/ccca726bd34e636c988c664e3abab9ba/transformed/appcompat-1.6.1/res/values-port/values-port.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "55",
+                        "endOffsets": "106"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,103 @@
+/* RAM Theme (Default) */
+:root {
+    --primary-color: #ff7817;
+    --primary-dark: #e66c15;
+    --accent-color: #ffc107;
+    --primary-bg: #fff7e6;
+    --surface-bg: #FFFFFF;
+    --text-color: #212121;
+    --text-secondary: #757575;
+    --hover-bg: rgba(255, 120, 23, 0.05);
+    --border-color: rgba(0, 0, 0, 0.12);
+}
+
+/* KRISHNA Theme */
+[data-theme="krishna"] {
+    --primary-color: #2874A6;
+    --primary-dark: #1f5578;
+    --accent-color: #64B5F6;
+    --primary-bg: #EBF5FB;
+    --surface-bg: #FFFFFF;
+    --text-color: #212121;
+    --text-secondary: #757575;
+    --hover-bg: rgba(40, 116, 166, 0.05);
+    --border-color: rgba(0, 0, 0, 0.12);
+}
+
+/* LAKSHMI Theme */
+[data-theme="lakshmi"] {
+    --primary-color: #FFD700;
+    --primary-dark: #FFC107;
+    --accent-color: #F57F17;
+    --primary-bg: #FFFAF0;
+    --surface-bg: #FFFFFF;
+    --text-color: #212121;
+    --text-secondary: #757575;
+    --hover-bg: rgba(255, 215, 0, 0.05);
+    --border-color: rgba(0, 0, 0, 0.12);
+}
+
+/* GANESH Theme */
+[data-theme="ganesh"] {
+    --primary-color: #FF4500;
+    --primary-dark: #E64A19;
+    --accent-color: #FF7043;
+    --primary-bg: #FFF5EE;
+    --surface-bg: #FFFFFF;
+    --text-color: #212121;
+    --text-secondary: #757575;
+    --hover-bg: rgba(255, 69, 0, 0.05);
+    --border-color: rgba(0, 0, 0, 0.12);
+}
+
+/* SHIVA Theme */
+[data-theme="shiva"] {
+    --primary-color: #800080;
+    --primary-dark: #6a006a;
+    --accent-color: #BA68C8;
+    --primary-bg: #F8F4FF;
+    --surface-bg: #FFFFFF;
+    --text-color: #212121;
+    --text-secondary: #757575;
+    --hover-bg: rgba(128, 0, 128, 0.05);
+    --border-color: rgba(0, 0, 0, 0.12);
+}
+
+/* Saffron Theme */
+[data-theme="saffron"] {
+    --primary: #FF9800;
+    --primary-dark: #F57C00;
+    --accent: #FFC107;
+    --background: #FFF3E0;
+    --surface: #FFFFFF;
+    --text: #212121;
+    --text-secondary: #757575;
+    --hover: rgba(255, 152, 0, 0.05);
+    --divider: rgba(0, 0, 0, 0.12);
+}
+
+/* Ocean Theme */
+[data-theme="ocean"] {
+    --primary: #03A9F4;
+    --primary-dark: #0288D1;
+    --accent: #00BCD4;
+    --background: #E1F5FE;
+    --surface: #FFFFFF;
+    --text: #212121;
+    --text-secondary: #757575;
+    --hover: rgba(3, 169, 244, 0.05);
+    --divider: rgba(0, 0, 0, 0.12);
+}
+
+/* Forest Theme */
+[data-theme="forest"] {
+    --primary: #4CAF50;
+    --primary-dark: #388E3C;
+    --accent: #8BC34A;
+    --background: #E8F5E9;
+    --surface: #FFFFFF;
+    --text: #212121;
+    --text-secondary: #757575;
+    --hover: rgba(76, 175, 80, 0.05);
+    --divider: rgba(0, 0, 0, 0.12);
+} 

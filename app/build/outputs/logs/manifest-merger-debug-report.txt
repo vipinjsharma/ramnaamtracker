@@ -1,0 +1,506 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:2:1-55:12
+INJECTED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:2:1-55:12
+INJECTED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:2:1-55:12
+INJECTED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:2:1-55:12
+MERGED from [androidx.databinding:viewbinding:8.9.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/64eb23b083db9b2d0d11028a839d89c5/transformed/jetified-viewbinding-8.9.1/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.room:room-runtime:2.6.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2493cc1927a4c1811967b144fed03dd2/transformed/room-runtime-2.6.1/AndroidManifest.xml:17:1-31:12
+MERGED from [androidx.room:room-ktx:2.6.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/d1aafb513b292fcab3c68186ffaaa404/transformed/jetified-room-ktx-2.6.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.hilt:hilt-navigation-compose:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/b414797ac54d930914ec9118555db0e4/transformed/jetified-hilt-navigation-compose-1.1.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.hilt:hilt-navigation:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/c99f38749a4a1436e018c51dbd856262/transformed/jetified-hilt-navigation-1.1.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-common:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/76503ce9b5f6654ca29e25d71769a75d/transformed/navigation-common-2.7.6/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-common-ktx:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/1bc9cbeb5adf1854937a9f606bb97b9e/transformed/navigation-common-ktx-2.7.6/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-runtime:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/0c97f5520ca1faf3e33988f5d2bba4e9/transformed/navigation-runtime-2.7.6/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-compose:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/c7b5aae02cd7cef3f345e7d389f430d1/transformed/jetified-navigation-compose-2.7.6/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/8198cfb1196a6b2d16512b78f8624791/transformed/navigation-runtime-ktx-2.7.6/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-fragment:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/373c5f77fd38e212e34ac91c18dd6265/transformed/navigation-fragment-2.7.6/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-fragment-ktx:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/c7f05c3f67f9a2cf02c2efca90b483ec/transformed/navigation-fragment-ktx-2.7.6/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-ui-ktx:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/044bc5eee624d4f778fda1bf1e489002/transformed/navigation-ui-ktx-2.7.6/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-ui:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/77e41c14df8bcfb2c79f7114aa39c20b/transformed/navigation-ui-2.7.6/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.android.material:material:1.11.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/49ad500eb1360d60405daff36a5e4cb8/transformed/material-1.11.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/573c7a34fc8663638477cbe1ca07128d/transformed/constraintlayout-2.1.4/AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/5ede4c6a97aafe7b8b7d181a650984bc/transformed/jetified-appcompat-resources-1.6.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.preference:preference-ktx:1.2.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/e1a03d163801970cd515747f4a9b18ad/transformed/jetified-preference-ktx-1.2.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.preference:preference:1.2.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/eb8cfa497bd92629e80a475481e796e2/transformed/preference-1.2.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.appcompat:appcompat:1.6.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/ccca726bd34e636c988c664e3abab9ba/transformed/appcompat-1.6.1/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.dagger:hilt-android:2.48] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/89fb728e0c88747ab16a73474ab38112/transformed/jetified-hilt-android-2.48/AndroidManifest.xml:16:1-19:12
+MERGED from [androidx.viewpager2:viewpager2:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/47d901a302f7c39143981652a6a30f79/transformed/jetified-viewpager2-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.fragment:fragment:1.6.2] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71cd9871912fdef1c08be68a059fa829/transformed/fragment-1.6.2/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.fragment:fragment-ktx:1.6.2] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/037065171d188adbb92fc1aa1134ce21/transformed/jetified-fragment-ktx-1.6.2/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity-compose:1.8.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/e3b7c327a345822b325e1eb24829e952/transformed/jetified-activity-compose-1.8.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.emoji2:emoji2-views-helper:1.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/d536b9f53cd5e0a07de27c52e476a104/transformed/jetified-emoji2-views-helper-1.2.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/974cb74979d938fe58f546523b4e558a/transformed/jetified-foundation-layout-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.animation:animation-core-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/bff7b2dbf2de82642ec970cc811add55/transformed/jetified-animation-core-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.animation:animation-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/29978bc76e3ebad9cc93eece37509d24/transformed/jetified-animation-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-util-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/80cf3f5fa57dac51aaede277607bb36f/transformed/jetified-ui-util-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-unit-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/dae4b06bec61ae6193d76f6cd5681e3c/transformed/jetified-ui-unit-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-graphics-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/77de9cb884581efeb2cd58a7005083eb/transformed/jetified-ui-graphics-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-geometry-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/e0e59a1b65bb34bc364963800f06a09d/transformed/jetified-ui-geometry-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-text-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/1e5525509ce006824cb6fb5578720a4d/transformed/jetified-ui-text-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.emoji2:emoji2:1.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/731e30e17bada44eeda2eeb931f7c2c8/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/061d9559544e5010b1cea4cdcfb33026/transformed/lifecycle-livedata-core-2.7.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/d8febc80a6156b42f80238c41108cb79/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/6d1704bac7adc948bfa9f0b4e9ff169a/transformed/jetified-lifecycle-livedata-core-ktx-2.7.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/8fd34ddac12318992a991b0019b2505e/transformed/dynamicanimation-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/253211ebb7643a93cb67961a90ac67b9/transformed/legacy-support-core-utils-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2074e2d8d6e889daa096d3446636bdd0/transformed/loader-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/6497847e7c5a9a27c4bf7a22147ff83e/transformed/lifecycle-livedata-2.7.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/785b7e705e0bc3ae2e6c2afd6cfb480c/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/57c73d0edc3b36e8336415e03412eff7/transformed/jetified-customview-poolingcontainer-1.0.0/AndroidManifest.xml:17:1-23:12
+MERGED from [androidx.core:core-ktx:1.12.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/4a7d884a4bbae191e7c3e555529fc506/transformed/jetified-core-ktx-1.12.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.webkit:webkit:1.6.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/11afac7309efa26543314a1f59d619a5/transformed/webkit-1.6.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/6187fa356d70c2457dadd944c798e230/transformed/swiperefreshlayout-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/6c36a8648ef732e1742511e31d4af102/transformed/drawerlayout-1.1.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2434130af4e1e03111cd11d8d3eec10a/transformed/coordinatorlayout-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/64639684b65cfdfc4b60434f17e081be/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/48141ca0a53c053459ae04dbe59e00ff/transformed/vectordrawable-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/d87562546a40bce74eead81df9862f18/transformed/recyclerview-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/4f280c47ad173c781c83b3a2595904e4/transformed/slidingpanelayout-1.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/fc13695c4f1fc3c1a73af7d30648dd61/transformed/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/f4645ad65091948da47090fcaa0ab585/transformed/customview-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.transition:transition:1.4.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/dc0b61aea3b4e515ee5b51dac6fc0fc7/transformed/transition-1.4.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.window:window:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/a74b331515c41cd60532b256b61d0de8/transformed/jetified-window-1.0.0/AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.autofill:autofill:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/4522cb7ac056521c71cd0df41b395c27/transformed/jetified-autofill-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.core:core:1.12.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/31c9448a8209cdc754009772db33cb9b/transformed/core-1.12.0/AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/8196f57cd1c0b3db3863b025351de9b7/transformed/lifecycle-runtime-2.7.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/ecfa33fc6490f51d5eab227fc019faa0/transformed/jetified-savedstate-ktx-1.2.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/873e32619803ef3f2b8d218839d13925/transformed/jetified-savedstate-1.2.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/603ca9bc6443991ec9e3c0fb0eb2677c/transformed/jetified-lifecycle-viewmodel-compose-2.7.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/04328910c4bb5ef7f1e67727db0c1523/transformed/jetified-ui-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.activity:activity-ktx:1.8.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/9496edd217eae666687fdeba98dab167/transformed/jetified-activity-ktx-1.8.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.activity:activity:1.8.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/877addd5e61e11735942bf900c8d180b/transformed/jetified-activity-1.8.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2f9fae3a4384dabcbe66518e8c940785/transformed/lifecycle-viewmodel-2.7.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2568d81dec0220e8851ceb58f893912e/transformed/jetified-lifecycle-runtime-ktx-2.7.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-ktx:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/41b3143ebe3a43b144fe0fae0b55782f/transformed/jetified-lifecycle-livedata-ktx-2.7.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/7f512e25101735cb3cf309163ebc24ad/transformed/jetified-lifecycle-viewmodel-ktx-2.7.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/b2bb156d71ebdff57c833079c064cdad/transformed/jetified-runtime-saveable-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.runtime:runtime-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/3e0838f8d96ff48f1e63f352611f35ab/transformed/jetified-runtime-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/0cafd597c5a72241e03ff2335a780987/transformed/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.cardview:cardview:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/c3a85f0f809647f2a3c929946e86c2f3/transformed/cardview-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/a78458e848b91078b0e35d570045b5ec/transformed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/84d43ccf157ff8f83a2ea293b1266abf/transformed/core-runtime-2.2.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.sqlite:sqlite-framework:2.4.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/9148ea2c6d78f752b828bf4779bdd72c/transformed/sqlite-framework-2.4.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.sqlite:sqlite:2.4.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/1b1deb48cb0fc0cd7507f350187ef67e/transformed/sqlite-2.4.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/5a2d8f92660519909abf25c27eec5d47/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:17:1-55:12
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/5b685dbd2f8b49fa02272158109c5afa/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.tracing:tracing:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/bed58a50ad966d58525575b6ae1f6287/transformed/jetified-tracing-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/8bc8831c5c53c3081977cc1d3d628c15/transformed/documentfile-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/b74f61383728c3aacb15ed8bc4697851/transformed/localbroadcastmanager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/e3c1b01eaa05fef4d6e57d84b37dd3e3/transformed/print-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.annotation:annotation-experimental:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/086a441d40defdf4635ecc865e7a6635/transformed/jetified-annotation-experimental-1.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.dagger:dagger-lint-aar:2.48] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/3aca99823796725e3c7843db6d12c63b/transformed/jetified-dagger-lint-aar-2.48/AndroidManifest.xml:16:1-19:12
+	package
+		INJECTED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.INTERNET
+ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:5:5-67
+	android:name
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:5:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:6:5-79
+	android:name
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:6:22-76
+uses-permission#android.permission.VIBRATE
+ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:7:5-66
+	android:name
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:7:22-63
+application
+ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:9:5-53:19
+INJECTED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:9:5-53:19
+MERGED from [androidx.room:room-runtime:2.6.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2493cc1927a4c1811967b144fed03dd2/transformed/room-runtime-2.6.1/AndroidManifest.xml:23:5-29:19
+MERGED from [androidx.room:room-runtime:2.6.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2493cc1927a4c1811967b144fed03dd2/transformed/room-runtime-2.6.1/AndroidManifest.xml:23:5-29:19
+MERGED from [com.google.android.material:material:1.11.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/49ad500eb1360d60405daff36a5e4cb8/transformed/material-1.11.0/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.material:material:1.11.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/49ad500eb1360d60405daff36a5e4cb8/transformed/material-1.11.0/AndroidManifest.xml:22:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/573c7a34fc8663638477cbe1ca07128d/transformed/constraintlayout-2.1.4/AndroidManifest.xml:9:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/573c7a34fc8663638477cbe1ca07128d/transformed/constraintlayout-2.1.4/AndroidManifest.xml:9:5-20
+MERGED from [androidx.emoji2:emoji2:1.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/731e30e17bada44eeda2eeb931f7c2c8/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.emoji2:emoji2:1.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/731e30e17bada44eeda2eeb931f7c2c8/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/d8febc80a6156b42f80238c41108cb79/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/d8febc80a6156b42f80238c41108cb79/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.window:window:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/a74b331515c41cd60532b256b61d0de8/transformed/jetified-window-1.0.0/AndroidManifest.xml:24:5-31:19
+MERGED from [androidx.window:window:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/a74b331515c41cd60532b256b61d0de8/transformed/jetified-window-1.0.0/AndroidManifest.xml:24:5-31:19
+MERGED from [androidx.core:core:1.12.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/31c9448a8209cdc754009772db33cb9b/transformed/core-1.12.0/AndroidManifest.xml:28:5-89
+MERGED from [androidx.core:core:1.12.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/31c9448a8209cdc754009772db33cb9b/transformed/core-1.12.0/AndroidManifest.xml:28:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/5a2d8f92660519909abf25c27eec5d47/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/5a2d8f92660519909abf25c27eec5d47/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/5b685dbd2f8b49fa02272158109c5afa/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/5b685dbd2f8b49fa02272158109c5afa/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
+	android:extractNativeLibs
+		INJECTED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.12.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/31c9448a8209cdc754009772db33cb9b/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
+	android:supportsRtl
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:15:9-35
+	android:label
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:13:9-41
+	android:roundIcon
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:14:9-54
+	android:icon
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:12:9-43
+	android:allowBackup
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:11:9-35
+	android:theme
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:17:9-40
+	android:usesCleartextTraffic
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:16:9-44
+	android:name
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:10:9-43
+activity#com.ramlekhak.SplashActivity
+ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:19:9-27:20
+	android:exported
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:21:13-36
+	android:theme
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:22:13-44
+	android:name
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:20:13-43
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:23:13-26:29
+action#android.intent.action.MAIN
+ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:24:17-69
+	android:name
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:24:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:25:17-77
+	android:name
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:25:27-74
+activity#com.ramlekhak.MainActivity
+ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:29:9-33:20
+	android:exported
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:31:13-36
+	android:theme
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:32:13-44
+	android:name
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:30:13-41
+activity#com.ramlekhak.ui.profile.ProfileActivity
+ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:35:9-39:58
+	android:parentActivityName
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:39:13-55
+	android:label
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:38:13-36
+	android:exported
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:37:13-37
+	android:name
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:36:13-55
+activity#com.ramlekhak.ui.reminder.ReminderActivity
+ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:41:9-45:58
+	android:parentActivityName
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:45:13-55
+	android:label
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:44:13-46
+	android:exported
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:43:13-37
+	android:name
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:42:13-57
+activity#com.ramlekhak.ui.rating.RatingActivity
+ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:47:9-51:58
+	android:parentActivityName
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:51:13-55
+	android:label
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:50:13-39
+	android:exported
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:49:13-37
+	android:name
+		ADDED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml:48:13-53
+uses-sdk
+INJECTED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml
+INJECTED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml
+MERGED from [androidx.databinding:viewbinding:8.9.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/64eb23b083db9b2d0d11028a839d89c5/transformed/jetified-viewbinding-8.9.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.databinding:viewbinding:8.9.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/64eb23b083db9b2d0d11028a839d89c5/transformed/jetified-viewbinding-8.9.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.room:room-runtime:2.6.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2493cc1927a4c1811967b144fed03dd2/transformed/room-runtime-2.6.1/AndroidManifest.xml:21:5-44
+MERGED from [androidx.room:room-runtime:2.6.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2493cc1927a4c1811967b144fed03dd2/transformed/room-runtime-2.6.1/AndroidManifest.xml:21:5-44
+MERGED from [androidx.room:room-ktx:2.6.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/d1aafb513b292fcab3c68186ffaaa404/transformed/jetified-room-ktx-2.6.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.room:room-ktx:2.6.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/d1aafb513b292fcab3c68186ffaaa404/transformed/jetified-room-ktx-2.6.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.hilt:hilt-navigation-compose:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/b414797ac54d930914ec9118555db0e4/transformed/jetified-hilt-navigation-compose-1.1.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.hilt:hilt-navigation-compose:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/b414797ac54d930914ec9118555db0e4/transformed/jetified-hilt-navigation-compose-1.1.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.hilt:hilt-navigation:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/c99f38749a4a1436e018c51dbd856262/transformed/jetified-hilt-navigation-1.1.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.hilt:hilt-navigation:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/c99f38749a4a1436e018c51dbd856262/transformed/jetified-hilt-navigation-1.1.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-common:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/76503ce9b5f6654ca29e25d71769a75d/transformed/navigation-common-2.7.6/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/76503ce9b5f6654ca29e25d71769a75d/transformed/navigation-common-2.7.6/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common-ktx:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/1bc9cbeb5adf1854937a9f606bb97b9e/transformed/navigation-common-ktx-2.7.6/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-common-ktx:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/1bc9cbeb5adf1854937a9f606bb97b9e/transformed/navigation-common-ktx-2.7.6/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-runtime:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/0c97f5520ca1faf3e33988f5d2bba4e9/transformed/navigation-runtime-2.7.6/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/0c97f5520ca1faf3e33988f5d2bba4e9/transformed/navigation-runtime-2.7.6/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-compose:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/c7b5aae02cd7cef3f345e7d389f430d1/transformed/jetified-navigation-compose-2.7.6/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-compose:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/c7b5aae02cd7cef3f345e7d389f430d1/transformed/jetified-navigation-compose-2.7.6/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/8198cfb1196a6b2d16512b78f8624791/transformed/navigation-runtime-ktx-2.7.6/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/8198cfb1196a6b2d16512b78f8624791/transformed/navigation-runtime-ktx-2.7.6/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-fragment:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/373c5f77fd38e212e34ac91c18dd6265/transformed/navigation-fragment-2.7.6/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-fragment:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/373c5f77fd38e212e34ac91c18dd6265/transformed/navigation-fragment-2.7.6/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-fragment-ktx:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/c7f05c3f67f9a2cf02c2efca90b483ec/transformed/navigation-fragment-ktx-2.7.6/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-fragment-ktx:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/c7f05c3f67f9a2cf02c2efca90b483ec/transformed/navigation-fragment-ktx-2.7.6/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-ui-ktx:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/044bc5eee624d4f778fda1bf1e489002/transformed/navigation-ui-ktx-2.7.6/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-ui-ktx:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/044bc5eee624d4f778fda1bf1e489002/transformed/navigation-ui-ktx-2.7.6/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-ui:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/77e41c14df8bcfb2c79f7114aa39c20b/transformed/navigation-ui-2.7.6/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-ui:2.7.6] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/77e41c14df8bcfb2c79f7114aa39c20b/transformed/navigation-ui-2.7.6/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.11.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/49ad500eb1360d60405daff36a5e4cb8/transformed/material-1.11.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.11.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/49ad500eb1360d60405daff36a5e4cb8/transformed/material-1.11.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/573c7a34fc8663638477cbe1ca07128d/transformed/constraintlayout-2.1.4/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/573c7a34fc8663638477cbe1ca07128d/transformed/constraintlayout-2.1.4/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/5ede4c6a97aafe7b8b7d181a650984bc/transformed/jetified-appcompat-resources-1.6.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/5ede4c6a97aafe7b8b7d181a650984bc/transformed/jetified-appcompat-resources-1.6.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.preference:preference-ktx:1.2.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/e1a03d163801970cd515747f4a9b18ad/transformed/jetified-preference-ktx-1.2.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.preference:preference-ktx:1.2.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/e1a03d163801970cd515747f4a9b18ad/transformed/jetified-preference-ktx-1.2.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.preference:preference:1.2.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/eb8cfa497bd92629e80a475481e796e2/transformed/preference-1.2.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.preference:preference:1.2.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/eb8cfa497bd92629e80a475481e796e2/transformed/preference-1.2.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat:1.6.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/ccca726bd34e636c988c664e3abab9ba/transformed/appcompat-1.6.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.6.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/ccca726bd34e636c988c664e3abab9ba/transformed/appcompat-1.6.1/AndroidManifest.xml:20:5-44
+MERGED from [com.google.dagger:hilt-android:2.48] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/89fb728e0c88747ab16a73474ab38112/transformed/jetified-hilt-android-2.48/AndroidManifest.xml:18:3-42
+MERGED from [com.google.dagger:hilt-android:2.48] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/89fb728e0c88747ab16a73474ab38112/transformed/jetified-hilt-android-2.48/AndroidManifest.xml:18:3-42
+MERGED from [androidx.viewpager2:viewpager2:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/47d901a302f7c39143981652a6a30f79/transformed/jetified-viewpager2-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager2:viewpager2:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/47d901a302f7c39143981652a6a30f79/transformed/jetified-viewpager2-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.6.2] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71cd9871912fdef1c08be68a059fa829/transformed/fragment-1.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment:1.6.2] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71cd9871912fdef1c08be68a059fa829/transformed/fragment-1.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment-ktx:1.6.2] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/037065171d188adbb92fc1aa1134ce21/transformed/jetified-fragment-ktx-1.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment-ktx:1.6.2] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/037065171d188adbb92fc1aa1134ce21/transformed/jetified-fragment-ktx-1.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity-compose:1.8.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/e3b7c327a345822b325e1eb24829e952/transformed/jetified-activity-compose-1.8.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-compose:1.8.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/e3b7c327a345822b325e1eb24829e952/transformed/jetified-activity-compose-1.8.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2-views-helper:1.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/d536b9f53cd5e0a07de27c52e476a104/transformed/jetified-emoji2-views-helper-1.2.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2-views-helper:1.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/d536b9f53cd5e0a07de27c52e476a104/transformed/jetified-emoji2-views-helper-1.2.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/974cb74979d938fe58f546523b4e558a/transformed/jetified-foundation-layout-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/974cb74979d938fe58f546523b4e558a/transformed/jetified-foundation-layout-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-core-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/bff7b2dbf2de82642ec970cc811add55/transformed/jetified-animation-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-core-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/bff7b2dbf2de82642ec970cc811add55/transformed/jetified-animation-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/29978bc76e3ebad9cc93eece37509d24/transformed/jetified-animation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/29978bc76e3ebad9cc93eece37509d24/transformed/jetified-animation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/80cf3f5fa57dac51aaede277607bb36f/transformed/jetified-ui-util-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/80cf3f5fa57dac51aaede277607bb36f/transformed/jetified-ui-util-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/dae4b06bec61ae6193d76f6cd5681e3c/transformed/jetified-ui-unit-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/dae4b06bec61ae6193d76f6cd5681e3c/transformed/jetified-ui-unit-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/77de9cb884581efeb2cd58a7005083eb/transformed/jetified-ui-graphics-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/77de9cb884581efeb2cd58a7005083eb/transformed/jetified-ui-graphics-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/e0e59a1b65bb34bc364963800f06a09d/transformed/jetified-ui-geometry-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/e0e59a1b65bb34bc364963800f06a09d/transformed/jetified-ui-geometry-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/1e5525509ce006824cb6fb5578720a4d/transformed/jetified-ui-text-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/1e5525509ce006824cb6fb5578720a4d/transformed/jetified-ui-text-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2:1.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/731e30e17bada44eeda2eeb931f7c2c8/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.emoji2:emoji2:1.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/731e30e17bada44eeda2eeb931f7c2c8/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/061d9559544e5010b1cea4cdcfb33026/transformed/lifecycle-livedata-core-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/061d9559544e5010b1cea4cdcfb33026/transformed/lifecycle-livedata-core-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/d8febc80a6156b42f80238c41108cb79/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/d8febc80a6156b42f80238c41108cb79/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/6d1704bac7adc948bfa9f0b4e9ff169a/transformed/jetified-lifecycle-livedata-core-ktx-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/6d1704bac7adc948bfa9f0b4e9ff169a/transformed/jetified-lifecycle-livedata-core-ktx-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/8fd34ddac12318992a991b0019b2505e/transformed/dynamicanimation-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/8fd34ddac12318992a991b0019b2505e/transformed/dynamicanimation-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/253211ebb7643a93cb67961a90ac67b9/transformed/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/253211ebb7643a93cb67961a90ac67b9/transformed/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2074e2d8d6e889daa096d3446636bdd0/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2074e2d8d6e889daa096d3446636bdd0/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/6497847e7c5a9a27c4bf7a22147ff83e/transformed/lifecycle-livedata-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/6497847e7c5a9a27c4bf7a22147ff83e/transformed/lifecycle-livedata-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/785b7e705e0bc3ae2e6c2afd6cfb480c/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/785b7e705e0bc3ae2e6c2afd6cfb480c/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/57c73d0edc3b36e8336415e03412eff7/transformed/jetified-customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/57c73d0edc3b36e8336415e03412eff7/transformed/jetified-customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.core:core-ktx:1.12.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/4a7d884a4bbae191e7c3e555529fc506/transformed/jetified-core-ktx-1.12.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.12.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/4a7d884a4bbae191e7c3e555529fc506/transformed/jetified-core-ktx-1.12.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.webkit:webkit:1.6.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/11afac7309efa26543314a1f59d619a5/transformed/webkit-1.6.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.webkit:webkit:1.6.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/11afac7309efa26543314a1f59d619a5/transformed/webkit-1.6.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/6187fa356d70c2457dadd944c798e230/transformed/swiperefreshlayout-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/6187fa356d70c2457dadd944c798e230/transformed/swiperefreshlayout-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/6c36a8648ef732e1742511e31d4af102/transformed/drawerlayout-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/6c36a8648ef732e1742511e31d4af102/transformed/drawerlayout-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2434130af4e1e03111cd11d8d3eec10a/transformed/coordinatorlayout-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2434130af4e1e03111cd11d8d3eec10a/transformed/coordinatorlayout-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/64639684b65cfdfc4b60434f17e081be/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/64639684b65cfdfc4b60434f17e081be/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/48141ca0a53c053459ae04dbe59e00ff/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/48141ca0a53c053459ae04dbe59e00ff/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/d87562546a40bce74eead81df9862f18/transformed/recyclerview-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/d87562546a40bce74eead81df9862f18/transformed/recyclerview-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/4f280c47ad173c781c83b3a2595904e4/transformed/slidingpanelayout-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/4f280c47ad173c781c83b3a2595904e4/transformed/slidingpanelayout-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/fc13695c4f1fc3c1a73af7d30648dd61/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/fc13695c4f1fc3c1a73af7d30648dd61/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/f4645ad65091948da47090fcaa0ab585/transformed/customview-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.1.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/f4645ad65091948da47090fcaa0ab585/transformed/customview-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.4.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/dc0b61aea3b4e515ee5b51dac6fc0fc7/transformed/transition-1.4.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.4.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/dc0b61aea3b4e515ee5b51dac6fc0fc7/transformed/transition-1.4.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.window:window:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/a74b331515c41cd60532b256b61d0de8/transformed/jetified-window-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.window:window:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/a74b331515c41cd60532b256b61d0de8/transformed/jetified-window-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.autofill:autofill:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/4522cb7ac056521c71cd0df41b395c27/transformed/jetified-autofill-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.autofill:autofill:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/4522cb7ac056521c71cd0df41b395c27/transformed/jetified-autofill-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.12.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/31c9448a8209cdc754009772db33cb9b/transformed/core-1.12.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.12.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/31c9448a8209cdc754009772db33cb9b/transformed/core-1.12.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/8196f57cd1c0b3db3863b025351de9b7/transformed/lifecycle-runtime-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/8196f57cd1c0b3db3863b025351de9b7/transformed/lifecycle-runtime-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/ecfa33fc6490f51d5eab227fc019faa0/transformed/jetified-savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/ecfa33fc6490f51d5eab227fc019faa0/transformed/jetified-savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/873e32619803ef3f2b8d218839d13925/transformed/jetified-savedstate-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/873e32619803ef3f2b8d218839d13925/transformed/jetified-savedstate-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/603ca9bc6443991ec9e3c0fb0eb2677c/transformed/jetified-lifecycle-viewmodel-compose-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/603ca9bc6443991ec9e3c0fb0eb2677c/transformed/jetified-lifecycle-viewmodel-compose-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/04328910c4bb5ef7f1e67727db0c1523/transformed/jetified-ui-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/04328910c4bb5ef7f1e67727db0c1523/transformed/jetified-ui-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.8.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/9496edd217eae666687fdeba98dab167/transformed/jetified-activity-ktx-1.8.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.8.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/9496edd217eae666687fdeba98dab167/transformed/jetified-activity-ktx-1.8.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity:1.8.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/877addd5e61e11735942bf900c8d180b/transformed/jetified-activity-1.8.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.8.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/877addd5e61e11735942bf900c8d180b/transformed/jetified-activity-1.8.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2f9fae3a4384dabcbe66518e8c940785/transformed/lifecycle-viewmodel-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2f9fae3a4384dabcbe66518e8c940785/transformed/lifecycle-viewmodel-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2568d81dec0220e8851ceb58f893912e/transformed/jetified-lifecycle-runtime-ktx-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2568d81dec0220e8851ceb58f893912e/transformed/jetified-lifecycle-runtime-ktx-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-ktx:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/41b3143ebe3a43b144fe0fae0b55782f/transformed/jetified-lifecycle-livedata-ktx-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-ktx:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/41b3143ebe3a43b144fe0fae0b55782f/transformed/jetified-lifecycle-livedata-ktx-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/7f512e25101735cb3cf309163ebc24ad/transformed/jetified-lifecycle-viewmodel-ktx-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/7f512e25101735cb3cf309163ebc24ad/transformed/jetified-lifecycle-viewmodel-ktx-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/b2bb156d71ebdff57c833079c064cdad/transformed/jetified-runtime-saveable-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/b2bb156d71ebdff57c833079c064cdad/transformed/jetified-runtime-saveable-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/3e0838f8d96ff48f1e63f352611f35ab/transformed/jetified-runtime-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-android:1.5.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/3e0838f8d96ff48f1e63f352611f35ab/transformed/jetified-runtime-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/0cafd597c5a72241e03ff2335a780987/transformed/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/0cafd597c5a72241e03ff2335a780987/transformed/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/c3a85f0f809647f2a3c929946e86c2f3/transformed/cardview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/c3a85f0f809647f2a3c929946e86c2f3/transformed/cardview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/a78458e848b91078b0e35d570045b5ec/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/a78458e848b91078b0e35d570045b5ec/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/84d43ccf157ff8f83a2ea293b1266abf/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/84d43ccf157ff8f83a2ea293b1266abf/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.sqlite:sqlite-framework:2.4.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/9148ea2c6d78f752b828bf4779bdd72c/transformed/sqlite-framework-2.4.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.sqlite:sqlite-framework:2.4.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/9148ea2c6d78f752b828bf4779bdd72c/transformed/sqlite-framework-2.4.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.sqlite:sqlite:2.4.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/1b1deb48cb0fc0cd7507f350187ef67e/transformed/sqlite-2.4.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.sqlite:sqlite:2.4.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/1b1deb48cb0fc0cd7507f350187ef67e/transformed/sqlite-2.4.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/5a2d8f92660519909abf25c27eec5d47/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/5a2d8f92660519909abf25c27eec5d47/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/5b685dbd2f8b49fa02272158109c5afa/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/5b685dbd2f8b49fa02272158109c5afa/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.tracing:tracing:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/bed58a50ad966d58525575b6ae1f6287/transformed/jetified-tracing-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.tracing:tracing:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/bed58a50ad966d58525575b6ae1f6287/transformed/jetified-tracing-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/8bc8831c5c53c3081977cc1d3d628c15/transformed/documentfile-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/8bc8831c5c53c3081977cc1d3d628c15/transformed/documentfile-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/b74f61383728c3aacb15ed8bc4697851/transformed/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/b74f61383728c3aacb15ed8bc4697851/transformed/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/e3c1b01eaa05fef4d6e57d84b37dd3e3/transformed/print-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/e3c1b01eaa05fef4d6e57d84b37dd3e3/transformed/print-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/086a441d40defdf4635ecc865e7a6635/transformed/jetified-annotation-experimental-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/086a441d40defdf4635ecc865e7a6635/transformed/jetified-annotation-experimental-1.3.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.dagger:dagger-lint-aar:2.48] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/3aca99823796725e3c7843db6d12c63b/transformed/jetified-dagger-lint-aar-2.48/AndroidManifest.xml:18:3-42
+MERGED from [com.google.dagger:dagger-lint-aar:2.48] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/3aca99823796725e3c7843db6d12c63b/transformed/jetified-dagger-lint-aar-2.48/AndroidManifest.xml:18:3-42
+	android:targetSdkVersion
+		INJECTED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/vipinsharma/Downloads/RamNaamTracker/app/src/main/AndroidManifest.xml
+service#androidx.room.MultiInstanceInvalidationService
+ADDED from [androidx.room:room-runtime:2.6.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2493cc1927a4c1811967b144fed03dd2/transformed/room-runtime-2.6.1/AndroidManifest.xml:24:9-28:63
+	android:exported
+		ADDED from [androidx.room:room-runtime:2.6.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2493cc1927a4c1811967b144fed03dd2/transformed/room-runtime-2.6.1/AndroidManifest.xml:27:13-37
+	tools:ignore
+		ADDED from [androidx.room:room-runtime:2.6.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2493cc1927a4c1811967b144fed03dd2/transformed/room-runtime-2.6.1/AndroidManifest.xml:28:13-60
+	android:directBootAware
+		ADDED from [androidx.room:room-runtime:2.6.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2493cc1927a4c1811967b144fed03dd2/transformed/room-runtime-2.6.1/AndroidManifest.xml:26:13-43
+	android:name
+		ADDED from [androidx.room:room-runtime:2.6.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/2493cc1927a4c1811967b144fed03dd2/transformed/room-runtime-2.6.1/AndroidManifest.xml:25:13-74
+provider#androidx.startup.InitializationProvider
+ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/731e30e17bada44eeda2eeb931f7c2c8/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/d8febc80a6156b42f80238c41108cb79/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/d8febc80a6156b42f80238c41108cb79/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/5b685dbd2f8b49fa02272158109c5afa/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/5b685dbd2f8b49fa02272158109c5afa/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
+	tools:node
+		ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/731e30e17bada44eeda2eeb931f7c2c8/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:28:13-31
+	android:authorities
+		ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/731e30e17bada44eeda2eeb931f7c2c8/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
+	android:exported
+		ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/731e30e17bada44eeda2eeb931f7c2c8/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/731e30e17bada44eeda2eeb931f7c2c8/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
+meta-data#androidx.emoji2.text.EmojiCompatInitializer
+ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/731e30e17bada44eeda2eeb931f7c2c8/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/731e30e17bada44eeda2eeb931f7c2c8/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/731e30e17bada44eeda2eeb931f7c2c8/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
+meta-data#androidx.lifecycle.ProcessLifecycleInitializer
+ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/d8febc80a6156b42f80238c41108cb79/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/d8febc80a6156b42f80238c41108cb79/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/d8febc80a6156b42f80238c41108cb79/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
+uses-library#androidx.window.extensions
+ADDED from [androidx.window:window:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/a74b331515c41cd60532b256b61d0de8/transformed/jetified-window-1.0.0/AndroidManifest.xml:25:9-27:40
+	android:required
+		ADDED from [androidx.window:window:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/a74b331515c41cd60532b256b61d0de8/transformed/jetified-window-1.0.0/AndroidManifest.xml:27:13-37
+	android:name
+		ADDED from [androidx.window:window:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/a74b331515c41cd60532b256b61d0de8/transformed/jetified-window-1.0.0/AndroidManifest.xml:26:13-54
+uses-library#androidx.window.sidecar
+ADDED from [androidx.window:window:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/a74b331515c41cd60532b256b61d0de8/transformed/jetified-window-1.0.0/AndroidManifest.xml:28:9-30:40
+	android:required
+		ADDED from [androidx.window:window:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/a74b331515c41cd60532b256b61d0de8/transformed/jetified-window-1.0.0/AndroidManifest.xml:30:13-37
+	android:name
+		ADDED from [androidx.window:window:1.0.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/a74b331515c41cd60532b256b61d0de8/transformed/jetified-window-1.0.0/AndroidManifest.xml:29:13-51
+permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/31c9448a8209cdc754009772db33cb9b/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.12.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/31c9448a8209cdc754009772db33cb9b/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.12.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/31c9448a8209cdc754009772db33cb9b/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
+permission#com.ramlekhak.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/31c9448a8209cdc754009772db33cb9b/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.12.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/31c9448a8209cdc754009772db33cb9b/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.12.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/31c9448a8209cdc754009772db33cb9b/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
+uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/31c9448a8209cdc754009772db33cb9b/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.12.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/31c9448a8209cdc754009772db33cb9b/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
+uses-permission#com.ramlekhak.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/31c9448a8209cdc754009772db33cb9b/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.12.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/31c9448a8209cdc754009772db33cb9b/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
+meta-data#androidx.profileinstaller.ProfileInstallerInitializer
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+receiver#androidx.profileinstaller.ProfileInstallReceiver
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+	android:enabled
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+	android:exported
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+	android:permission
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+	android:directBootAware
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+intent-filter#action:name:androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+action#androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+intent-filter#action:name:androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+action#androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+intent-filter#action:name:androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+action#androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+intent-filter#action:name:androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+action#androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/vipinsharma/.gradle/caches/8.11.1/transforms/71bdb9ba75e68f4de77aa22668e29f53/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:25-92

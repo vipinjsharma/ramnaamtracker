@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.RamLekhak" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.RamLekhak" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primary_dark</item>
@@ -17,6 +17,11 @@
         <!-- Text colors -->
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorSecondary">@color/text_secondary</item>
+        <!-- Toolbar theme -->
+        <item name="toolbarStyle">@style/Widget.RamLekhak.Toolbar</item>
+        <item name="actionBarStyle">@style/Widget.RamLekhak.ActionBar</item>
+        <!-- Navigation drawer theme -->
+        <item name="navigationViewStyle">@style/Widget.RamLekhak.NavigationView</item>
     </style>
     
     <style name="Theme.RamLekhak.NoActionBar">
@@ -27,6 +32,24 @@
     <style name="Theme.RamLekhak.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     
     <style name="Theme.RamLekhak.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    
+    <!-- Toolbar styles -->
+    <style name="Widget.RamLekhak.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="titleTextAppearance">@style/TextAppearance.RamLekhak.Toolbar.Title</item>
+        <item name="subtitleTextAppearance">@style/TextAppearance.MaterialComponents.Subtitle1</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+    </style>
+
+    <style name="Widget.RamLekhak.ActionBar" parent="Widget.MaterialComponents.ActionBar.Surface">
+        <item name="titleTextStyle">@style/TextAppearance.RamLekhak.Toolbar.Title</item>
+    </style>
+
+    <style name="Widget.RamLekhak.NavigationView" parent="Widget.MaterialComponents.NavigationView">
+        <item name="itemTextAppearance">@style/TextAppearance.RamLekhak.Navigation.Item</item>
+        <item name="itemIconSize">24dp</item>
+        <item name="itemIconPadding">16dp</item>
+    </style>
     
     <!-- Button styles -->
     <style name="RamButton" parent="Widget.MaterialComponents.Button">
@@ -43,5 +66,17 @@
         <item name="cornerRadius">8dp</item>
         <item name="android:padding">12dp</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Theme.RamNaamTracker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary_orange</item>
+        <item name="colorPrimaryVariant">@color/primary_orange</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/primary_orange</item>
+        <item name="colorSecondaryVariant">@color/primary_orange</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 </resources>

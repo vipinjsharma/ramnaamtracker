@@ -1,136 +1,106 @@
 package com.ramlekhak.ui.writing
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.button.MaterialButton
+import androidx.fragment.app.viewModels
 import com.ramlekhak.R
-import com.ramlekhak.utils.DrawingView
+import com.ramlekhak.databinding.FragmentWritingBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WritingFragment : Fragment() {
 
-    private lateinit var viewModel: WritingViewModel
-    
-    // UI elements
-    private lateinit var drawingView: DrawingView
-    private lateinit var clearButton: MaterialButton
-    private lateinit var autoDrawButton: MaterialButton
-    private lateinit var submitButton: MaterialButton
-    private lateinit var currentCountText: TextView
-    private lateinit var todayCountText: TextView
-    private lateinit var totalCountText: TextView
-    private lateinit var malaCountText: TextView
-    
-    // Count tracking
-    private var currentCount = 0
+    private var _binding: FragmentWritingBinding? = null
+    private val binding get() = _binding!!
+
+    private val viewModel: WritingViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_writing, container, false)
+    ): View {
+        _binding = FragmentWritingBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        // Initialize ViewModel
-        viewModel = ViewModelProvider(this)[WritingViewModel::class.java]
-        
-        // Initialize UI elements
-        drawingView = view.findViewById(R.id.drawing_view)
-        clearButton = view.findViewById(R.id.clear_button)
-        autoDrawButton = view.findViewById(R.id.auto_draw_button)
-        submitButton = view.findViewById(R.id.submit_button)
-        
-        // Initialize count text views if they exist
-        view.findViewById<TextView>(R.id.current_count_text)?.let { currentCountText = it }
-        view.findViewById<TextView>(R.id.today_count_text)?.let { todayCountText = it }
-        view.findViewById<TextView>(R.id.total_count_text)?.let { totalCountText = it }
-        view.findViewById<TextView>(R.id.mala_count_text)?.let { malaCountText = it }
-        
-        // Set up touch detection for drawing
-        setupDrawingTouchDetection()
-        
-        // Set up observers
         setupObservers()
-        
-        // Set up click listeners
         setupClickListeners()
     }
 
-    private fun setupDrawingTouchDetection() {
-        // We'll have the drawing view notify us when writing is complete
-        drawingView.setOnDrawingCompleteListener {
-            viewModel.incrementCount()
-        }
-    }
-
     private fun setupObservers() {
-        // Observe current count
-        viewModel.currentCount.observe(viewLifecycleOwner) { count ->
-            if (::currentCountText.isInitialized) {
-                currentCountText.text = getString(R.string.current_count, count)
-            }
-            currentCount = count
-        }
-        
         // Observe today's count
         viewModel.todayCount.observe(viewLifecycleOwner) { count ->
-            if (::todayCountText.isInitialized) {
-                todayCountText.text = getString(R.string.today_count, count ?: 0)
-            }
+            binding.todayCountValue.text = count.toString()
         }
         
-        // Observe total count
-        viewModel.totalCount.observe(viewLifecycleOwner) { count ->
-            if (::totalCountText.isInitialized) {
-                totalCountText.text = getString(R.string.total_count, count ?: 0)
-            }
+        // Observe streak count
+        viewModel.streakCount.observe(viewLifecycleOwner) { count ->
+            binding.streakCountValue.text = "$count Days"
         }
         
-        // Observe mala count
-        viewModel.currentMalaCount.observe(viewLifecycleOwner) { count ->
-            if (::malaCountText.isInitialized) {
-                malaCountText.text = getString(R.string.mala_count, count)
-            }
+        // Observe today's malas
+        viewModel.todayMalas.observe(viewLifecycleOwner) { malas ->
+            binding.todayMalasValue.text = malas.toString()
+        }
+        
+        // Observe daily progress
+        viewModel.dailyProgress.observe(viewLifecycleOwner) { progress ->
+            binding.dailyProgressBar.progress = progress
+            binding.goalPercentage.text = "$progress%"
         }
     }
 
     private fun setupClickListeners() {
-        clearButton.setOnClickListener {
-            drawingView.clearCanvas()
-            viewModel.resetCurrentCount()
+        // Clear drawing button
+        binding.clearButton.setOnClickListener {
+            binding.drawingView.clear()
         }
         
-        autoDrawButton.setOnClickListener {
-            drawingView.autoDraw()
-            // Auto-draw counts as one writing
-            viewModel.incrementCount()
+        // Auto-draw RAM button
+        binding.autoDrawButton.setOnClickListener {
+            val ramBitmap = viewModel.generateRamDrawing()
+            binding.drawingView.setBitmap(ramBitmap)
         }
         
-        submitButton.setOnClickListener {
-            if (currentCount > 0) {
-                viewModel.submitCount()
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.count_submitted_format, currentCount),
-                    Toast.LENGTH_SHORT
-                ).show()
-                drawingView.clearCanvas()
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.no_count_to_submit),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+        // Submit button
+        binding.submitButton.setOnClickListener {
+            val drawingBitmap = binding.drawingView.getBitmap()
+            viewModel.submitDrawing(drawingBitmap)
+            binding.drawingView.clear()
         }
+        
+        // Share progress button
+        binding.shareProgressButton.setOnClickListener {
+            shareProgress()
+        }
+    }
+    
+    private fun shareProgress() {
+        val streakText = binding.streakCountValue.text
+        val malasText = binding.todayMalasValue.text
+        val countText = binding.todayCountValue.text
+        
+        val shareText = "I've been writing RAM naam for $streakText with $malasText malas and a total count of $countText today! Join me in this spiritual journey. #RAMNaamJap"
+        
+        val shareIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, shareText)
+            type = "text/plain"
+        }
+        
+        startActivity(Intent.createChooser(shareIntent, "Share your progress"))
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

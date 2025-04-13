@@ -4,74 +4,73 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.button.MaterialButton
 import com.ramlekhak.R
+import com.ramlekhak.databinding.FragmentHomeBinding
 import com.ramlekhak.viewmodel.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
-
-    private lateinit var viewModel: HomeViewModel
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
     
-    // UI elements
-    private lateinit var todayCountText: TextView
-    private lateinit var totalCountText: TextView
-    private lateinit var malaCountText: TextView
-    private lateinit var startWritingButton: MaterialButton
-    private lateinit var viewAllBenefitsText: TextView
+    private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
-        // Initialize ViewModel
-        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
-        
-        // Initialize UI elements
-        todayCountText = view.findViewById(R.id.today_count)
-        totalCountText = view.findViewById(R.id.total_count)
-        malaCountText = view.findViewById(R.id.mala_count)
-        startWritingButton = view.findViewById(R.id.start_writing_button)
-        viewAllBenefitsText = view.findViewById(R.id.view_all_benefits)
-        
-        // Set up observers
+
         setupObservers()
-        
-        // Set up click listeners
         setupClickListeners()
     }
 
     private fun setupObservers() {
+        // Update streak count
+        viewModel.streakCount.observe(viewLifecycleOwner) { count ->
+            binding.streakCount.text = "$count Days"
+        }
+
+        // Update today's malas
+        viewModel.todayMalas.observe(viewLifecycleOwner) { count ->
+            binding.todayMalas.text = count.toString()
+        }
+
+        // Update today's count
         viewModel.todayCount.observe(viewLifecycleOwner) { count ->
-            todayCountText.text = getString(R.string.today_count, count ?: 0)
+            binding.todayCount.text = count.toString()
         }
-        
-        viewModel.totalCount.observe(viewLifecycleOwner) { count ->
-            totalCountText.text = getString(R.string.total_count, count ?: 0)
-        }
-        
-        viewModel.malaCount.observe(viewLifecycleOwner) { count ->
-            malaCountText.text = getString(R.string.mala_count, count)
+
+        // Update daily progress
+        viewModel.dailyProgress.observe(viewLifecycleOwner) { progress ->
+            binding.dailyProgress.progress = progress
         }
     }
 
     private fun setupClickListeners() {
-        startWritingButton.setOnClickListener {
+        // Navigate to writing screen when "Start RAM naam writing" button is clicked
+        binding.startWritingButton.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_writingFragment)
         }
-        
-        viewAllBenefitsText.setOnClickListener {
-            findNavController().navigate(R.id.benefitsFragment)
+
+        // Share progress
+        binding.shareProgressButton.setOnClickListener {
+            viewModel.shareProgress()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

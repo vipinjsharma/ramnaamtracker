@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Orange circular background -->
+    <path
+        android:fillColor="#FF8C00"
+        android:pathData="M54,24C37.43,24 24,37.43 24,54C24,70.57 37.43,84 54,84C70.57,84 84,70.57 84,54C84,37.43 70.57,24 54,24Z" />
+    
+    <!-- White circle border -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3"
+        android:pathData="M54,30C40.7,30 30,40.7 30,54C30,67.3 40.7,78 54,78C67.3,78 78,67.3 78,54C78,40.7 67.3,30 54,30Z" />
+    
+    <!-- Simple RAM text in more modern, bold style -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M36,48L36,62L42,62L42,56L48,56L48,62L54,62L54,48L36,48Z" /> <!-- R -->
+    
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M56,48L56,62L74,62L74,48L56,48ZM62,54L68,54L68,56L62,56L62,54Z" /> <!-- A -->
+    
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M76,48L76,62L82,62L82,56L88,56L88,62L94,62L94,48L76,48Z" /> <!-- M -->
+    
+    <!-- Four diamond decorations -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,20L57,16L54,12L51,16L54,20Z" /> <!-- Top -->
+    
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,96L57,92L54,88L51,92L54,96Z" /> <!-- Bottom -->
+    
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M12,54L16,51L20,54L16,57L12,54Z" /> <!-- Left -->
+    
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M96,54L92,51L88,54L92,57L96,54Z" /> <!-- Right -->
+</vector> 

@@ -1,49 +1,43 @@
 package com.ramlekhak.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ramlekhak.data.AppDatabase
-import com.ramlekhak.data.EntryRepository
+import com.ramlekhak.data.Count
+import com.ramlekhak.data.CountRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.Date
+import javax.inject.Inject
 
 /**
  * ViewModel for the Writing screen.
  */
-class WritingViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class WritingViewModel @Inject constructor(
+    private val repository: CountRepository
+) : ViewModel() {
 
-    private val repository: EntryRepository
-    
-    // Events for the UI
-    private val _submissionEvent = MutableLiveData<SubmissionEvent>()
-    val submissionEvent: LiveData<SubmissionEvent> = _submissionEvent
+    private val _todayCount = MutableLiveData(0)
+    val todayCount: LiveData<Int> = _todayCount
 
     init {
-        val entryDao = AppDatabase.getDatabase(application).entryDao()
-        repository = EntryRepository(entryDao)
+        loadTodayCount()
     }
 
-    /**
-     * Submit a writing count to the repository
-     */
-    fun submitCount(count: Int, note: String? = null) {
+    private fun loadTodayCount() {
         viewModelScope.launch {
-            try {
-                repository.insert(count, note)
-                _submissionEvent.postValue(SubmissionEvent.Success(count))
-            } catch (e: Exception) {
-                _submissionEvent.postValue(SubmissionEvent.Error(e.message ?: "Unknown error occurred"))
+            repository.getTodayCount().collect { counts ->
+                _todayCount.value = counts.sumOf { it.count }
             }
         }
     }
 
-    /**
-     * Submission event sealed class
-     */
-    sealed class SubmissionEvent {
-        data class Success(val count: Int) : SubmissionEvent()
-        data class Error(val message: String) : SubmissionEvent()
+    fun addCount(count: Int) {
+        viewModelScope.launch {
+            repository.insert(Count(date = Date(), count = count))
+        }
     }
 }

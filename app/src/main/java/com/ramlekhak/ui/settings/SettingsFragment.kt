@@ -8,22 +8,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.ramlekhak.R
 import com.ramlekhak.data.UserPreferences
 import java.util.Locale
+import com.ramlekhak.databinding.FragmentSettingsBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SettingsFragment : Fragment() {
 
-    private lateinit var userPreferences: UserPreferences
+    private var _binding: FragmentSettingsBinding? = null
+    private val binding get() = _binding!!
+
+    @Inject
+    lateinit var userPreferences: UserPreferences
     
     // UI elements
     private lateinit var languageRadioGroup: RadioGroup
     private lateinit var radioEnglish: RadioButton
     private lateinit var radioHindi: RadioButton
-    private lateinit var themeSwitch: SwitchMaterial
     private lateinit var notificationSwitch: SwitchMaterial
     private lateinit var resetMidnightSwitch: SwitchMaterial
 
@@ -31,23 +37,20 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_settings, container, false)
+    ): View {
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        // Initialize preferences
-        userPreferences = UserPreferences(requireContext())
-        
         // Initialize UI elements
-        languageRadioGroup = view.findViewById(R.id.language_radio_group)
-        radioEnglish = view.findViewById(R.id.radio_english)
-        radioHindi = view.findViewById(R.id.radio_hindi)
-        themeSwitch = view.findViewById(R.id.theme_switch)
-        notificationSwitch = view.findViewById(R.id.notification_switch)
-        resetMidnightSwitch = view.findViewById(R.id.reset_midnight_switch)
+        languageRadioGroup = binding.languageRadioGroup
+        radioEnglish = binding.radioEnglish
+        radioHindi = binding.radioHindi
+        notificationSwitch = binding.notificationSwitch
+        resetMidnightSwitch = binding.resetMidnightSwitch
         
         // Load current settings
         loadCurrentSettings()
@@ -64,9 +67,6 @@ class SettingsFragment : Fragment() {
         } else {
             radioEnglish.isChecked = true
         }
-        
-        // Theme
-        themeSwitch.isChecked = userPreferences.isDarkThemeEnabled()
         
         // Notifications
         notificationSwitch.isChecked = userPreferences.areNotificationsEnabled()
@@ -90,13 +90,6 @@ class SettingsFragment : Fragment() {
             }
         }
         
-        // Theme switch listener
-        themeSwitch.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked != userPreferences.isDarkThemeEnabled()) {
-                userPreferences.setDarkThemeEnabled(isChecked)
-            }
-        }
-        
         // Notifications switch listener
         notificationSwitch.setOnCheckedChangeListener { _, isChecked ->
             userPreferences.setNotificationsEnabled(isChecked)
@@ -104,7 +97,7 @@ class SettingsFragment : Fragment() {
         
         // Reset at midnight switch listener
         resetMidnightSwitch.setOnCheckedChangeListener { _, isChecked ->
-            userPreferences.setResetAtMidnightEnabled(isChecked)
+            userPreferences.setResetAtMidnight(isChecked)
         }
     }
 
@@ -117,5 +110,10 @@ class SettingsFragment : Fragment() {
             config,
             requireContext().resources.displayMetrics
         )
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

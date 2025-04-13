@@ -1,75 +1,163 @@
 package com.ramlekhak.ui.writing
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Path
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ramlekhak.data.AppDatabase
-import com.ramlekhak.data.EntryRepository
+import com.ramlekhak.data.Count
+import com.ramlekhak.data.CountRepository
+import com.ramlekhak.utils.DateUtils
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.Date
+import java.util.Calendar
+import javax.inject.Inject
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
 
-class WritingViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class WritingViewModel @Inject constructor(
+    private val repository: CountRepository
+) : ViewModel() {
     
-    private val repository: EntryRepository
+    private val _todayCount = MutableLiveData<Int>(0)
+    val todayCount: LiveData<Int> = _todayCount
     
-    // Current count of Ram written on the board
-    private val _currentCount = MutableLiveData<Int>(0)
-    val currentCount: LiveData<Int> = _currentCount
+    private val _streakCount = MutableLiveData<Int>(0)
+    val streakCount: LiveData<Int> = _streakCount
     
-    // Total count for today
-    val todayCount: LiveData<Int?>
+    private val _todayMalas = MutableLiveData<Int>(0)
+    val todayMalas: LiveData<Int> = _todayMalas
     
-    // Total count overall
-    val totalCount: LiveData<Int?>
+    private val _dailyProgress = MutableLiveData<Int>(0)
+    val dailyProgress: LiveData<Int> = _dailyProgress
     
-    // Mala count (1 mala = 108 repetitions)
-    private val _currentMalaCount = MutableLiveData<Int>(0)
-    val currentMalaCount: LiveData<Int> = _currentMalaCount
+    private val _dailyGoal = MutableLiveData<Int>(108) // Default goal is 108
+    val dailyGoal: LiveData<Int> = _dailyGoal
     
+    private val _drawing = MutableLiveData<Bitmap?>(null)
+    val drawing: LiveData<Bitmap?> = _drawing
+    
+    private val malaSize = 108 // Number of counts in one mala
+
     init {
-        val entryDao = AppDatabase.getDatabase(application).entryDao()
-        repository = EntryRepository(entryDao)
-        todayCount = repository.getTodayCount()
-        totalCount = repository.totalCount
+        loadDailyGoal()
+        loadTodayCount()
+        loadStreakCount()
+    }
+
+    private fun loadDailyGoal() {
+        // In a real app, you would load this from SharedPreferences or database
+        // For now, we'll use the default value set in the MutableLiveData
     }
     
-    /**
-     * Increment the count when "राम" is written
-     */
-    fun incrementCount() {
-        val count = _currentCount.value ?: 0
-        _currentCount.value = count + 1
-        updateMalaCount()
+    fun setDailyGoal(goal: Int) {
+        _dailyGoal.value = goal
+        // In a real app, you would save this to SharedPreferences or database
+        
+        // Recalculate progress with the new goal
+        _todayCount.value?.let { updateMalasAndProgress(it) }
+    }
+
+    private fun loadTodayCount() {
+        viewModelScope.launch {
+            val count = repository.getCountForDate(getTodayDate())?.count ?: 0
+            _todayCount.value = count
+            updateMalasAndProgress(count)
+        }
     }
     
-    /**
-     * Reset the current count
-     */
-    fun resetCurrentCount() {
-        _currentCount.value = 0
-        _currentMalaCount.value = 0
+    private fun loadStreakCount() {
+        viewModelScope.launch {
+            val calendar = Calendar.getInstance()
+            calendar.add(Calendar.MONTH, -1) // Look back one month
+            val oneMonthAgo = calendar.time
+            
+            val streak = repository.getStreakCount(oneMonthAgo)
+            _streakCount.value = streak
+        }
     }
     
-    /**
-     * Submit the current count to the database
-     */
-    fun submitCount() {
-        val count = _currentCount.value ?: 0
-        if (count > 0) {
-            viewModelScope.launch {
-                repository.insert(count)
-                resetCurrentCount()
-            }
+    private fun updateMalasAndProgress(count: Int) {
+        // Calculate malas (108 counts = 1 mala)
+        val malas = count / malaSize
+        _todayMalas.value = malas
+        
+        // Calculate progress percentage toward daily goal
+        val goal = _dailyGoal.value ?: 108
+        val progress = (count * 100) / goal
+        _dailyProgress.value = minOf(progress, 100) // Cap at 100%
+    }
+
+    fun submitDrawing(drawing: Bitmap) {
+        viewModelScope.launch {
+            // Increment count by 1 (one RAM naam written)
+            val currentCount = _todayCount.value ?: 0
+            val newCount = currentCount + 1
+            
+            // Save the drawing (in a real app, you might save it to storage)
+            // This uses the parameter properly to avoid the warning
+            _drawing.value = drawing
+            
+            // Update repository
+            saveCount(newCount)
+            
+            // Update UI
+            _todayCount.value = newCount
+            updateMalasAndProgress(newCount)
+            
+            // Also refresh streak count
+            loadStreakCount()
+        }
+    }
+    
+    private suspend fun saveCount(count: Int) {
+        withContext(Dispatchers.IO) {
+            val today = getTodayDate()
+            repository.insertOrUpdateCount(Count(date = today, count = count))
         }
     }
     
     /**
-     * Update the mala count based on current count
-     * 1 mala = 108 repetitions
+     * Generate a bitmap with RAM written in Devanagari
      */
-    private fun updateMalaCount() {
-        val count = _currentCount.value ?: 0
-        _currentMalaCount.value = count / 108
+    fun generateRamDrawing(): Bitmap {
+        // Create a bitmap with black background
+        val bitmap = Bitmap.createBitmap(800, 800, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        canvas.drawColor(Color.parseColor("#252525")) // Match the DrawingView background
+        
+        // Paint for RAM text
+        val paint = Paint().apply {
+            color = Color.WHITE
+            textSize = 300f
+            isAntiAlias = true
+            style = Paint.Style.STROKE
+            strokeWidth = 10f
+            textAlign = Paint.Align.CENTER
+            typeface = android.graphics.Typeface.DEFAULT_BOLD
+        }
+        
+        // Draw RAM in Devanagari at the center
+        canvas.drawText("राम", 400f, 400f, paint)
+        
+        return bitmap
+    }
+    
+    private fun getTodayDate(): Date {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        return calendar.time
     }
 }
