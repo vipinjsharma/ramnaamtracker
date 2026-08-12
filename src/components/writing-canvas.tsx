@@ -23,16 +23,22 @@ export function WritingCanvas() {
   const drawGuide = React.useCallback((canvas: HTMLCanvasElement) => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+    // The context is scaled by devicePixelRatio (see setupCanvas), so all
+    // drawing here must use CSS-pixel dimensions (clientWidth/clientHeight),
+    // not the raw canvas.width/height buffer size - otherwise positions end
+    // up scaled twice on high-DPI displays.
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
     const devanagariFont =
       getComputedStyle(document.documentElement)
         .getPropertyValue("--font-devanagari")
         .trim() || "sans-serif";
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.font = `bold ${Math.floor(canvas.height * 0.5)}px ${devanagariFont}`;
+    ctx.clearRect(0, 0, width, height);
+    ctx.font = `bold ${Math.floor(height * 0.5)}px ${devanagariFont}`;
     ctx.fillStyle = "rgba(120, 120, 120, 0.18)";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText(GUIDE_TEXT, canvas.width / 2, canvas.height / 2);
+    ctx.fillText(GUIDE_TEXT, width / 2, height / 2);
   }, []);
 
   const setupCanvas = React.useCallback(() => {
