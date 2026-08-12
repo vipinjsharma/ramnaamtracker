@@ -215,7 +215,7 @@ function ProfileContent() {
 
 function StatCard({ label, value }: { label: string; value: React.ReactNode }) {
   return (
-    <div className="min-w-0 rounded-xl border bg-card px-4 py-3 shadow-sm">
+    <div className="shadow-soft min-w-0 rounded-2xl border bg-card px-4 py-3.5">
       <div className="truncate text-xl font-semibold">{value}</div>
       <div className="truncate text-xs text-muted-foreground">{label}</div>
     </div>

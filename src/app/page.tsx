@@ -29,7 +29,7 @@ export default function Home() {
         transition={{ duration: 0.4 }}
         className="flex flex-col items-center gap-2 py-4 text-center"
       >
-        <h1 className="font-[family-name:var(--font-devanagari)] text-3xl font-semibold">
+        <h1 className="font-[family-name:var(--font-devanagari-display)] text-4xl">
           {t("home_greeting")}, {data.userName}
         </h1>
         <p className="max-w-xs text-sm text-muted-foreground">{t("home_subtitle")}</p>
@@ -113,7 +113,7 @@ function StatTile({
   icon?: React.ReactNode;
 }) {
   return (
-    <div className="flex min-w-0 flex-col items-center gap-1 rounded-xl border bg-card px-2 py-3 text-center shadow-sm">
+    <div className="shadow-soft flex min-w-0 flex-col items-center gap-1 rounded-2xl border bg-card px-2 py-3.5 text-center">
       <div className="flex items-center gap-1 text-xl font-semibold">
         {icon}
         {value}

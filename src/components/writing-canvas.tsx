@@ -11,14 +11,22 @@ import { Button } from "@/components/ui/button";
 import { Confetti, createConfettiBurst, type ConfettiPiece } from "@/components/confetti";
 
 const GUIDE_TEXT = "राम";
+const CANVAS_HEIGHT = 380;
+
+type Point = { x: number; y: number };
+
+const midpoint = (a: Point, b: Point): Point => ({
+  x: (a.x + b.x) / 2,
+  y: (a.y + b.y) / 2,
+});
 
 export function WritingCanvas() {
   const { data, recordWrite, t } = usePractice();
   const containerRef = React.useRef<HTMLDivElement>(null);
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
-  const isDrawingRef = React.useRef(false);
-  const lastPointRef = React.useRef<{ x: number; y: number } | null>(null);
+  const pointsRef = React.useRef<Point[]>([]);
   const [confettiPieces, setConfettiPieces] = React.useState<ConfettiPiece[]>([]);
+  const [isDrawing, setIsDrawing] = React.useState(false);
 
   const drawGuide = React.useCallback((canvas: HTMLCanvasElement) => {
     const ctx = canvas.getContext("2d");
@@ -31,14 +39,29 @@ export function WritingCanvas() {
     const height = canvas.clientHeight;
     const devanagariFont =
       getComputedStyle(document.documentElement)
-        .getPropertyValue("--font-devanagari")
+        .getPropertyValue("--font-devanagari-display")
         .trim() || "sans-serif";
+
     ctx.clearRect(0, 0, width, height);
-    ctx.font = `bold ${Math.floor(height * 0.5)}px ${devanagariFont}`;
-    ctx.fillStyle = "rgba(120, 120, 120, 0.18)";
+
+    // A faint baseline, like ruled practice paper.
+    ctx.save();
+    ctx.strokeStyle = "rgba(120, 120, 120, 0.15)";
+    ctx.lineWidth = 1;
+    ctx.setLineDash([5, 6]);
+    ctx.beginPath();
+    ctx.moveTo(width * 0.08, height * 0.72);
+    ctx.lineTo(width * 0.92, height * 0.72);
+    ctx.stroke();
+    ctx.restore();
+
+    // Outline-only guide glyph, like a tracing sheet - not a solid fill.
+    ctx.font = `${Math.floor(height * 0.52)}px ${devanagariFont}`;
     ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(GUIDE_TEXT, width / 2, height / 2);
+    ctx.textBaseline = "alphabetic";
+    ctx.lineWidth = 1.4;
+    ctx.strokeStyle = "rgba(120, 120, 120, 0.32)";
+    ctx.strokeText(GUIDE_TEXT, width / 2, height * 0.72);
   }, []);
 
   const setupCanvas = React.useCallback(() => {
@@ -47,11 +70,10 @@ export function WritingCanvas() {
     if (!canvas || !container) return;
     const ratio = window.devicePixelRatio || 1;
     const width = container.clientWidth;
-    const height = 340;
     canvas.width = width * ratio;
-    canvas.height = height * ratio;
+    canvas.height = CANVAS_HEIGHT * ratio;
     canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
+    canvas.style.height = `${CANVAS_HEIGHT}px`;
     const ctx = canvas.getContext("2d");
     if (ctx) {
       ctx.scale(ratio, ratio);
@@ -70,9 +92,7 @@ export function WritingCanvas() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data.theme]);
 
-  const getCanvasContext = () => canvasRef.current?.getContext("2d") ?? null;
-
-  const getScaledPoint = (e: React.PointerEvent<HTMLCanvasElement>) => {
+  const getScaledPoint = (e: React.PointerEvent<HTMLCanvasElement>): Point => {
     const canvas = canvasRef.current;
     if (!canvas) return { x: 0, y: 0 };
     const rect = canvas.getBoundingClientRect();
@@ -81,26 +101,34 @@ export function WritingCanvas() {
 
   const handlePointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
     canvasRef.current?.setPointerCapture(e.pointerId);
-    isDrawingRef.current = true;
-    lastPointRef.current = getScaledPoint(e);
+    setIsDrawing(true);
+    pointsRef.current = [getScaledPoint(e)];
   };
 
   const handlePointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
-    if (!isDrawingRef.current) return;
-    const ctx = getCanvasContext();
-    const last = lastPointRef.current;
-    if (!ctx || !last) return;
-    const point = getScaledPoint(e);
+    if (pointsRef.current.length === 0) return;
+    const ctx = canvasRef.current?.getContext("2d");
+    if (!ctx) return;
+
+    pointsRef.current.push(getScaledPoint(e));
+    const points = pointsRef.current;
+    const len = points.length;
+
+    // Quadratic-curve smoothing through the midpoints of recent samples -
+    // draws a continuous smooth stroke instead of jagged straight segments.
+    if (len < 3) return;
+    const [p0, p1, p2] = points.slice(len - 3);
+    const start = midpoint(p0, p1);
+    const end = midpoint(p1, p2);
     ctx.beginPath();
-    ctx.moveTo(last.x, last.y);
-    ctx.lineTo(point.x, point.y);
+    ctx.moveTo(start.x, start.y);
+    ctx.quadraticCurveTo(p1.x, p1.y, end.x, end.y);
     ctx.stroke();
-    lastPointRef.current = point;
   };
 
   const handlePointerUp = () => {
-    isDrawingRef.current = false;
-    lastPointRef.current = null;
+    setIsDrawing(false);
+    pointsRef.current = [];
   };
 
   const clearCanvas = () => {
@@ -123,11 +151,20 @@ export function WritingCanvas() {
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-4">
       <Confetti pieces={confettiPieces} />
-      <div
+      <motion.div
         ref={containerRef}
-        className="overflow-hidden rounded-xl border bg-card shadow-sm"
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{
+          opacity: 1,
+          scale: isDrawing ? 1.005 : 1,
+          boxShadow: isDrawing
+            ? "0 8px 24px -8px rgba(0,0,0,0.18)"
+            : "0 2px 10px -4px rgba(0,0,0,0.1)",
+        }}
+        transition={{ duration: 0.2 }}
+        className="overflow-hidden rounded-2xl border bg-card"
       >
         <canvas
           ref={canvasRef}
@@ -137,7 +174,7 @@ export function WritingCanvas() {
           onPointerLeave={handlePointerUp}
           className="touch-none"
         />
-      </div>
+      </motion.div>
       <p className="text-center text-sm text-muted-foreground">{t("keep_writing")}</p>
       <div className="flex gap-3">
         <Button variant="outline" className="flex-1" onClick={clearCanvas}>

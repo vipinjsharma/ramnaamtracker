@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 
-const COLORS = ["#ff7817", "#2874a6", "#d4ac0d", "#c0392b", "#7d3c98", "#27ae60"];
-const PIECE_COUNT = 32;
+const PETAL_COLORS = ["#ff7817", "#ffb347", "#f4c95d", "#e8a87c", "#d4ac0d"];
+const PIECE_COUNT = 26;
 
 export interface ConfettiPiece {
   id: number;
@@ -11,6 +11,8 @@ export interface ConfettiPiece {
   color: string;
   rotate: number;
   delay: number;
+  scale: number;
+  drift: number;
 }
 
 let nextBatchId = 1;
@@ -20,10 +22,12 @@ export function createConfettiBurst(): ConfettiPiece[] {
   const batchId = nextBatchId++;
   return Array.from({ length: PIECE_COUNT }, (_, i) => ({
     id: batchId * 1000 + i,
-    x: Math.random() * 100,
-    color: COLORS[i % COLORS.length],
+    x: 10 + Math.random() * 80,
+    color: PETAL_COLORS[i % PETAL_COLORS.length],
     rotate: Math.random() * 360,
-    delay: Math.random() * 0.3,
+    delay: Math.random() * 0.35,
+    scale: 0.7 + Math.random() * 0.6,
+    drift: (Math.random() - 0.5) * 60,
   }));
 }
 
@@ -36,11 +40,20 @@ export function Confetti({ pieces }: { pieces: ConfettiPiece[] }) {
       {pieces.map((piece) => (
         <motion.span
           key={piece.id}
-          className="absolute top-0 block h-2.5 w-1.5 rounded-sm"
+          className="absolute top-0 block size-3 rounded-[60%_0%_60%_60%]"
           style={{ left: `${piece.x}%`, backgroundColor: piece.color }}
-          initial={{ y: -20, opacity: 1, rotate: 0 }}
-          animate={{ y: "110vh", opacity: [1, 1, 0], rotate: piece.rotate }}
-          transition={{ duration: 1.8, delay: piece.delay, ease: "easeIn" }}
+          initial={{ y: -24, x: 0, opacity: 0, rotate: 0, scale: piece.scale }}
+          animate={{
+            y: "105vh",
+            x: piece.drift,
+            opacity: [0, 1, 1, 0],
+            rotate: piece.rotate,
+          }}
+          transition={{
+            duration: 2.1,
+            delay: piece.delay,
+            ease: [0.2, 0.65, 0.4, 1],
+          }}
         />
       ))}
     </div>
