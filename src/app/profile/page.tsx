@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { CheckIcon, PencilIcon, XIcon } from "lucide-react";
+import { CheckIcon, LoaderCircleIcon, PencilIcon, XIcon } from "lucide-react";
 import { toast } from "sonner";
 
 import { usePractice } from "@/lib/practice-store";
@@ -26,8 +26,16 @@ export default function ProfilePage() {
 }
 
 function ProfileContent() {
-  const { data, totalMalaCount, setUserName, setGoals, setTheme, setLanguage, t } =
-    usePractice();
+  const {
+    data,
+    totalMalaCount,
+    setUserName,
+    setGoals,
+    setTheme,
+    setLanguage,
+    t,
+    cloudSyncAvailable,
+  } = usePractice();
 
   const [editingName, setEditingName] = React.useState(false);
   const [nameDraft, setNameDraft] = React.useState(data.userName);
@@ -105,6 +113,8 @@ function ProfileContent() {
           </button>
         )}
       </div>
+
+      {cloudSyncAvailable && <SyncCard />}
 
       <div className="grid grid-cols-2 gap-3">
         <StatCard label={t("total_written")} value={data.totalCount} />
@@ -210,6 +220,95 @@ function ProfileContent() {
         {t("app_title")} · राम राम 🙏
       </p>
     </main>
+  );
+}
+
+function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" {...props}>
+      <path
+        fill="#4285F4"
+        d="M23.52 12.27c0-.85-.08-1.67-.22-2.45H12v4.64h6.47a5.54 5.54 0 0 1-2.4 3.63v3h3.88c2.27-2.09 3.57-5.17 3.57-8.82Z"
+      />
+      <path
+        fill="#34A853"
+        d="M12 24c3.24 0 5.95-1.07 7.94-2.91l-3.88-3c-1.08.72-2.45 1.15-4.06 1.15-3.12 0-5.77-2.11-6.71-4.94H1.28v3.1A12 12 0 0 0 12 24Z"
+      />
+      <path
+        fill="#FBBC05"
+        d="M5.29 14.3A7.2 7.2 0 0 1 4.91 12c0-.8.14-1.57.38-2.3v-3.1H1.28A12 12 0 0 0 0 12c0 1.94.46 3.77 1.28 5.4l4.01-3.1Z"
+      />
+      <path
+        fill="#EA4335"
+        d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.44-3.44C17.94 1.19 15.24 0 12 0 7.31 0 3.26 2.69 1.28 6.6l4.01 3.1C6.23 6.86 8.88 4.75 12 4.75Z"
+      />
+    </svg>
+  );
+}
+
+function SyncCard() {
+  const { user, authLoading, signInWithEmail, signInWithGoogle, signOut, t } = usePractice();
+  const [email, setEmail] = React.useState("");
+  const [sending, setSending] = React.useState(false);
+
+  const sendMagicLink = async () => {
+    if (!email.trim()) return;
+    setSending(true);
+    const { error } = await signInWithEmail(email.trim());
+    setSending(false);
+    if (error) {
+      toast.error(error);
+    } else {
+      toast.success(t("magic_link_sent"));
+    }
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-sm font-medium">{t("sync_title")}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        {authLoading ? (
+          <div className="flex items-center justify-center py-2 text-muted-foreground">
+            <LoaderCircleIcon className="size-4 animate-spin" />
+          </div>
+        ) : user ? (
+          <div className="flex flex-col gap-3">
+            <p className="text-sm text-muted-foreground">
+              {t("signed_in_as")} <span className="font-medium text-foreground">{user.email}</span>
+            </p>
+            <Button variant="outline" onClick={() => void signOut()}>
+              {t("sign_out")}
+            </Button>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-3">
+            <p className="text-sm text-muted-foreground">{t("sync_subtitle")}</p>
+            <div className="flex gap-2">
+              <Input
+                type="email"
+                placeholder={t("email_placeholder")}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="min-w-0 flex-1"
+              />
+              <Button onClick={() => void sendMagicLink()} disabled={sending}>
+                {t("send_magic_link")}
+              </Button>
+            </div>
+            <div className="flex items-center gap-3">
+              <Separator className="flex-1" />
+              <span className="text-xs text-muted-foreground">{t("or_divider")}</span>
+              <Separator className="flex-1" />
+            </div>
+            <Button variant="outline" onClick={() => void signInWithGoogle()}>
+              <GoogleIcon /> {t("continue_with_google")}
+            </Button>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }
 

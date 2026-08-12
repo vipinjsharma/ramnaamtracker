@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import type { AuthChangeEvent, Session, User } from "@supabase/supabase-js";
 
 import {
   DEFAULT_PRACTICE_DATA,
@@ -10,6 +11,14 @@ import {
   type ThemeId,
 } from "@/lib/types";
 import { translate, type TranslationKey } from "@/lib/translations";
+import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import { isSupabaseConfigured } from "@/lib/supabase/env";
+import {
+  applyRollover,
+  fetchRemotePracticeData,
+  mergePracticeData,
+  pushRemotePracticeData,
+} from "@/lib/practice-sync";
 
 const STORAGE_KEY = "ramLekhakData";
 
@@ -24,14 +33,18 @@ interface PracticeContextValue {
   setTheme: (theme: ThemeId) => void;
   setLanguage: (language: Language) => void;
   t: (key: TranslationKey, vars?: Record<string, string | number>) => string;
+  /** Whether cloud sync is even possible in this deployment (env vars set). */
+  cloudSyncAvailable: boolean;
+  user: User | null;
+  authLoading: boolean;
+  signInWithEmail: (email: string) => Promise<{ error: string | null }>;
+  signInWithGoogle: () => Promise<void>;
+  signOut: () => Promise<void>;
 }
 
 const PracticeContext = React.createContext<PracticeContextValue | null>(null);
 
-function readStoredData(): PracticeData {
-  const today = new Date().toDateString();
-  const thisMonth = new Date().getMonth() + 1;
-
+function readLocalData(): PracticeData {
   let saved: Partial<PracticeData> | null = null;
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -39,46 +52,30 @@ function readStoredData(): PracticeData {
   } catch {
     saved = null;
   }
-
   if (!saved) {
-    return { ...DEFAULT_PRACTICE_DATA, currentMonth: thisMonth };
+    return { ...DEFAULT_PRACTICE_DATA, currentMonth: new Date().getMonth() + 1 };
   }
-
-  const merged: PracticeData = { ...DEFAULT_PRACTICE_DATA, ...saved };
-
-  if (merged.lastActiveDate === today) {
-    // Already active today; keep counts and streak as saved.
-  } else {
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    if (merged.lastActiveDate !== yesterday.toDateString()) {
-      merged.currentStreak = 0;
-    }
-    merged.todayCount = 0;
-  }
-
-  if (merged.currentMonth !== thisMonth) {
-    merged.currentMonth = thisMonth;
-    merged.currentMonthCount = 0;
-  }
-
-  return merged;
+  return applyRollover({ ...DEFAULT_PRACTICE_DATA, ...saved });
 }
 
 export function PracticeProvider({ children }: { children: React.ReactNode }) {
   const [data, setData] = React.useState<PracticeData>(DEFAULT_PRACTICE_DATA);
   const [loaded, setLoaded] = React.useState(false);
+  const [user, setUser] = React.useState<User | null>(null);
+  const [authLoading, setAuthLoading] = React.useState(isSupabaseConfigured);
+
+  const dataRef = React.useRef(data);
+  const userRef = React.useRef(user);
 
   React.useEffect(() => {
-    // localStorage isn't available during SSR, so the real data can only be
-    // read after mount - this is the standard "sync from an external system"
-    // exception to the set-state-in-effect rule.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setData(readStoredData());
-    setLoaded(true);
-  }, []);
+    dataRef.current = data;
+  }, [data]);
 
-  const persist = React.useCallback((next: PracticeData) => {
+  React.useEffect(() => {
+    userRef.current = user;
+  }, [user]);
+
+  const persistLocal = React.useCallback((next: PracticeData) => {
     setData(next);
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
@@ -87,9 +84,61 @@ export function PracticeProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  const persist = React.useCallback(
+    (next: PracticeData) => {
+      persistLocal(next);
+      const supabase = getSupabaseBrowserClient();
+      if (supabase && userRef.current) {
+        void pushRemotePracticeData(supabase, userRef.current.id, next);
+      }
+    },
+    [persistLocal],
+  );
+
+  // Initial local load - localStorage is only available after mount.
+  React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setData(readLocalData());
+    setLoaded(true);
+  }, []);
+
+  // Auth: pick up any existing session, then react to sign-in/out. On a
+  // fresh sign-in, reconcile this device's local progress with whatever's
+  // already saved to the account (see mergePracticeData for the rules).
+  React.useEffect(() => {
+    const supabase = getSupabaseBrowserClient();
+    if (!supabase) return;
+
+    supabase.auth.getSession().then(({ data }: { data: { session: Session | null } }) => {
+      setUser(data.session?.user ?? null);
+      setAuthLoading(false);
+    });
+
+    const { data: subscription } = supabase.auth.onAuthStateChange(
+      async (event: AuthChangeEvent, session: Session | null) => {
+        setUser(session?.user ?? null);
+
+        if (event === "SIGNED_IN" && session?.user) {
+          const remote = await fetchRemotePracticeData(supabase, session.user.id);
+          if (remote) {
+            const merged = applyRollover(mergePracticeData(dataRef.current, remote));
+            persistLocal(merged);
+            void pushRemotePracticeData(supabase, session.user.id, merged);
+          } else {
+            void pushRemotePracticeData(supabase, session.user.id, dataRef.current);
+          }
+        }
+      },
+    );
+
+    return () => subscription.subscription.unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const recordWrite = React.useCallback(() => {
     let malaCompleted = false;
     let malaCount = 0;
+    let written: PracticeData | null = null;
 
     setData((prev) => {
       const today = new Date().toDateString();
@@ -116,9 +165,14 @@ export function PracticeProvider({ children }: { children: React.ReactNode }) {
       } catch {
         // ignore
       }
-
+      written = next;
       return next;
     });
+
+    const supabase = getSupabaseBrowserClient();
+    if (supabase && userRef.current && written) {
+      void pushRemotePracticeData(supabase, userRef.current.id, written);
+    }
 
     return { malaCompleted, malaCount };
   }, []);
@@ -144,6 +198,31 @@ export function PracticeProvider({ children }: { children: React.ReactNode }) {
     [data, persist],
   );
 
+  const signInWithEmail = React.useCallback(async (email: string) => {
+    const supabase = getSupabaseBrowserClient();
+    if (!supabase) return { error: "Cloud sync isn't set up yet." };
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+    });
+    return { error: error?.message ?? null };
+  }, []);
+
+  const signInWithGoogle = React.useCallback(async () => {
+    const supabase = getSupabaseBrowserClient();
+    if (!supabase) return;
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: `${window.location.origin}/auth/callback` },
+    });
+  }, []);
+
+  const signOut = React.useCallback(async () => {
+    const supabase = getSupabaseBrowserClient();
+    if (!supabase) return;
+    await supabase.auth.signOut();
+  }, []);
+
   const t = React.useCallback(
     (key: TranslationKey, vars?: Record<string, string | number>) =>
       translate(data.language, key, vars),
@@ -162,8 +241,28 @@ export function PracticeProvider({ children }: { children: React.ReactNode }) {
       setTheme,
       setLanguage,
       t,
+      cloudSyncAvailable: isSupabaseConfigured,
+      user,
+      authLoading,
+      signInWithEmail,
+      signInWithGoogle,
+      signOut,
     }),
-    [data, loaded, recordWrite, setUserName, setGoals, setTheme, setLanguage, t],
+    [
+      data,
+      loaded,
+      recordWrite,
+      setUserName,
+      setGoals,
+      setTheme,
+      setLanguage,
+      t,
+      user,
+      authLoading,
+      signInWithEmail,
+      signInWithGoogle,
+      signOut,
+    ],
   );
 
   return (
