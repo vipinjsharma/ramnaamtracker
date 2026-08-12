@@ -79,7 +79,7 @@ export function WritingCanvas() {
       ctx.scale(ratio, ratio);
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
-      ctx.lineWidth = 6;
+      ctx.lineWidth = 9;
       ctx.strokeStyle = THEMES[data.theme]?.primary ?? THEMES.ram.primary;
     }
     drawGuide(canvas);
