@@ -29,6 +29,11 @@ const tiroDevanagari = Tiro_Devanagari_Hindi({
 export const metadata: Metadata = {
   title: "Ram Lekhak | राम लेखक",
   description: "Practice writing Ram Naam and track your daily japa progress.",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Ram Lekhak",
+  },
 };
 
 export const viewport: Viewport = {
