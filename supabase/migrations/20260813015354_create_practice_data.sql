@@ -1,6 +1,7 @@
--- Ram Lekhak cloud sync schema.
--- Run this once in the Supabase SQL Editor (Project > SQL Editor > New query)
--- for a fresh project. Safe to re-run (uses IF NOT EXISTS / OR REPLACE).
+-- Ram Lekhak cloud sync schema: the practice_data table and its
+-- row-level security policies. Applied automatically by Supabase's GitHub
+-- integration on merge to main; safe to also run by hand in the SQL
+-- Editor (uses IF NOT EXISTS / OR REPLACE throughout).
 
 create table if not exists public.practice_data (
   user_id uuid primary key references auth.users (id) on delete cascade,

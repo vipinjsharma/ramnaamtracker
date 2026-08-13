@@ -37,8 +37,15 @@ fully usable with zero setup. To let people sign in and keep their progress
 across devices/browsers:
 
 1. Create a free project at [supabase.com](https://supabase.com)
-2. In the Supabase dashboard's SQL Editor, run [`supabase/schema.sql`](./supabase/schema.sql)
-   to create the `practice_data` table and its row-level security policies
+2. Connect it to this repo under the project's Integrations > GitHub, with
+   "Deploy to production" on and the production branch set to `main`. With
+   that connected, everything under [`supabase/migrations/`](./supabase/migrations)
+   (the `practice_data` table and its row-level security policies) applies
+   automatically whenever a change merges to `main` - no manual SQL Editor
+   step needed. To have the table before that (e.g. to test sync locally
+   before merging), paste the latest file under `supabase/migrations/` into
+   the SQL Editor and run it once by hand; it's idempotent, so the
+   GitHub-integration run later is a safe no-op.
 3. Copy `.env.example` to `.env.local` and fill in the **Project URL** and
    **anon/public** key from Project Settings > API (never the `service_role`
    key - that one must stay server-side only, and this app never needs it)
