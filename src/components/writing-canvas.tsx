@@ -56,7 +56,20 @@ export function WritingCanvas() {
     ctx.restore();
 
     // Outline-only guide glyph, like a tracing sheet - not a solid fill.
-    ctx.font = `${Math.floor(height * 0.52)}px ${devanagariFont}`;
+    // Size from height first, then shrink to fit the canvas width if
+    // needed - on narrow phone screens the canvas is much narrower than
+    // it is tall, and a height-only size can render wider than the
+    // canvas itself. Devanagari conjuncts aren't symmetric around their
+    // center point, so that overflow shows up as "shifted right" rather
+    // than clipped evenly on both sides.
+    let fontSize = Math.floor(height * 0.52);
+    ctx.font = `${fontSize}px ${devanagariFont}`;
+    const maxTextWidth = width * 0.82;
+    const measuredWidth = ctx.measureText(GUIDE_TEXT).width;
+    if (measuredWidth > maxTextWidth) {
+      fontSize = Math.floor(fontSize * (maxTextWidth / measuredWidth));
+      ctx.font = `${fontSize}px ${devanagariFont}`;
+    }
     ctx.textAlign = "center";
     ctx.textBaseline = "alphabetic";
     ctx.lineWidth = 1.4;
@@ -87,6 +100,14 @@ export function WritingCanvas() {
 
   React.useEffect(() => {
     setupCanvas();
+    // Canvas text doesn't repaint itself when a web font finishes loading
+    // the way DOM text does, so the guide glyph can get drawn against a
+    // fallback font on first paint if Tiro Devanagari Hindi hasn't loaded
+    // yet - redraw once the browser confirms it's actually ready.
+    document.fonts?.ready.then(() => {
+      const canvas = canvasRef.current;
+      if (canvas) drawGuide(canvas);
+    });
     window.addEventListener("resize", setupCanvas);
     return () => window.removeEventListener("resize", setupCanvas);
     // eslint-disable-next-line react-hooks/exhaustive-deps
