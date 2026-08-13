@@ -45,6 +45,16 @@ const translations = {
     home_monthly_progress: "This month",
 
     mala_completed: "Congratulations! You completed {count} mala{plural}!",
+
+    sync_title: "Sync across devices",
+    sync_subtitle: "Sign in to keep your progress when you switch phones or browsers.",
+    email_placeholder: "you@example.com",
+    send_magic_link: "Send magic link",
+    magic_link_sent: "Check your email for a sign-in link.",
+    or_divider: "or",
+    continue_with_google: "Continue with Google",
+    signed_in_as: "Signed in as",
+    sign_out: "Sign out",
   },
   hi: {
     app_title: "राम लेखक",
@@ -90,6 +100,16 @@ const translations = {
     home_monthly_progress: "इस महीने",
 
     mala_completed: "बधाई हो! आपने {count} माला{plural} पूरी कर ली!",
+
+    sync_title: "डिवाइस पर सिंक करें",
+    sync_subtitle: "फ़ोन या ब्राउज़र बदलने पर अपनी प्रगति सुरक्षित रखने के लिए साइन इन करें।",
+    email_placeholder: "aap@example.com",
+    send_magic_link: "मैजिक लिंक भेजें",
+    magic_link_sent: "साइन-इन लिंक के लिए अपना ईमेल देखें।",
+    or_divider: "या",
+    continue_with_google: "Google से जारी रखें",
+    signed_in_as: "साइन इन किया गया",
+    sign_out: "साइन आउट",
   },
 } satisfies Record<Language, Record<string, string>>;
 

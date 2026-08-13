@@ -9,6 +9,7 @@ A Ram Naam writing/tracking app, being migrated from a static Replit
 - [Tailwind CSS](https://tailwindcss.com)
 - [shadcn/ui](https://ui.shadcn.com) (Radix UI primitives + `class-variance-authority`)
 - [Framer Motion](https://www.framer.com/motion/) for animations
+- [Supabase](https://supabase.com) (Postgres + auth) for optional cross-device sync
 - Optimized for zero-config deployment on [Vercel](https://vercel.com)
 
 ## Getting started
@@ -28,6 +29,36 @@ The `shadcn` CLI needs network access to `ui.shadcn.com`, which isn't
 reachable from this environment's sandboxed proxy. Component source files
 are added manually under `src/components/ui/` instead, following the
 standard shadcn/ui output for the `new-york` style (see `components.json`).
+
+## Cloud sync (optional)
+
+By default all progress lives in the browser's `localStorage` - the app is
+fully usable with zero setup. To let people sign in and keep their progress
+across devices/browsers:
+
+1. Create a free project at [supabase.com](https://supabase.com)
+2. Connect it to this repo under the project's Integrations > GitHub, with
+   "Deploy to production" on and the production branch set to `main`. With
+   that connected, everything under [`supabase/migrations/`](./supabase/migrations)
+   (the `practice_data` table and its row-level security policies) applies
+   automatically whenever a change merges to `main` - no manual SQL Editor
+   step needed. To have the table before that (e.g. to test sync locally
+   before merging), paste the latest file under `supabase/migrations/` into
+   the SQL Editor and run it once by hand; it's idempotent, so the
+   GitHub-integration run later is a safe no-op.
+3. Copy `.env.example` to `.env.local` and fill in the **Project URL** and
+   **anon/public** key from Project Settings > API (never the `service_role`
+   key - that one must stay server-side only, and this app never needs it)
+4. Set the same two variables in the Vercel project's Environment Variables
+   for production
+
+Email magic-link sign-in works out of the box once those variables are set.
+Google/Facebook/etc. sign-in additionally require enabling that provider
+under Supabase's Authentication > Providers (the app already calls
+`signInWithOAuth`, so enabling a provider there is the only step needed).
+
+Without these variables set, no sign-in UI is shown and nothing about the
+local-only experience changes.
 
 ## Deploying
 
