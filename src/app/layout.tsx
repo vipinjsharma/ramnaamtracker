@@ -29,6 +29,19 @@ const tiroDevanagari = Tiro_Devanagari_Hindi({
 export const metadata: Metadata = {
   title: "Ram Lekhak | राम लेखक",
   description: "Practice writing Ram Naam and track your daily japa progress.",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Ram Lekhak",
+  },
+  icons: {
+    // iOS's touch-icon fetcher is picky about the URL and doesn't
+    // reliably pick up Next's auto-generated /apple-icon.png?<hash> route
+    // (a dynamic route handler, not a plain static file) - a literal
+    // public/ file with a clean query-string-free URL is what actually
+    // works for "Add to Home Screen".
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export const viewport: Viewport = {

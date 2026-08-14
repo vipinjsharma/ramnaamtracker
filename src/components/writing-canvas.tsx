@@ -27,6 +27,11 @@ export function WritingCanvas() {
   const pointsRef = React.useRef<Point[]>([]);
   const [confettiPieces, setConfettiPieces] = React.useState<ConfettiPiece[]>([]);
   const [isDrawing, setIsDrawing] = React.useState(false);
+  // TEMPORARY diagnostic panel - remove once the real-device guide-glyph
+  // clipping bug is confirmed fixed. Surfaces what the canvas actually did
+  // (which font resolved, real measurements) so it can be screenshotted
+  // instead of guessing blind about iOS-specific font substitution.
+  const [debugInfo, setDebugInfo] = React.useState<string | null>(null);
 
   const drawGuide = React.useCallback((canvas: HTMLCanvasElement) => {
     const ctx = canvas.getContext("2d");
@@ -56,12 +61,54 @@ export function WritingCanvas() {
     ctx.restore();
 
     // Outline-only guide glyph, like a tracing sheet - not a solid fill.
-    ctx.font = `${Math.floor(height * 0.52)}px ${devanagariFont}`;
     ctx.textAlign = "center";
     ctx.textBaseline = "alphabetic";
+
+    // Size and center off the glyph's actual ink extents
+    // (actualBoundingBoxLeft/Right), not TextMetrics.width (the advance
+    // width, i.e. cursor movement). Canvas font resolution for a custom
+    // @font-face is less reliable than regular DOM text and can silently
+    // fall back to a different font per browser/OS, and Devanagari
+    // conjuncts can render with ink that isn't symmetric around the
+    // advance box - so sizing/centering off the advance width alone can
+    // end up visibly off-center or clipped depending on which font
+    // actually gets used. The ink box reflects whatever was actually
+    // drawn, so this self-corrects regardless.
+    let fontSize = Math.floor(height * 0.52);
+    ctx.font = `${fontSize}px ${devanagariFont}`;
+    let metrics = ctx.measureText(GUIDE_TEXT);
+    let inkWidth = metrics.actualBoundingBoxLeft + metrics.actualBoundingBoxRight;
+
+    const maxInkWidth = width * 0.82;
+    if (inkWidth > maxInkWidth) {
+      fontSize = Math.floor(fontSize * (maxInkWidth / inkWidth));
+      ctx.font = `${fontSize}px ${devanagariFont}`;
+      metrics = ctx.measureText(GUIDE_TEXT);
+      inkWidth = metrics.actualBoundingBoxLeft + metrics.actualBoundingBoxRight;
+    }
+
+    // Shift the draw anchor so the ink itself ends up centered, rather
+    // than assuming the ink is symmetric around the advance-width center.
+    const anchorX = width / 2 - (metrics.actualBoundingBoxRight - metrics.actualBoundingBoxLeft) / 2;
+
     ctx.lineWidth = 1.4;
     ctx.strokeStyle = "rgba(120, 120, 120, 0.32)";
-    ctx.strokeText(GUIDE_TEXT, width / 2, height * 0.72);
+    ctx.strokeText(GUIDE_TEXT, anchorX, height * 0.72);
+
+    setDebugInfo(
+      [
+        `canvas: ${width.toFixed(1)}x${height.toFixed(1)} css-px, dpr=${window.devicePixelRatio}`,
+        `--font-devanagari-display: ${devanagariFont}`,
+        `ctx.font (final): ${ctx.font}`,
+        `document.fonts.check(font): ${document.fonts?.check(ctx.font)}`,
+        `fontSize: ${fontSize}px`,
+        `advance width: ${metrics.width.toFixed(1)}`,
+        `ink L/R: ${metrics.actualBoundingBoxLeft.toFixed(1)} / ${metrics.actualBoundingBoxRight.toFixed(1)} (sum=${inkWidth.toFixed(1)})`,
+        `maxInkWidth: ${maxInkWidth.toFixed(1)}`,
+        `anchorX: ${anchorX.toFixed(1)} (canvas center: ${(width / 2).toFixed(1)})`,
+        `UA: ${navigator.userAgent}`,
+      ].join("\n"),
+    );
   }, []);
 
   const setupCanvas = React.useCallback(() => {
@@ -87,6 +134,14 @@ export function WritingCanvas() {
 
   React.useEffect(() => {
     setupCanvas();
+    // Canvas text doesn't repaint itself when a web font finishes loading
+    // the way DOM text does, so the guide glyph can get drawn against a
+    // fallback font on first paint if Tiro Devanagari Hindi hasn't loaded
+    // yet - redraw once the browser confirms it's actually ready.
+    document.fonts?.ready.then(() => {
+      const canvas = canvasRef.current;
+      if (canvas) drawGuide(canvas);
+    });
     window.addEventListener("resize", setupCanvas);
     return () => window.removeEventListener("resize", setupCanvas);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -176,6 +231,11 @@ export function WritingCanvas() {
         />
       </motion.div>
       <p className="text-center text-sm text-muted-foreground">{t("keep_writing")}</p>
+      {debugInfo && (
+        <pre className="overflow-x-auto rounded-lg border border-dashed border-red-400 bg-red-50 p-2 text-[10px] leading-tight whitespace-pre-wrap text-red-900">
+          {debugInfo}
+        </pre>
+      )}
       <div className="flex gap-3">
         <Button variant="outline" className="flex-1" onClick={clearCanvas}>
           <EraserIcon /> {t("clear")}
