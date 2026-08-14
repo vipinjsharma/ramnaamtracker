@@ -27,6 +27,11 @@ export function WritingCanvas() {
   const pointsRef = React.useRef<Point[]>([]);
   const [confettiPieces, setConfettiPieces] = React.useState<ConfettiPiece[]>([]);
   const [isDrawing, setIsDrawing] = React.useState(false);
+  // TEMPORARY diagnostic panel - remove once the real-device guide-glyph
+  // clipping bug is confirmed fixed. Surfaces what the canvas actually did
+  // (which font resolved, real measurements) so it can be screenshotted
+  // instead of guessing blind about iOS-specific font substitution.
+  const [debugInfo, setDebugInfo] = React.useState<string | null>(null);
 
   const drawGuide = React.useCallback((canvas: HTMLCanvasElement) => {
     const ctx = canvas.getContext("2d");
@@ -89,6 +94,21 @@ export function WritingCanvas() {
     ctx.lineWidth = 1.4;
     ctx.strokeStyle = "rgba(120, 120, 120, 0.32)";
     ctx.strokeText(GUIDE_TEXT, anchorX, height * 0.72);
+
+    setDebugInfo(
+      [
+        `canvas: ${width.toFixed(1)}x${height.toFixed(1)} css-px, dpr=${window.devicePixelRatio}`,
+        `--font-devanagari-display: ${devanagariFont}`,
+        `ctx.font (final): ${ctx.font}`,
+        `document.fonts.check(font): ${document.fonts?.check(ctx.font)}`,
+        `fontSize: ${fontSize}px`,
+        `advance width: ${metrics.width.toFixed(1)}`,
+        `ink L/R: ${metrics.actualBoundingBoxLeft.toFixed(1)} / ${metrics.actualBoundingBoxRight.toFixed(1)} (sum=${inkWidth.toFixed(1)})`,
+        `maxInkWidth: ${maxInkWidth.toFixed(1)}`,
+        `anchorX: ${anchorX.toFixed(1)} (canvas center: ${(width / 2).toFixed(1)})`,
+        `UA: ${navigator.userAgent}`,
+      ].join("\n"),
+    );
   }, []);
 
   const setupCanvas = React.useCallback(() => {
@@ -211,6 +231,11 @@ export function WritingCanvas() {
         />
       </motion.div>
       <p className="text-center text-sm text-muted-foreground">{t("keep_writing")}</p>
+      {debugInfo && (
+        <pre className="overflow-x-auto rounded-lg border border-dashed border-red-400 bg-red-50 p-2 text-[10px] leading-tight whitespace-pre-wrap text-red-900">
+          {debugInfo}
+        </pre>
+      )}
       <div className="flex gap-3">
         <Button variant="outline" className="flex-1" onClick={clearCanvas}>
           <EraserIcon /> {t("clear")}
