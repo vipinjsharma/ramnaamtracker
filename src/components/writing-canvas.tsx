@@ -56,25 +56,39 @@ export function WritingCanvas() {
     ctx.restore();
 
     // Outline-only guide glyph, like a tracing sheet - not a solid fill.
-    // Size from height first, then shrink to fit the canvas width if
-    // needed - on narrow phone screens the canvas is much narrower than
-    // it is tall, and a height-only size can render wider than the
-    // canvas itself. Devanagari conjuncts aren't symmetric around their
-    // center point, so that overflow shows up as "shifted right" rather
-    // than clipped evenly on both sides.
-    let fontSize = Math.floor(height * 0.52);
-    ctx.font = `${fontSize}px ${devanagariFont}`;
-    const maxTextWidth = width * 0.82;
-    const measuredWidth = ctx.measureText(GUIDE_TEXT).width;
-    if (measuredWidth > maxTextWidth) {
-      fontSize = Math.floor(fontSize * (maxTextWidth / measuredWidth));
-      ctx.font = `${fontSize}px ${devanagariFont}`;
-    }
     ctx.textAlign = "center";
     ctx.textBaseline = "alphabetic";
+
+    // Size and center off the glyph's actual ink extents
+    // (actualBoundingBoxLeft/Right), not TextMetrics.width (the advance
+    // width, i.e. cursor movement). Canvas font resolution for a custom
+    // @font-face is less reliable than regular DOM text and can silently
+    // fall back to a different font per browser/OS, and Devanagari
+    // conjuncts can render with ink that isn't symmetric around the
+    // advance box - so sizing/centering off the advance width alone can
+    // end up visibly off-center or clipped depending on which font
+    // actually gets used. The ink box reflects whatever was actually
+    // drawn, so this self-corrects regardless.
+    let fontSize = Math.floor(height * 0.52);
+    ctx.font = `${fontSize}px ${devanagariFont}`;
+    let metrics = ctx.measureText(GUIDE_TEXT);
+    let inkWidth = metrics.actualBoundingBoxLeft + metrics.actualBoundingBoxRight;
+
+    const maxInkWidth = width * 0.82;
+    if (inkWidth > maxInkWidth) {
+      fontSize = Math.floor(fontSize * (maxInkWidth / inkWidth));
+      ctx.font = `${fontSize}px ${devanagariFont}`;
+      metrics = ctx.measureText(GUIDE_TEXT);
+      inkWidth = metrics.actualBoundingBoxLeft + metrics.actualBoundingBoxRight;
+    }
+
+    // Shift the draw anchor so the ink itself ends up centered, rather
+    // than assuming the ink is symmetric around the advance-width center.
+    const anchorX = width / 2 - (metrics.actualBoundingBoxRight - metrics.actualBoundingBoxLeft) / 2;
+
     ctx.lineWidth = 1.4;
     ctx.strokeStyle = "rgba(120, 120, 120, 0.32)";
-    ctx.strokeText(GUIDE_TEXT, width / 2, height * 0.72);
+    ctx.strokeText(GUIDE_TEXT, anchorX, height * 0.72);
   }, []);
 
   const setupCanvas = React.useCallback(() => {
